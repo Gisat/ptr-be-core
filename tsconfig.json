@@ -1,0 +1,59 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "ES2020",
+    "module": "NodeNext",
+    "lib": [
+      "ES2022"
+    ],
+    "outDir": "dist",
+    "rootDir": ".",
+    
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    
+    /* Module Resolution Options */
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    
+    /* Advanced Options */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    
+    /* Additional Options */
+    "sourceMap": true,
+    "incremental": true,
+    "noEmitOnError": true,
+
+    /* Declaration Options */
+    "declaration": true,
+    "declarationMap": true,
+
+    "resolveJsonModule": true,
+    "types": [
+      "node"
+    ],
+    /* Path Mapping (Optional) */
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["./*"]
+    },
+    /* Experimental (If Needed) */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./dist/**/*"
+  ],
+  /* Additional Linting Options */
+  "noUnusedLocals": true,
+  "noUnusedParameters": false // Set to true if applicable
+}

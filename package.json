@@ -1,0 +1,35 @@
+{
+  "name": "ptr-be-core",
+  "version": "0.0.1",
+  "description": "Testing the core",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build:barrels": "barrelsby -c barrelsby.json",
+    "build:ts": "tsc && tsc-alias",
+    "build": "npm run build:barrels && npm run build:ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ioredis": "^5.6.0",
+    "lodash": "^4.17.21",
+    "luxon": "^3.5.0",
+    "mongodb": "^6.14.2",
+    "neo4j-driver": "^5.28.1",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.16",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.13.10",
+    "barrelsby": "^2.8.1",
+    "ts-jest": "^29.2.6",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.11",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

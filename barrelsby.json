@@ -1,0 +1,9 @@
+{
+    "directory": ".",
+    "exclude": ["node_modules", "dist", "coverage", "test", "tests", "spec", "specs"],
+    "delete": true,
+    "location": "top",
+    "barrelName": "index.ts",
+    "verbose": true
+  }
+  
