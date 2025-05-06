@@ -1,6 +1,4 @@
 import pino from "pino";
-import { Unsure } from "../coding/code.types";
-
 /**
  * @typedef {Object} AppLogOptions
  * @property {string} label - The label for the log entry.

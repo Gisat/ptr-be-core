@@ -1,25 +1,27 @@
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import typescript from '@rollup/plugin-typescript'; 
+import typescript from '@rollup/plugin-typescript';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url); // Creates a require function
 const pkg = require('./package.json'); // Loads package.json for configuration
 
-export default {
-  input: 'index.ts',
-  output: [
+export default [
     {
-      file: pkg.main,
-      format: 'cjs',
-      sourcemap: true,
-    },
-    {
-      file: pkg.module,
-      format: 'es',
-      sourcemap: true,
+        input: 'index.ts',
+        output: [
+            {
+                file: pkg.main,
+                format: 'cjs',
+                sourcemap: true,
+            },
+            {
+                file: pkg.module,
+                format: 'es',
+                sourcemap: true,
+            }
+        ],
+        plugins: [json(), resolve(), commonjs(), typescript({ tsconfig: './tsconfig.json' })]
     }
-  ],
-  plugins: [json(), resolve(), commonjs(), typescript({ tsconfig: './tsconfig.json' })]
-};
+];
