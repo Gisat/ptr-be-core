@@ -6,18 +6,21 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
   },
   "scripts": {
+    "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
     "build:barrels": "barrelsby -c barrelsby.json",
-    "build:ts": "tsc --emitDeclarationOnly",
     "build:rollup": "rollup -c",
-    "build": "npm run build:barrels && npm run build:ts && npm run build:rollup"
+    "build": "npm run build:clean && npm run build:barrels && npm run build:rollup"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "peerDependencies": {
     "lodash": "^4.17.21",
     "luxon": "^3.6.1",
     "pino": "^9.6.0",

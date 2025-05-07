@@ -6,6 +6,7 @@ import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url); // Creates a require function
 const pkg = require('./package.json'); // Loads package.json for configuration
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 export default [
     {
@@ -22,6 +23,8 @@ export default [
                 sourcemap: true,
             }
         ],
-        plugins: [json(), resolve(), commonjs(), typescript({ tsconfig: './tsconfig.json' })]
+        plugins: [json(), resolve({ extensions }), commonjs(), typescript({
+            tsconfig: './tsconfig.json',
+        })]
     }
 ];
