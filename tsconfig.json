@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
     /* Basic Options */
-    "target": "ES2020",
-    "module": "NodeNext",
-    "lib": [
-      "ES2022"
-    ],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "rootDir": ".",
     
@@ -16,9 +14,7 @@
     "noFallthroughCasesInSwitch": true,
     
     /* Module Resolution Options */
-    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     
     /* Advanced Options */
     "skipLibCheck": true,
@@ -26,7 +22,6 @@
     
     /* Additional Options */
     "sourceMap": true,
-    "incremental": true,
     "noEmitOnError": true,
 
     /* Declaration Options */
@@ -40,11 +35,8 @@
     /* Path Mapping (Optional) */
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["./*"]
+      "@core/*": ["./src/*"]
     },
-    /* Experimental (If Needed) */
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
   },
   "include": [
     "./**/*"
