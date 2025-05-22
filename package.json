@@ -1,5 +1,5 @@
 {
-  "name": "ptr-be-core",
+  "name": "@gisatcz/ptr-be-core",
   "version": "0.0.1",
   "description": "Testing the core",
   "main": "dist/index.cjs",
