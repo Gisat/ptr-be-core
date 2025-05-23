@@ -1,4 +1,6 @@
-name: version-bump
+name: Version bump
+description: This workflow bumps the version in package.json and creates a new version tag.
+
 on:
   push:
     branches:
