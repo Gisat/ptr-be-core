@@ -1,0 +1,21 @@
+name: Check Permissions
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  check-permissions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List permissions and ownership of top-level files
+        run: |
+          for file in *; do
+            if [ -f "$file" ]; then
+              ls -l "$file"
+            fi
+          done
