@@ -14,8 +14,4 @@ jobs:
 
       - name: List permissions and ownership of top-level files
         run: |
-          for file in *; do
-            if [ -f "$file" ]; then
-              ls -l "$file"
-            fi
-          done
+            ls -alh
