@@ -23,7 +23,7 @@ export default {
     json(), // Enables JSON imports
     resolve({ extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'] }), // Resolves file extensions
     commonjs(), // Converts CommonJS to ES6
-    typescript({ tsconfig: './tsconfig.json' }) // Uses the specified TypeScript configuration
+    typescript({ tsconfig: './tsconfig.prod.json' }) // Uses the specified TypeScript configuration
   ],
   watch: { // DEV only
     include: ['src/**', "index.ts"],

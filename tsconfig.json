@@ -1,24 +1,4 @@
+// tsconfig.json for IDE and development
 {
-  "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "resolveJsonModule": true,
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "declaration": true,
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "noImplicitAny": false,
-    "baseUrl": ".",
-    "paths": {
-      "@core/*": ["src/*"], 
-      "@test/*": ["tests/*"]
-    },
-    "types": [
-      "node",
-      "vitest/globals",
-    ],
-  },
-  "include": ["**/*"],
-  "exclude": ["node_modules", "dist"]
+    "extends": "./tsconfig.dev.json"
 }
