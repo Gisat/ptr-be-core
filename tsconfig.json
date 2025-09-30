@@ -1,51 +1,24 @@
 {
   "compilerOptions": {
-    /* Basic Options */
-    "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "outDir": "dist",
-    "rootDir": ".",
-    
-    /* Strict Type-Checking Options */
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    
-    /* Module Resolution Options */
-    "esModuleInterop": true,
-    
-    /* Advanced Options */
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    
-    /* Additional Options */
-    "sourceMap": true,
-    "noEmitOnError": true,
-
-    /* Declaration Options */
-    "declaration": true,
-    "declarationMap": true,
-
+    "target": "ESNext",
     "resolveJsonModule": true,
-    "types": [
-      "node"
-    ],
-    /* Path Mapping (Optional) */
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "noImplicitAny": false,
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["./src/*"]
+      "@core/*": ["src/*"], 
+      "@test/*": ["tests/*"]
     },
+    "types": [
+      "node",
+      "vitest/globals",
+    ],
   },
-  "include": [
-    "./**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "./dist/**/*"
-  ],
-  /* Additional Linting Options */
-  "noUnusedLocals": true,
-  "noUnusedParameters": false // Set to true if applicable
+  "include": ["**/*"],
+  "exclude": ["node_modules", "dist"]
 }

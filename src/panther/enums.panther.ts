@@ -10,7 +10,8 @@ export enum UsedNodeLabels {
     AreaTreeLevel = "areaTreeLevel", // Area tree level node for administrative division
     Layer = "layer", // Layer node for map layer (layer have a style and a datasource)
     Style = "style", // Style node for map layer or a feature
-    Feature = "feature" // Feature node for map layer
+    Feature = "feature", // Feature node for map layer,
+    Attribute = "attribute" // Attribute node for properties of entities, like "temperature", "population", etc.
 }
 
 /**
@@ -20,7 +21,7 @@ export enum UsedDatasourceLabels {
     Attribute = "attribute",   // Column(s) with attribute values
     Geojson = "geojson",      // Geojson for web map
     WMS = "wms",              // WMS online source
-    COG = "cogBitmap",        // COG online source
+    COG = "cogbitmap",        // COG online source
     MVT = "mvt",              // MVT (Mapbox Vector Tiles) source
     XYZ = "xyz",              // XYZ tile source
     CSV = "csv",              // CSV data source

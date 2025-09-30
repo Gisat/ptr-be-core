@@ -1,6 +1,6 @@
-import { Nullable } from "../coding/code.types"
-import { HasGeometry, HasInterval, HasLevels, HasConfiguration } from "./models.nodes.properties"
+import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUrl, HasBands, HasSpecificName, HasColor, HasUnits } from "./models.nodes.properties"
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther"
+import { Nullable } from "@core/coding/code.types"
 
 /**
  * General graph node - same for all metadatata entities
@@ -13,6 +13,8 @@ export interface PantherEntity {
     description: Nullable<string>,
     lastUpdatedAt: number,
 }
+
+export interface MapStyle extends PantherEntity, Partial<HasSpecificName> { }
 
 /**
  * Place node - somewhere in the world
@@ -27,20 +29,24 @@ export interface Period extends PantherEntity, HasInterval { }
 /**
  * Area tree node - tree of areas
  */
-export interface AreaTreeLevel extends PantherEntity, HasLevels {}
+export interface AreaTreeLevel extends PantherEntity, HasLevels { }
 
 /**
  * Datasource with source configuration
  */
-export interface Datasource extends PantherEntity, HasConfiguration {}
+export interface Datasource extends PantherEntity, Partial<HasConfiguration & HasUrl & HasBands> { }
 
 /**
  * Application node - main entity in metadata model
  */
-export interface ApplicationNode extends PantherEntity, HasConfiguration {}
+export interface ApplicationNode extends PantherEntity, Partial<HasConfiguration> { }
 
-export { UsedNodeLabels, HasInterval, UsedDatasourceLabels }
-
+/**
+ * Attribute node - describes a property of an entity
+ * Like "temperature", "humidity", "population", etc.
+ */
+export interface Attribute extends PantherEntity, Partial<HasColor & HasUnits> {
+}
 
 /**
  * Represents a full panther entity which extends the basic PantherEntity
@@ -51,5 +57,21 @@ export { UsedNodeLabels, HasInterval, UsedDatasourceLabels }
  * @extends Partial<HasInterval>
  * @extends Partial<HasLevels>
  * @extends Partial<HasConfiguration>
+ * @extends Partial<HasUrl>
+ * @extends Partial<HasBands>
+ * @extends Partial<HasSpecificName>
+ * @extends Partial<HasColor>
+ * @extends Partial<HasUnits>
  */
-export interface FullPantherEntity extends PantherEntity, Partial<HasGeometry & HasInterval & HasLevels & HasConfiguration> { }
+export interface FullPantherEntity extends
+    PantherEntity,
+    Partial<
+        HasGeometry &
+        HasInterval &
+        HasLevels &
+        HasConfiguration &
+        HasUrl &
+        HasBands &
+        HasSpecificName &
+        HasColor &
+        HasUnits> { }
