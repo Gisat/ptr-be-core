@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "NodeNext",
+    "target": "esnext",
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "declaration": true,
     "declarationDir": "dist",
+    "declarationMap": true,
     "outDir": "dist",
     "noImplicitAny": false,
     "baseUrl": ".",
+    "isolatedModules": true,
   },
-  "include": ["**/*"],
+  "include": [
+    "**/*"
+  ],
 }

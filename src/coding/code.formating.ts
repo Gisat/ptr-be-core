@@ -25,6 +25,7 @@ export const sortStringArray = (rawArray: string[]) => sortBy(rawArray)
  */
 export const removeDuplicitiesFromArray = (arr: any[]) => [...new Set(arr)]
 
+
 /**
  * Check if the string value is not ` "" `
  * @param value Value to check

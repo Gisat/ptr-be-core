@@ -3,7 +3,7 @@ type Unsure<T> = T | undefined
 type Nullish<T> = T | undefined | null
 type UsurePromise<T> = Unsure<Promise<T>>
 
-export {
+export type {
     Nullable,
     Nullish,
     Unsure,
