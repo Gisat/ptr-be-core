@@ -1,20 +1,15 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "resolveJsonModule": true,
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "emitDeclarationOnly": false,
-    "stripInternal": true,
-    "removeComments": false,
-    "skipLibCheck": true,
+    "lib": ["ESNext"],
+    "isolatedModules": true,
     "declaration": true,
-    "declarationDir": "dist",
-    "declarationMap": true,
     "outDir": "dist",
     "noImplicitAny": false,
     "baseUrl": ".",
-    "isolatedModules": true,
+    "resolveJsonModule": true,
     "paths": {
       "@core/*": [
         "src/*"
