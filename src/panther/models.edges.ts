@@ -7,8 +7,6 @@ import { UsedEdgeLabels } from "./enums.panther"
  */
 export type GraphRelation = [string, string]
 
-
-
 /**
  * Edge of the graph model.
  * It connects two graph nodes and have some properties.
