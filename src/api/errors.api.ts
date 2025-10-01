@@ -14,9 +14,8 @@ export class InvalidRequestError extends Error{
   }
 }
 
-
 /**
- * Wher client has general authorization issue
+ * Where client has general authorization issue
  */
 export class AuthorizationError extends Error{
   constructor(){
