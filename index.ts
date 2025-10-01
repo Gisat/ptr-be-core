@@ -15,6 +15,12 @@ export {
 // Shared geenral code types
 export type { Nullable, Nullish, Unsure, UsurePromise } from "./src/coding/code.types";
 
+// API error handling
+export { messageFromError, InvalidRequestError, AuthorizationError } from "./src/api/errors.api";
+
+// API models and helpers
+export type { EndpointResponse } from "./src/api/models.api";
+
 // Logger functionality
 export type { AppLogOptions } from "./src/logging/logger";
 export { AppLogger } from "./src/logging/logger";
