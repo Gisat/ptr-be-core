@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "description": "Shared core library for PTR BE services",
   "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -18,14 +21,13 @@
     "build:barrels": "barrelsby -c barrelsby.json",
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
-    "dev": "npm run build:clean && npm run build:barrels && rollup --config --watch",
-    "build": "npm run build:clean && npm run build:barrels && rollup --config",
+    "dev": "rollup --config --watch",
+    "build": "rollup --config",
     "test": "vitest --config vitest.config.ts"
   },
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "lodash": "^4.17.21",
     "luxon": "^3.6.1",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0"
@@ -35,7 +37,6 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@types/lodash": "^4.17.16",
     "@types/luxon": "^3.6.2",
     "@types/node": "^22.15.12",
     "barrelsby": "^2.8.1",

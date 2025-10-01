@@ -12,6 +12,14 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "isolatedModules": true,
+    "paths": {
+      "@core/*": [
+        "src/*"
+      ],
+      "@test/*": [
+        "tests/*"
+      ]
+    },
   },
   "include": [
     "**/*"

@@ -1,4 +1,4 @@
-import { Nullable } from "@core/coding/code.types"
+import { Nullable } from "../coding/code.types"
 import { UsedEdgeLabels } from "./enums.panther"
 
 /**
@@ -6,6 +6,7 @@ import { UsedEdgeLabels } from "./enums.panther"
  * It is point to point definition of graph edge
  */
 export type GraphRelation = [string, string]
+
 
 
 /**

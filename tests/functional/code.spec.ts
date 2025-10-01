@@ -8,7 +8,7 @@ import {
     enumValuesToArray,
     randomNumberBetween,
     flattenObject,
-} from "@core/coding/code.formating";
+} from "../../src/coding/code.formating";
 
 describe("Code helper functions", () => {
 
