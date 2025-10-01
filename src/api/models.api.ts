@@ -3,7 +3,7 @@
  * Generic type T is type of body
  * Headers can be null
  */
-export interface EndpointResponse<T>{
+export interface ApiEndpointResponse<T>{
     intoBody: T;
     intoHeaders: Record<string, any> | null;
 }
