@@ -21,6 +21,7 @@
     "build:barrels": "barrelsby -c barrelsby.json",
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
+    "build:tsc": "tsc --build tsconfig.prod.json",
     "dev": "rollup --config --watch",
     "build": "rollup --config",
     "test": "vitest --config vitest.config.ts"
@@ -41,6 +42,7 @@
     "@types/node": "^22.15.12",
     "barrelsby": "^2.8.1",
     "rollup": "^4.40.2",
+    "rollup-plugin-dts": "^6.2.3",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",

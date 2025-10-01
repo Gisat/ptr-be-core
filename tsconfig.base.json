@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
+    "module": "esnext",
     "target": "esnext",
     "resolveJsonModule": true,
     "moduleResolution": "bundler",

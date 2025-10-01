@@ -1,3 +1,5 @@
+import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "./src/panther/enums.panther";
+
 
 // Shared code helpers
 export {
@@ -21,13 +23,12 @@ export { messageFromError, InvalidRequestError, AuthorizationError } from "./src
 // API models and helpers
 export type { ApiEndpointResponse } from "./src/api/models.api";
 
-
 // Logger functionality
 export type { AppLogOptions } from "./src/logging/logger";
 export { AppLogger } from "./src/logging/logger";
 
 // Panther graph model - labels for nodes and edges
-export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "./src/panther/enums.panther";
+export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels }
 
 // Panther graph model - edges and relations
 export type { GraphEdge, GraphRelation } from "./src/panther/models.edges";

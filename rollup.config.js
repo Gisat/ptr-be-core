@@ -2,6 +2,7 @@ import resolve from '@rollup/plugin-node-resolve'; // Resolves node_modules impo
 import typescript from '@rollup/plugin-typescript'; // Compiles TypeScript files
 import json from '@rollup/plugin-json'; // Allows importing JSON files
 import commonjs from '@rollup/plugin-commonjs'; // Converts CommonJS modules to ES6
+import dts from "rollup-plugin-dts"; // Generates TypeScript declaration files
 import { exec } from 'child_process';
 
 import { createRequire } from 'module'; // Enables using require in ES modules
