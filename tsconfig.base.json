@@ -10,14 +10,6 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "resolveJsonModule": true,
-    "paths": {
-      "@core/*": [
-        "src/*"
-      ],
-      "@test/*": [
-        "tests/*"
-      ]
-    },
   },
   "include": [
     "**/*"
