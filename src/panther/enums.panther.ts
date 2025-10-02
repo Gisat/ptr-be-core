@@ -21,7 +21,7 @@ export enum UsedDatasourceLabels {
     Attribute = "attribute",   // Column(s) with attribute values
     Geojson = "geojson",      // Geojson for web map
     WMS = "wms",              // WMS online source
-    COG = "cogbitmap",        // COG online source
+    COG = "cloudOptimizedGeotiff", // COG online source
     MVT = "mvt",              // MVT (Mapbox Vector Tiles) source
     XYZ = "xyz",              // XYZ tile source
     CSV = "csv",              // CSV data source
