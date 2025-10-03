@@ -17,7 +17,6 @@ export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./s
 // API error handling
 export { messageFromError, InvalidRequestError, AuthorizationError } from "./src/api/errors.api";
 
-
 // API models and helpers
 export { type ApiEndpointResponse } from "./src/api/models.api";
 

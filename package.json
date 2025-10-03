@@ -10,13 +10,11 @@
     "dist/"
   ],
   "scripts": {
-    "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
-    "build:barrels": "barrelsby -c barrelsby.json",
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
-    "build:tsc": "tsc --build tsconfig.prod.json",
-    "dev": "rollup --config --watch",
-    "build": "rollup --config",
+    "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
+    "dev": "npm run build:clean && rollup --config --watch",
+    "build": "npm run build:clean && rollup --config",
     "test": "vitest --config vitest.config.ts",
     "pack:check": "npm pack --dry-run"
 
