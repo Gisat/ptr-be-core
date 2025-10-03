@@ -1,5 +1,3 @@
-import { sortBy } from "lodash"
-
 /**
  * Check if the value in included in enum posibilities.
  * @param value Value we need to check
@@ -16,7 +14,7 @@ export const isInEnum = (value: any, enumEntity: any) => {
  * @param rawArray Raw unsorted array of elements
  * @returns Sorted string array
  */
-export const sortStringArray = (rawArray: string[]) => sortBy(rawArray)
+export const sortStringArray = (rawArray: string[]) => rawArray.sort()
 
 /**
  * Remove all duplicity string items from an array
@@ -24,6 +22,7 @@ export const sortStringArray = (rawArray: string[]) => sortBy(rawArray)
  * @returns Array of original values
  */
 export const removeDuplicitiesFromArray = (arr: any[]) => [...new Set(arr)]
+
 
 /**
  * Check if the string value is not ` "" `

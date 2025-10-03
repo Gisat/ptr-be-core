@@ -3,7 +3,7 @@
  * Example: Period is connected to some time range.
  */
 export interface HasInterval {
-    validUtcIntervalIso: string,
+    validIntervalIso: string,
     validFrom: number,
     validTo: number
 }
@@ -20,7 +20,19 @@ export interface HasConfiguration {
  */
 export interface HasGeometry {
     geometry: any,
-    bbox: any,
+    bbox: number[],
+}
+
+/**
+ * Entity that has bands, e.g. satellite imagery
+ * Bands have CSV format - order of values is important.
+ * Bands are used to represent different spectral bands in satellite imagery.
+ * Each band can have a name and a period (e.g., wavelength).
+ */
+export interface HasBands{
+    bands: number[] 
+    bandNames: string[]
+    bandPeriods: string[]
 }
 
 /**
@@ -28,4 +40,37 @@ export interface HasGeometry {
  */
 export interface HasLevels {
     level: number,
+}
+
+/**
+ * Entity that has a URL, e.g. a link to a resource or a service.
+ * This is used for entities that can be accessed via a URL.
+ */
+export interface HasUrl {
+    url: string
+}
+
+/**
+ * Entity that has a specific name, e.g. a unique identifier or a specific title.
+ * This is used for entities that need to be identified by a specific name.
+ */
+export interface HasSpecificName {
+    specificName: string
+}   
+
+
+/**
+ * Represents an entity that has a color property.
+ * The color is defined as a hexadecimal color code.
+ */
+export interface HasColor{
+    color: string // Hex color code
+}
+
+/**
+ * Represents an entity that has a unit of measurement.
+ */
+export interface HasUnits{
+    unit: string
+    valueType: 'string' | 'number' | 'boolean' | 'date' | 'json'
 }

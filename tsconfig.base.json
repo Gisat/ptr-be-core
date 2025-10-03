@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ESNext"],
+    "isolatedModules": true,
+    "declaration": true,
+    "outDir": "dist",
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+  },
+  "include": [
+    "**/*"
+  ],
+}
