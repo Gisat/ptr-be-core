@@ -9,6 +9,14 @@
   "files": [
     "dist/"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    }
+  },
   "scripts": {
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
