@@ -1,6 +1,6 @@
 {
   "name": "@gisatcz/ptr-be-core",
-  "version": "0.0.1-dev.2",
+  "version": "0.0.1-dev.3",
   "description": "Shared core library for PTR BE services",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -25,7 +25,6 @@
     "build": "npm run build:clean && rollup --config",
     "test": "vitest --config vitest.config.ts",
     "pack:check": "npm pack --dry-run"
-
   },
   "author": "",
   "license": "ISC",
