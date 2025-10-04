@@ -22,7 +22,7 @@ export default [
     ],
     plugins: [
       json(), // Enables JSON imports
-      resolve({ extensions: ['.mjs', '.js', '.ts'] }), // Resolves file extensions
+      resolve({ extensions: ['.mjs', '.cjs', '.js', '.ts'] }), // Resolves file extensions
       commonjs(), // Converts CommonJS to ES6
       typescript({ tsconfig: './tsconfig.prod.json' }) // Uses the specified TypeScript configuration
     ],

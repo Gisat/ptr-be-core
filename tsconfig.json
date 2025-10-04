@@ -1,4 +1,4 @@
-// tsconfig.json for IDE and development
+// For dev, tests and IDE purposes
 {
-    "extends": "./tsconfig.dev.json"
+  "extends": "./tsconfig.dev.json",
 }
