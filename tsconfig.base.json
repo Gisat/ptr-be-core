@@ -1,8 +1,6 @@
+// Base config for all builds
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "es2022",
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,

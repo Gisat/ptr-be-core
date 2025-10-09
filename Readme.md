@@ -11,6 +11,10 @@ This repository contains source of shared functionalities across Panther backend
 - Now you can add this package for local development by opening the target application repository and run `yalc add @gisatcz/ptr-be-core`
 - Run `npm run dev` for development mode with Rollup build watcher and auto yalc publishing.
 
+## Usage in Applications
+- FE based apps should use imports from `@gisatcz/ptr-be-core/browser`
+- NodeJS based apps should use imports from `@gisatcz/ptr-be-core/node`
+
 ## Resources
 - YALC (local NPM): https://github.com/wclr/yalc
 - Vitest (testing): https://vitest.dev

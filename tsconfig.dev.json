@@ -1,6 +1,10 @@
+// For dev, tests and IDE purposes
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "types": [
       "node",
       "vitest/globals"
