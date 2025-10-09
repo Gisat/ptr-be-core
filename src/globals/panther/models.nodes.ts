@@ -1,6 +1,6 @@
 import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUrl, HasBands, HasSpecificName, HasColor, HasUnits } from "./models.nodes.properties"
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther"
-import { Nullable } from "../globals/coding/code.types"
+import { Nullable } from "../coding/code.types"
 
 /**
  * General graph node - same for all metadatata entities

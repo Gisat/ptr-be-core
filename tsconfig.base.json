@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "resolveJsonModule": true,
+    "target": "es2022",
+    "module": "es2022",
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
     "noImplicitAny": false,
+    "strict": true,
+    "esModuleInterop": true,     
+    "allowSyntheticDefaultImports": true, 
+    "forceConsistentCasingInFileNames": true 
   },
   "include": ["**/*"],
 }

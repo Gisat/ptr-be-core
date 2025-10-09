@@ -1,4 +1,4 @@
-import { Nullable } from "../coding/code.types"
+import type { Nullable } from "../coding/code.types"
 import { UsedEdgeLabels } from "./enums.panther"
 
 /**

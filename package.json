@@ -3,20 +3,34 @@
   "version": "0.0.1-dev.3",
   "description": "Shared core library for PTR BE services",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/"
   ],
+  "main": "dist/index.node.cjs",
+  "module": "dist/index.node.mjs",
+  "types": "dist/node/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.mjs"
-    }
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/index.node.mjs",
+      "require": "./dist/index.node.cjs",
+      "default": "./dist/index.node.mjs"
+    },
+    "./globals": {
+      "types": "./dist/globals/index.d.ts",
+      "import": "./dist/index.globals.mjs",
+      "require": "./dist/index.globals.cjs",
+      "default": "./dist/index.globals.mjs"
+    },
+    "./node": {
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/index.node.mjs",
+      "require": "./dist/index.node.cjs",
+      "default": "./dist/index.node.mjs"
+    },
+    "./package.json": "./package.json"
   },
+  "sideEffects": false,
   "scripts": {
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
