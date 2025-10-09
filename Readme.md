@@ -13,7 +13,7 @@ This repository contains source of shared functionalities across Panther backend
 
 ## Usage in Applications
 - FE based apps should use imports from `@gisatcz/ptr-be-core/browser`
-- NodeJS based apps should use imports from `@gisatcz/ptr-be-core/node`
+- NodeJS based apps should use imports from `@gisatcz/ptr-be-core/nodejs`
 
 ## Resources
 - YALC (local NPM): https://github.com/wclr/yalc

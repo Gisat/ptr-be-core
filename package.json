@@ -11,7 +11,7 @@
       "types": "./dist/index.browser.d.ts",
       "import": "./dist/index.browser.js"
     },
-    "./node": {
+    "./nodejs": {
       "types": "./dist/index.node.d.ts",
       "import": "./dist/index.node.js"
     },
