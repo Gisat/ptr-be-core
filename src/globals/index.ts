@@ -9,17 +9,17 @@ export {
     randomNumberBetween,
     removeDuplicitiesFromArray,
     sortStringArray
-} from "./coding/code.formating";
+} from "./coding/code.formating.js";
 
 // Shared geenral code types
-export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./coding/code.types";
+export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./coding/code.types.js";
 
 
 // Panther graph model - labels for nodes and edges
-export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "./panther/enums.panther";
+export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "./panther/enums.panther.js";
 
 // Panther graph model - edges and relations
-export { type GraphEdge, type GraphRelation } from "./panther/models.edges";
+export { type GraphEdge, type GraphRelation } from "./panther/models.edges.js";
 
 // Panther graph model - node definitions with specific properties
 export {
@@ -32,7 +32,7 @@ export {
     type HasSpecificName,
     type HasUrl,
     type HasUnits
-} from "./panther/models.nodes.properties";
+} from "./panther/models.nodes.properties.js";
 
 export {
     type Place,
@@ -44,4 +44,4 @@ export {
     type FullPantherEntity,
     type MapStyle,
     type PantherEntity
-} from "./panther/models.nodes";
+} from "./panther/models.nodes.js";

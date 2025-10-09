@@ -6,27 +6,18 @@
   "files": [
     "dist/"
   ],
-  "main": "dist/index.node.cjs",
-  "module": "dist/index.node.mjs",
-  "types": "dist/node/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/node/index.d.ts",
-      "import": "./dist/index.node.mjs",
-      "require": "./dist/index.node.cjs",
-      "default": "./dist/index.node.mjs"
+      "types": "./dist/globals/index.d.ts",
+      "import": "./dist/globals/index.js"
     },
     "./globals": {
       "types": "./dist/globals/index.d.ts",
-      "import": "./dist/index.globals.mjs",
-      "require": "./dist/index.globals.cjs",
-      "default": "./dist/index.globals.mjs"
+      "import": "./dist/globals/index.js"
     },
     "./node": {
       "types": "./dist/node/index.d.ts",
-      "import": "./dist/index.node.mjs",
-      "require": "./dist/index.node.cjs",
-      "default": "./dist/index.node.mjs"
+      "import": "./dist/node/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -35,8 +26,9 @@
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
     "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
-    "dev": "npm run build:clean && rollup --config --watch",
+    "dev": "npm run build:clean && npm run build:tsc && npm run yalc:publish:push",
     "build": "npm run build:clean && rollup --config",
+    "build:tsc": "tsc --build tsconfig.prod.json",
     "test": "vitest --config vitest.config.ts",
     "pack:check": "npm pack --dry-run"
   },

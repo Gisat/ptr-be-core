@@ -13,8 +13,7 @@ export default [
   {
     input: 'src/globals/index.ts', // Entry point of the library
     output: [
-      { file: "./dist/index.globals.cjs", format: 'cjs', sourcemap: true, inlineDynamicImports: true }, // CommonJS output
-      { file: "./dist/index.globals.mjs", format: 'esm', sourcemap: true, inlineDynamicImports: true } // ES module output
+      { file: "./dist/index.globals.js", format: 'esm', sourcemap: true, inlineDynamicImports: true } // ES module output
     ],
     external: [
       ...Object.keys(pkg.peerDependencies || {}), // Excludes peer dependencies from the bundle
@@ -22,7 +21,6 @@ export default [
     plugins: [
       json(), // Enables JSON imports
       resolve({ extensions: ['.mjs', '.cjs', '.js', '.ts'] }), // Resolves file extensions
-      commonjs(), // Converts CommonJS to ES6
       typescript({ tsconfig: './tsconfig.prod.json' }) // Uses the specified TypeScript configuration
     ],
     watch: { // DEV only
@@ -57,7 +55,6 @@ export default [
   {
     input: 'src/node/index.ts', // Entry point of the library
     output: [
-      { file: "./dist/index.node.cjs", format: 'cjs', sourcemap: true, inlineDynamicImports: true }, // CommonJS output
       { file: "./dist/index.node.mjs", format: 'esm', sourcemap: true, inlineDynamicImports: true } // ES module output
     ],
     external: [
@@ -66,7 +63,6 @@ export default [
     plugins: [
       json(), // Enables JSON imports
       resolve({ extensions: ['.mjs', '.cjs', '.js', '.ts'] }), // Resolves file extensions
-      commonjs(), // Converts CommonJS to ES6
       typescript({ tsconfig: './tsconfig.prod.json' }) // Uses the specified TypeScript configuration
     ],
     watch: { // DEV only
