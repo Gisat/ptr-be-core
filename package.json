@@ -7,17 +7,13 @@
     "dist/"
   ],
   "exports": {
-    ".": {
-      "types": "./dist/globals/index.d.ts",
-      "import": "./dist/globals/index.js"
-    },
-    "./globals": {
-      "types": "./dist/globals/index.d.ts",
-      "import": "./dist/globals/index.js"
+    "./browser": {
+      "types": "./dist/index.browser.d.ts",
+      "import": "./dist/index.browser.js"
     },
     "./node": {
-      "types": "./dist/node/index.d.ts",
-      "import": "./dist/node/index.js"
+      "types": "./dist/index.node.d.ts",
+      "import": "./dist/index.node.js"
     },
     "./package.json": "./package.json"
   },
@@ -26,7 +22,7 @@
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
     "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
-    "dev": "npm run build:clean && npm run build:tsc && npm run yalc:publish:push",
+    "dev": "npm run build:clean && rollup --config --watch",
     "build": "npm run build:clean && rollup --config",
     "build:tsc": "tsc --build tsconfig.prod.json",
     "test": "vitest --config vitest.config.ts",
