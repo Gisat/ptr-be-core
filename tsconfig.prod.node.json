@@ -1,6 +1,10 @@
+// For production build for Node.js (ESM)
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "target": "es2024",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "types": [
       "node",
     ],

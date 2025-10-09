@@ -3,26 +3,28 @@
   "version": "0.0.1-dev.3",
   "description": "Shared core library for PTR BE services",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/"
   ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.mjs"
-    }
+    "./browser": {
+      "types": "./dist/index.browser.d.ts",
+      "import": "./dist/index.browser.js"
+    },
+    "./node": {
+      "types": "./dist/index.node.d.ts",
+      "import": "./dist/index.node.js"
+    },
+    "./package.json": "./package.json"
   },
+  "sideEffects": false,
   "scripts": {
     "yalc:publish": "yalc publish",
     "yalc:publish:push": "yalc publish --push",
     "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
     "dev": "npm run build:clean && rollup --config --watch",
     "build": "npm run build:clean && rollup --config",
+    "build:tsc": "tsc --build tsconfig.prod.json",
     "test": "vitest --config vitest.config.ts",
     "pack:check": "npm pack --dry-run"
   },

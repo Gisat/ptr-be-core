@@ -1,5 +1,5 @@
-import { Nullable } from "../coding/code.types"
-import { UsedEdgeLabels } from "./enums.panther"
+import type { Nullable } from "../coding/code.types.js"
+import { UsedEdgeLabels } from "./enums.panther.js"
 
 /**
  * Tuple for relation between two graph nodes

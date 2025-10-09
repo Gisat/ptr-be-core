@@ -1,15 +1,17 @@
+// Base config for all builds
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
     "resolveJsonModule": true,
-    "moduleResolution": "bundler",
     "isolatedModules": true,
     "skipLibCheck": true,
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
     "noImplicitAny": false,
+    "strict": true,
+    "esModuleInterop": true,     
+    "allowSyntheticDefaultImports": true, 
+    "forceConsistentCasingInFileNames": true 
   },
   "include": ["**/*"],
 }
