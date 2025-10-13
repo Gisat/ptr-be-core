@@ -14,12 +14,14 @@ export {
 // Shared geenral code types
 export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
 
-
 // Panther graph model - labels for nodes and edges
 export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "./globals/panther/enums.panther.js";
 
 // Panther graph model - edges and relations
 export { type GraphEdge, type GraphRelation } from "./globals/panther/models.edges.js";
+
+// Panther graph model - edge specific properties
+export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic, type OneOfEdgeProperties } from "./globals/panther/models.edges.properties.js";
 
 // Panther graph model - node definitions with specific properties
 export {
