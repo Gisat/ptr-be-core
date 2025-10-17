@@ -14,7 +14,7 @@ export type GraphRelation = [string, string]
  * Have "key" witch is composed from node keys.
  */
 export interface GraphEdge{
-    labels: string[] | UsedEdgeLabels[],
+    label: UsedEdgeLabels,
     edgeNodes: GraphRelation
     properties: Nullable<OneOfEdgeProperties>
 }

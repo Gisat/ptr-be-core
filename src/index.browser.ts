@@ -23,6 +23,7 @@ export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic, type O
 // Panther graph model - edges and relations
 export { type GraphEdge, type GraphRelation } from "./globals/panther/models.edges.js";
 
+
 // Panther graph model - node definitions with specific properties
 export {
     type HasBands,
