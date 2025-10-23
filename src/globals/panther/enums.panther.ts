@@ -18,7 +18,7 @@ export enum UsedNodeLabels {
  * What datasources we use in the system
  */
 export enum UsedDatasourceLabels {
-    Attribute = "attribute",   // Column(s) with attribute values
+    Attribute = "attributeSource",   // Column(s) with attribute values
     Geojson = "geojson",      // Geojson for web map
     WMS = "wms",              // WMS online source
     COG = "cloudOptimizedGeotiff", // COG online source
@@ -39,4 +39,5 @@ export enum UsedDatasourceLabels {
 export enum UsedEdgeLabels {
     RelatedTo = "RELATED", // Generic edge for any relation
     Has = "HAS", // Edge for ownership relation
+    InPostgisLocation = "IN_POSTGIS_LOCATION" // Edge to connect datasource with PostGIS location (schema, table, geometry column)
 }

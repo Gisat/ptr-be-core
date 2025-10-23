@@ -55,7 +55,8 @@ export default [
   {
     input: 'src/index.node.ts', // Entry point of the library
     output: [
-      { file: "./dist/index.node.js", format: 'esm', sourcemap: true, inlineDynamicImports: true } // ES module output
+      { file: "./dist/index.node.js", format: 'esm', sourcemap: true, inlineDynamicImports: true }, // ES module output
+      { file: "./dist/index.node.cjs", format: 'cjs', sourcemap: true, inlineDynamicImports: true } // CommonJS module output
     ],
     external: [
       ...Object.keys(pkg.peerDependencies || {}), // Excludes peer dependencies from the bundle

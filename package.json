@@ -9,11 +9,13 @@
   "exports": {
     "./browser": {
       "types": "./dist/index.browser.d.ts",
-      "import": "./dist/index.browser.js"
+      "import": "./dist/index.browser.js",
+      "default": "./dist/index.browser.js"
     },
     "./node": {
       "types": "./dist/index.node.d.ts",
-      "import": "./dist/index.node.js"
+      "require": "./dist/index.node.cjs",
+      "default": "./dist/index.node.js"
     },
     "./package.json": "./package.json"
   },

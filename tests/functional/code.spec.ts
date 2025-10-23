@@ -11,111 +11,60 @@ import {
 } from "../../src/globals/coding/code.formating";
 
 describe("Code helper functions", () => {
+    enum TestEnum {
+        A = "A",
+        B = "B",
+    }
 
-    describe("isInEnum", () => {
-        enum TestEnum {
-            A = "A",
-            B = "B",
-        }
-
-        it("should return true if value is in enum", () => {
-            expect(isInEnum("A", TestEnum)).toBe(true);
-        });
-
-        it("should return false if value is not in enum", () => {
-            expect(isInEnum("C", TestEnum)).toBe(false);
-        });
+    test("isInEnum - value in enum", () => {
+        expect(isInEnum("A", TestEnum)).toBe(true);
     });
 
-    describe("sortStringArray", () => {
-        it("should sort an array of strings", () => {
-            const input = ["banana", "apple", "cherry"];
-            const output = sortStringArray(input);
-            expect(output).toEqual(["apple", "banana", "cherry"]);
-        });
+    test("isInEnum - value not in enum", () => {
+        expect(isInEnum("C", TestEnum)).toBe(false);
     });
 
-    describe("removeDuplicitiesFromArray", () => {
-        it("should remove duplicate items from an array", () => {
-            const input = ["apple", "banana", "apple", "cherry"];
-            const output = removeDuplicitiesFromArray(input);
-            expect(output).toEqual(["apple", "banana", "cherry"]);
-        });
+    test("sortStringArray", () => {
+        expect(sortStringArray(["banana", "apple", "cherry"])).toEqual(["apple", "banana", "cherry"]);
     });
 
-    describe("notEmptyString", () => {
-        it("should return true for non-empty strings", () => {
-            expect(notEmptyString("hello")).toBe(true);
-        });
-
-        it("should return false for empty strings", () => {
-            expect(notEmptyString("")).toBe(false);
-        });
+    test("removeDuplicitiesFromArray", () => {
+        expect(removeDuplicitiesFromArray(["apple", "banana", "apple", "cherry"])).toEqual(["apple", "banana", "cherry"]);
     });
 
-    describe("enumValuesToString", () => {
-        enum TestEnum {
-            A = "A",
-            B = "B",
-        }
-
-        it("should return enum values as a string", () => {
-            expect(enumValuesToString(TestEnum)).toBe("A, B");
-        });
+    test("notEmptyString - non-empty string", () => {
+        expect(notEmptyString("hello")).toBe(true);
     });
 
-    describe("enumCombineValuesToString", () => {
-        enum TestEnum1 {
-            A = "A",
-            B = "B",
-        }
+    test("notEmptyString - empty string", () => {
+        expect(notEmptyString("")).toBe(false);
+    });
 
+    test("enumValuesToString", () => {
+        expect(enumValuesToString(TestEnum)).toBe("A, B");
+    });
+
+    test("enumCombineValuesToString", () => {
         enum TestEnum2 {
             C = "C",
             D = "D",
         }
-
-        it("should combine enum values into a single string", () => {
-            expect(enumCombineValuesToString([TestEnum1, TestEnum2])).toBe("A, B, C, D");
-        });
+        expect(enumCombineValuesToString([TestEnum, TestEnum2])).toBe("A, B, C, D");
     });
 
-    describe("enumValuesToArray", () => {
-        enum TestEnum {
-            A = "A",
-            B = "B",
-        }
-
-        it("should return enum values as an array", () => {
-            expect(enumValuesToArray(TestEnum)).toEqual(["A", "B"]);
-        });
+    test("enumValuesToArray", () => {
+        expect(enumValuesToArray(TestEnum)).toEqual(["A", "B"]);
     });
 
-    describe("randomNumberBetween", () => {
-        it("should return a random number within the range", () => {
-            const min = 1;
-            const max = 10;
-            const random = randomNumberBetween(min, max);
-            expect(random).toBeGreaterThanOrEqual(min);
-            expect(random).toBeLessThanOrEqual(max);
-        });
+    test("randomNumberBetween", () => {
+        const min = 1, max = 10;
+        const random = randomNumberBetween(min, max);
+        expect(random).toBeGreaterThanOrEqual(min);
+        expect(random).toBeLessThanOrEqual(max);
     });
 
-    describe("flattenObject", () => {
-        it("should flatten a nested object", () => {
-            const nestedObj = {
-                a: {
-                    b: {
-                        c: 1,
-                    },
-                },
-                d: 2,
-            };
-            const flatObj = flattenObject(nestedObj);
-            expect(flatObj).toEqual({
-                "a.b.c": 1,
-                d: 2,
-            });
-        });
+    test("flattenObject", () => {
+        const nestedObj = { a: { b: { c: 1 } }, d: 2 };
+        expect(flattenObject(nestedObj)).toEqual({ "a.b.c": 1, d: 2 });
     });
 });

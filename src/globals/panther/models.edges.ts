@@ -1,5 +1,6 @@
 import type { Nullable } from "../coding/code.types.js"
 import { UsedEdgeLabels } from "./enums.panther.js"
+import { OneOfEdgeProperties } from "./models.edges.properties.js"
 
 /**
  * Tuple for relation between two graph nodes
@@ -13,7 +14,7 @@ export type GraphRelation = [string, string]
  * Have "key" witch is composed from node keys.
  */
 export interface GraphEdge{
-    labels: string[] | UsedEdgeLabels[],
+    label: UsedEdgeLabels,
     edgeNodes: GraphRelation
-    properties: Nullable<object>
+    properties: Nullable<OneOfEdgeProperties>
 }
