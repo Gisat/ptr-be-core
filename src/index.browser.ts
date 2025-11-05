@@ -1,5 +1,3 @@
-import { HasEdges, HasNeighbours, NodeWithNeighbours } from "./globals/panther/models.nodes.structure.js";
-
 // Shared code helpers
 export {
     enumCombineValuesToString,
@@ -52,8 +50,9 @@ export {
 } from "./globals/panther/models.nodes.js";
 
 // structure for nodes with neighbours and edges
-export {
-    type HasNeighbours,
-    type HasEdges,
-    type NodeWithNeighbours
-}
+export { 
+    type HasEdges, 
+    type HasNeighbours, 
+    type NodeWithNeighbours 
+} from "./globals/panther/models.nodes.structure.js";
+
