@@ -10,10 +10,7 @@ import { GraphEdge } from "./models.edges";
  * that hold a reference to the same instance.
  *
  * @typeParam T - The element type stored in the `neighbours` array.
- *
- * @example
- * // A graph node containing neighbours of the same node type:
- * // interface Node extends HasNeighbours<Node> { id: string; }
+ * @property neighbours - An array of neighbouring items of type `T`.
  */
 export interface HasNeighbours<T> {
     neighbours: T[]; 
@@ -42,6 +39,7 @@ export interface HasEdges{
  * @typeParam T - The type of the node and its neighbours.
  * @property node - The main node, or `null` if not present.
  * @property neighbours - An array of neighbouring nodes.
+ * @property edges - An array of edges connecting the node to its neighbours.
  */
 export interface NodeWithNeighbours<T> extends HasNeighbours<T>, HasEdges {
     node: T;
