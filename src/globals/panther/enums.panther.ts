@@ -30,7 +30,9 @@ export enum UsedDatasourceLabels {
     PostGIS = "postgis",      // PostGIS database source
     WMTS = "wmts",            // Web Map Tile Service
     WFS = "wfs",              // Web Feature Service
-    GeoPackage = "geopackage" // OGC GeoPackage format
+    GeoPackage = "geopackage", // OGC GeoPackage format
+    MapStyle = "mapStyle", // Map style datasource
+    Timeseries = "timeseries" // Timeseries datasource (with from-to and step)
 }
 
 /**
@@ -40,4 +42,15 @@ export enum UsedEdgeLabels {
     RelatedTo = "RELATED", // Generic edge for any relation
     Has = "HAS", // Edge for ownership relation
     InPostgisLocation = "IN_POSTGIS_LOCATION" // Edge to connect datasource with PostGIS location (schema, table, geometry column)
+}
+
+/**
+ * What time steps are used in timeseries data
+ */
+export enum UsedTimeseriesSteps{
+    Year = "year",
+    Quarter = "quarter",
+    Month = "month",
+    Week = "week",
+    Day = "day"
 }

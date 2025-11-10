@@ -1,6 +1,5 @@
 import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../panther/enums.panther";
-import { OneOfEdgeProperties } from "../panther/models.edges.properties";
-import { FullPantherEntity } from "../panther/models.nodes";
+import { FullEdgeProperties, FullPantherEntity } from "../panther/models.groups";
 
 /**
  * Represents a node in the Arrows diagram/model.
@@ -55,6 +54,6 @@ export interface ArrowsEdge{
     fromId: string;
     toId: string;
     type: string | UsedEdgeLabels,
-    properties?: Partial<OneOfEdgeProperties>
+    properties?: Partial<FullEdgeProperties>
     style?: object
 }
