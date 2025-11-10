@@ -2,7 +2,7 @@ import { randomUUID } from "crypto"
 import { isArray } from "lodash"
 import { FullPantherEntity } from "../../globals/panther/models.groups"
 import { validateNodeLabels } from "./validations.shared"
-import { parseSingleNode } from "./parse.changeNodes"
+import { parseSinglePantherNode } from "./parse.changeNodes"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
 import { UsedEdgeLabels } from "../../globals/panther/enums.panther"
 import { isInEnum } from "../../globals/coding/code.formating"
@@ -25,7 +25,7 @@ const parseNodeFromArrows = (node: any): FullPantherEntity => {
 
     validateNodeLabels(labels)
 
-    const basicGraphResult: FullPantherEntity = parseSingleNode({
+    const basicGraphResult: FullPantherEntity = parseSinglePantherNode({
         labels: labels as string[],
         key: properties.key as string ?? id ?? randomUUID(),
         nameDisplay: caption ?? properties.nameDisplay as string ?? "",

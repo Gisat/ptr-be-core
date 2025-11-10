@@ -247,7 +247,7 @@ const parseHasBands = (bodyRaw: any, required = false): Unsure<HasBands> => {
  * @param bodyNodeEntity Entity from request body
  * @returns Parsed object for specific node
  */
-export const parseSingleNode = (bodyNodeEntity: unknown): FullPantherEntity => {
+export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEntity => {
 
   // Parse basic node properties first
   let node: PantherEntity = parseBasicNodeFromBody(bodyNodeEntity)
@@ -335,13 +335,13 @@ export const parseSingleNode = (bodyNodeEntity: unknown): FullPantherEntity => {
  * @param body Array of graph nodes inside http request body
  * @returns Array of parsed graph nodes in correct form
  */
-export const parseChangeNodesFromBody = (body: unknown): FullPantherEntity[] => {
+export const parseParsePantherNodes = (body: unknown): FullPantherEntity[] => {
   const nodeArray = body as any[]
 
   if (!isArray(nodeArray))
     throw new InvalidRequestError("Request: Grah nodes must be an array")
 
-  return nodeArray.map(PantherEntity => parseSingleNode(PantherEntity))
+  return nodeArray.map(PantherEntity => parseSinglePantherNode(PantherEntity))
 }
 
 // TODO: cover by better testing
