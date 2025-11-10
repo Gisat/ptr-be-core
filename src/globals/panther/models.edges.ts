@@ -1,6 +1,6 @@
 import type { Nullable } from "../coding/code.types.js"
 import { UsedEdgeLabels } from "./enums.panther.js"
-import { FullEdgeProperties } from "./models.groups.js"
+import { FullEdgeProperties } from "./models.edges.properties.js"
 
 /**
  * Tuple for relation between two graph nodes

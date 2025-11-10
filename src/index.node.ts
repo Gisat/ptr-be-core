@@ -11,6 +11,11 @@ export { type ApiEndpointResponse } from "./node/api/models.api.js";
 export { type AppLogOptions } from "./node/logging/logger.js";
 export { AppLogger } from "./node/logging/logger.js";
 
+// parse and validate nodes from Arrows.app JSON format
+export {
+    parseArrowsJson,
+} from "./node/api/parse.arrows.json.js";
+
 // parse and validate nodes from raw input
 export {
     parseParsePantherNodes,

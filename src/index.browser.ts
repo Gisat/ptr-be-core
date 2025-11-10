@@ -64,7 +64,6 @@ export {
     type HasUrl,
     type HasSpecificName,
     type HasColor,
-    type FullDatasourceProperties
 } from "./globals/panther/models.nodes.properties.datasources.js";
 
 // Panther graph model - named node definitions
