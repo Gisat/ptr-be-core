@@ -16,7 +16,7 @@ export {
 export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
 
 // Panther graph model - labels for nodes and edges
-export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "./globals/panther/enums.panther.js";
+export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels, UsedTimeseriesSteps } from "./globals/panther/enums.panther.js";
 
 // Panther graph model - edge specific properties
 export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic, type OneOfEdgeProperties } from "./globals/panther/models.edges.properties.js";
@@ -24,20 +24,33 @@ export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic, type O
 // Panther graph model - edges and relations
 export { type GraphEdge, type GraphRelation } from "./globals/panther/models.edges.js";
 
+// Panther graph model - Nodes with neighbours models
+export { 
+    type HasEdges, 
+    type HasNeighbours, 
+    type NodeWithNeighbours 
+} from "./globals/panther/models.nodes.structure.js";
 
 // Panther graph model - node definitions with specific properties
 export {
-    type HasBands,
     type HasColor,
     type HasConfiguration,
     type HasGeometry,
     type HasInterval,
     type HasLevels,
     type HasSpecificName,
-    type HasUrl,
     type HasUnits
-} from "./globals/panther/models.nodes.properties.js";
+} from "./globals/panther/models.nodes.properties.general.js";
 
+// Panther graph model - Datasource specific node properties
+export {
+    type HasBands,
+    type HasDocumentId,
+    type HasTimeseries,
+    type HasUrl
+} from "./globals/panther/models.nodes.properties.datasources.js";
+
+// Panther graph model - named node definitions
 export {
     type Place,
     type Period,
@@ -50,14 +63,7 @@ export {
     type PantherEntity
 } from "./globals/panther/models.nodes.js";
 
-// structure for nodes with neighbours and edges
-export { 
-    type HasEdges, 
-    type HasNeighbours, 
-    type NodeWithNeighbours 
-} from "./globals/panther/models.nodes.structure.js";
-
-// Arrows app models
+// Arrows.app models for import / export
 export {
     type ArrowsNode,
     type ArrowsEdge

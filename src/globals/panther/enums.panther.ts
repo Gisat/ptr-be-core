@@ -41,3 +41,14 @@ export enum UsedEdgeLabels {
     Has = "HAS", // Edge for ownership relation
     InPostgisLocation = "IN_POSTGIS_LOCATION" // Edge to connect datasource with PostGIS location (schema, table, geometry column)
 }
+
+/**
+ * What time steps are used in timeseries data
+ */
+export enum UsedTimeseriesSteps{
+    Year = "year",
+    Quarter = "quarter",
+    Month = "month",
+    Week = "week",
+    Day = "day"
+}

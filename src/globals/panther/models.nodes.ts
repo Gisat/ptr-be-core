@@ -1,5 +1,6 @@
-import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUrl, HasBands, HasSpecificName, HasColor, HasUnits } from "./models.nodes.properties.js"
+import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasSpecificName, HasColor, HasUnits } from "./models.nodes.properties.general.js"
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther.js"
+import { HasBands, HasDocumentId, HasTimeseries, HasUrl } from "./models.nodes.properties.datasources.js"
 import { Nullable } from "../coding/code.types.js"
 
 /**
@@ -34,7 +35,7 @@ export interface AreaTreeLevel extends PantherEntity, HasLevels { }
 /**
  * Datasource with source configuration
  */
-export interface Datasource extends PantherEntity, Partial<HasConfiguration & HasUrl & HasBands> { }
+export interface Datasource extends PantherEntity, Partial<HasConfiguration & HasUrl & HasBands & HasTimeseries> { }
 
 /**
  * Application node - main entity in metadata model
@@ -74,4 +75,6 @@ export interface FullPantherEntity extends
         HasBands &
         HasSpecificName &
         HasColor &
-        HasUnits> { }
+        HasUnits & 
+        HasDocumentId &
+        HasTimeseries> { }

@@ -1,5 +1,5 @@
 /**
- * Entity that has relevant time interval.
+ * Datasource that has relevant time interval.
  * Example: Period is connected to some time range.
  */
 export interface HasInterval {
@@ -24,30 +24,10 @@ export interface HasGeometry {
 }
 
 /**
- * Entity that has bands, e.g. satellite imagery
- * Bands have CSV format - order of values is important.
- * Bands are used to represent different spectral bands in satellite imagery.
- * Each band can have a name and a period (e.g., wavelength).
- */
-export interface HasBands{
-    bands: number[] 
-    bandNames: string[]
-    bandPeriods: string[]
-}
-
-/**
  * Place node - somewhere in the world
  */
 export interface HasLevels {
     level: number,
-}
-
-/**
- * Entity that has a URL, e.g. a link to a resource or a service.
- * This is used for entities that can be accessed via a URL.
- */
-export interface HasUrl {
-    url: string
 }
 
 /**
