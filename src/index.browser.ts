@@ -1,3 +1,4 @@
+
 // Shared code helpers
 export {
     enumCombineValuesToString,
@@ -48,3 +49,16 @@ export {
     type MapStyle,
     type PantherEntity
 } from "./globals/panther/models.nodes.js";
+
+// structure for nodes with neighbours and edges
+export { 
+    type HasEdges, 
+    type HasNeighbours, 
+    type NodeWithNeighbours 
+} from "./globals/panther/models.nodes.structure.js";
+
+// Arrows app models
+export {
+    type ArrowsNode,
+    type ArrowsEdge
+} from "./globals/arrows/models.arrows.js";
