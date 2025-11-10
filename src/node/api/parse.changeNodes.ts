@@ -4,7 +4,7 @@ import { Unsure } from "../../globals/coding/code.types"
 import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 import { HasConfiguration, HasGeometry, HasInterval, HasLevels, HasUnits } from "../../globals/panther/models.nodes.properties.general"
 import { InvalidRequestError } from "./errors.api"
-import { HasBands, HasColor, HasSpecificName, HasUrl } from "../../globals/panther/models.nodes.properties.datasources"
+import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "../../globals/panther/models.nodes.properties.datasources"
 import { UsedDatasourceLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
 import { validateNodeLabels } from "./validations.shared"
 import { isoIntervalToTimestamps, nowTimestamp } from "../../globals/coding/code.dates"
@@ -203,6 +203,48 @@ const parseWithUnits = (bodyRaw: any, isRequired = false): Unsure<HasUnits> => {
 }
 
 /**
+ * Parse and validate the `documentId` property from a raw request body.
+ *
+ * Extracts `documentId` from `bodyRaw` and returns it as an object matching
+ * HasDocumentId, wrapped in the Unsure type. If `documentId` is missing or
+ * falsy, the function throws an InvalidRequestError.
+ *
+ * @param bodyRaw - The raw request body (e.g. parsed JSON) expected to contain `documentId`.
+ * @returns Unsure<HasDocumentId> — an object with the `documentId` property.
+ * @throws {InvalidRequestError} Thrown when `documentId` is not present on `bodyRaw`.
+ */
+const parseHasDocumentId = (bodyRaw: any): HasDocumentId => {
+  const { documentId } = bodyRaw
+
+  if (!documentId)
+    throw new InvalidRequestError("Property documentId is required for the node")
+
+  return { documentId }
+}
+
+/**
+ * Parse timeseries information from a raw request body.
+ *
+ * Delegates interval parsing to `parseWithInterval(bodyRaw)` and then
+ * attaches the `step` value from the provided `bodyRaw` to the resulting
+ * timeseries object. The function does not mutate the input object.
+ *
+ * @param bodyRaw - Raw request payload (unknown/loose shape). Expected to
+ *                  contain whatever fields `parseWithInterval` requires and
+ *                  optionally a `step` property.
+ * @returns A `HasTimeseries` object composed of the interval-related fields
+ *          returned by `parseWithInterval` plus the `step` property from
+ *          `bodyRaw` (which may be `undefined` if not present).
+ * @throws Rethrows any errors produced by `parseWithInterval` when the input
+ *         body is invalid for interval parsing.
+ */
+const parseWithTimeseries = (bodyRaw: any): HasTimeseries => {
+  const timeseriesIntervals = parseWithInterval(bodyRaw)
+  const { step } = bodyRaw
+  return { ...timeseriesIntervals, step }
+}
+
+/**
  * Parses the `bands`, `bandNames`, and `bandPeriods` properties from the provided raw input object.
  * 
  * - If `required` is `true`, throws an `InvalidRequestError` if any of the properties are missing.
@@ -296,15 +338,31 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
       node = parsedBands ? { ...node, ...parsedBands } : node;
     }
 
-    // If node is an AreaTreeLevel, add level information
-    if (label === UsedNodeLabels.AreaTreeLevel)
-      node = { ...node, ...paseHasLevels(bodyNodeEntity) };
-
     // If node is a Style, add specific name information
-    if (label === UsedNodeLabels.Style) {
+    if (label === UsedNodeLabels.Style || label === UsedDatasourceLabels.MapStyle) {
       const parsedSpecificName = parseHasSpecificName(bodyNodeEntity, true);
       node = parsedSpecificName ? { ...node, ...parsedSpecificName } : node;
     }
+
+    // If node is a Datasource with timeseries, add timeseries information
+    if (label === UsedDatasourceLabels.Timeseries) {
+      const parsedTimeseries = parseWithTimeseries(bodyNodeEntity);
+      node = { ...node, ...parsedTimeseries };
+    }
+
+    // If node is a Datasource with document ID, add document ID information
+    const datasourcesWithDocumentId = [
+      UsedDatasourceLabels.PostGIS,
+    ];
+    
+    if (datasourcesWithDocumentId.includes(label as UsedDatasourceLabels)) {
+      const parsedDocumentId = parseHasDocumentId(bodyNodeEntity);
+      node = { ...node, ...parsedDocumentId };
+    }
+
+    // If node is an AreaTreeLevel, add level information
+    if (label === UsedNodeLabels.AreaTreeLevel)
+      node = { ...node, ...paseHasLevels(bodyNodeEntity) };
 
     // If node is an Attribute, add color information and units
     if (label === UsedNodeLabels.Attribute) {
