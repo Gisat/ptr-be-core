@@ -1,7 +1,7 @@
 import { isArray } from "lodash"
 import { enumCombineValuesToString, isInEnum } from "../../globals/coding/code.formating"
-import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "@gisatcz/ptr-be-core/node"
 import { InvalidRequestError } from "./errors.api"
+import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
 
 
 /**

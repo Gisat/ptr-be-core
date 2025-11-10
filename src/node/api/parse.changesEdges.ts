@@ -1,6 +1,8 @@
-import { enumValuesToString, GraphEdge, GraphRelation, isInEnum, UsedEdgeLabels } from "@gisatcz/ptr-be-core/node"
 import { isArray } from "lodash"
 import { InvalidRequestError } from "./errors.api"
+import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
+import { enumValuesToString, isInEnum } from "../../globals/coding/code.formating"
+import { UsedEdgeLabels } from "../../globals/panther/enums.panther"
 
 export const parseRichEdges = (body: unknown): GraphEdge[] => {
 
