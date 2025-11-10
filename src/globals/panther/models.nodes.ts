@@ -16,8 +16,6 @@ export interface PantherEntity {
     lastUpdatedAt: number,
 }
 
-export interface MapStyle extends PantherEntity, Partial<HasSpecificName> { }
-
 /**
  * Place node - somewhere in the world
  */

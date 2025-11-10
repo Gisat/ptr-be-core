@@ -58,7 +58,6 @@ export {
     type Datasource,
     type ApplicationNode,
     type Attribute,
-    type MapStyle,
     type PantherEntity
 } from "./globals/panther/models.nodes.js";
 
