@@ -1,31 +1,7 @@
 import { UsedEdgeLabels } from "../../dist/index.browser"
-import { FullPantherEntity, GraphEdge, parseArrowsJson, parseParsePantherNodes, UsedDatasourceLabels, UsedNodeLabels } from "../../src/index.node"
+import { filterNodeByLabel, findEdgeByLabel, findNodeByLabel, FullPantherEntity, GraphEdge, parseArrowsJson, UsedDatasourceLabels, UsedNodeLabels } from "../../src/index.node"
 
 import ArrowsImport from "../fixtures/arrows.import.allNodes.json"
-
-const findNodeByLabel = (
-  nodes: FullPantherEntity[],
-  label: UsedDatasourceLabels | UsedNodeLabels): FullPantherEntity | undefined => {
-  return nodes.find(n => n.labels.includes(label))
-}
-
-const filterNodeByLabel = (
-  nodes: FullPantherEntity[],
-  label: UsedDatasourceLabels | UsedNodeLabels): FullPantherEntity[] => {
-  return nodes.filter(n => n.labels.includes(label))
-}
-
-const findEdgeByLabel = (
-  edges: GraphEdge[],
-  label: UsedEdgeLabels): GraphEdge | undefined => {
-  return edges.find(e => e.label === label)
-}
-
-const filterEdgeByLabel = (
-  edges: GraphEdge[],
-  label: UsedEdgeLabels): GraphEdge[] => {
-  return edges.filter(e => e.label === label)
-}
 
 describe("Parse graph structures (nodes and edges)", () => {
 

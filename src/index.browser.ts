@@ -28,6 +28,14 @@ export {
     csvParseStrings
 } from "./globals/coding/formats.csv.js";
 
+// code helpers for Panther graph models
+export {
+    filterNodeByLabel,
+    findEdgeByLabel,
+    filterEdgeByLabel,
+    findNodeByLabel
+} from "./globals/panther/utils.panther.js";
+
 // Shared geenral code types
 export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
 
