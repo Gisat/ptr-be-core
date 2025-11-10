@@ -1,7 +1,6 @@
 import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../panther/enums.panther";
 import { OneOfEdgeProperties } from "../panther/models.edges.properties";
-import { PantherEntity } from "../panther/models.nodes";
-import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUrl, HasBands, HasSpecificName, HasColor, HasUnits } from "../panther/models.nodes.properties";
+import { FullPantherEntity } from "../panther/models.nodes";
 
 /**
  * Represents a node in the Arrows diagram/model.
@@ -30,16 +29,7 @@ export interface ArrowsNode{
     id: string;
     caption?: string,
     labels: string[] | UsedNodeLabels[] | UsedDatasourceLabels[],
-    properties: PantherEntity & Partial<
-            HasGeometry &
-            HasInterval &
-            HasLevels &
-            HasConfiguration &
-            HasUrl &
-            HasBands &
-            HasSpecificName &
-            HasColor &
-            HasUnits> 
+    properties: FullPantherEntity 
     position?: {
         x: number,
         y: number
