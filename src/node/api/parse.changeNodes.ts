@@ -241,6 +241,10 @@ const parseHasDocumentId = (bodyRaw: any): HasDocumentId => {
 const parseWithTimeseries = (bodyRaw: any): HasTimeseries => {
   const timeseriesIntervals = parseWithInterval(bodyRaw)
   const { step } = bodyRaw
+
+  if (!step)
+    throw new InvalidRequestError("Property step is required for timeseries datasource")
+
   return { ...timeseriesIntervals, step }
 }
 
@@ -353,8 +357,9 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
     // If node is a Datasource with document ID, add document ID information
     const datasourcesWithDocumentId = [
       UsedDatasourceLabels.PostGIS,
+      UsedDatasourceLabels.Timeseries
     ];
-    
+
     if (datasourcesWithDocumentId.includes(label as UsedDatasourceLabels)) {
       const parsedDocumentId = parseHasDocumentId(bodyNodeEntity);
       node = { ...node, ...parsedDocumentId };

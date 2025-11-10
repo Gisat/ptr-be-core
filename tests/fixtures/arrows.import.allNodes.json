@@ -152,7 +152,7 @@
       "caption": "TestOSM",
       "labels": [
         "datasource",
-        "mvt"
+        "cloudOptimizedGeotiff"
       ],
       "properties": {
         "nameInternal": "test",
@@ -160,7 +160,9 @@
         "description": "Long Description",
         "configuration": "\"{'url': 'http://some.app'}\"",
         "url": "http://some.app",
-        "bands": "1,2,3"
+        "bands": "1,2,3",
+        "bandNames": "pm1, pm2, pm3",
+        "bandPeriods": "2020, 2021, 2022"
       },
       "style": {}
     },
@@ -173,14 +175,18 @@
       "caption": "",
       "labels": [
         "datasource",
-        "attributeSource"
+        "attributeSource",
+        "timeseries"
       ],
       "properties": {
         "nameInternal": "test",
         "nameDisplay": "displayTest",
         "description": "Long Description",
         "table": "testTableInPostgis",
-        "columns": "test01,test02"
+        "columns": "test01,test02",
+        "intervalISO": "2020/2025",
+        "step": "year",
+        "documentId": "someVector"
       },
       "style": {}
     }
@@ -228,29 +234,29 @@
     },
     {
       "id": "n6",
+      "fromId": "n3",
+      "toId": "n6",
       "type": "IN_POSTGIS_LOCATION",
-      "style": {},
       "properties": {
         "column": "test01"
       },
-      "fromId": "n3",
-      "toId": "n6"
+      "style": {}
     },
     {
       "id": "n7",
-      "type": "",
-      "style": {},
-      "properties": {},
       "fromId": "n0",
-      "toId": "n3"
+      "toId": "n3",
+      "type": "",
+      "properties": {},
+      "style": {}
     },
     {
       "id": "n8",
-      "type": "",
-      "style": {},
-      "properties": {},
       "fromId": "n0",
-      "toId": "n6"
+      "toId": "n6",
+      "type": "",
+      "properties": {},
+      "style": {}
     }
   ]
 }
