@@ -1,6 +1,6 @@
 import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUnits } from "./models.nodes.properties.general.js"
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther.js"
-import { HasColor, HasSpecificName } from "./models.nodes.properties.datasources.js"
+import { HasColor } from "./models.nodes.properties.datasources.js"
 import { Nullable } from "../coding/code.types.js"
 import { FullDatasourceProperties } from "./models.groups.js"
 
@@ -47,19 +47,3 @@ export interface ApplicationNode extends PantherEntity, Partial<HasConfiguration
  */
 export interface Attribute extends PantherEntity, Partial<HasColor & HasUnits> {
 }
-
-/**
- * Represents a full panther entity which extends the basic PantherEntity
- * and optionally includes geometry, interval, levels, and configuration properties.
- * 
- * @extends PantherEntity
- * @extends Partial<HasGeometry>
- * @extends Partial<HasInterval>
- * @extends Partial<HasLevels>
- * @extends Partial<HasConfiguration>
- * @extends Partial<HasUrl>
- * @extends Partial<HasBands>
- * @extends Partial<HasSpecificName>
- * @extends Partial<HasColor>
- * @extends Partial<HasUnits>
- */
