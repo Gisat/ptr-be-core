@@ -68,7 +68,7 @@ export {
     type FullDatasourceProperties,
     type FullPantherEntity,
     type FullEdgeProperties
-} from "./globals/panther/models.fullInterfaces.js";
+} from "./globals/panther/models.groups.js";
 
 // Arrows.app models for import / export
 export {

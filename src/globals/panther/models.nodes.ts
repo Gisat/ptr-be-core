@@ -2,7 +2,7 @@ import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUnits } from 
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther.js"
 import { HasColor, HasSpecificName } from "./models.nodes.properties.datasources.js"
 import { Nullable } from "../coding/code.types.js"
-import { FullDatasourceProperties } from "./models.fullInterfaces.js"
+import { FullDatasourceProperties } from "./models.groups.js"
 
 /**
  * General graph node - same for all metadatata entities
