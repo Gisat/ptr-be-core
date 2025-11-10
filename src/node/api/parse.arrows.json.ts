@@ -1,13 +1,12 @@
 import { randomUUID } from "crypto"
 import { isArray } from "lodash"
-import { FullPantherEntity } from "../../globals/panther/models.groups"
 import { validateNodeLabels } from "./validations.shared"
 import { parseSinglePantherNode } from "./parse.changeNodes"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
 import { UsedEdgeLabels } from "../../globals/panther/enums.panther"
 import { isInEnum } from "../../globals/coding/code.formating"
 import { InvalidRequestError } from "./errors.api"
-import { PantherEntity } from "../../globals/panther/models.nodes"
+import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 
 /**
  * Parses a node object from the Arrows JSON format and converts it into a `PantherEntity`.

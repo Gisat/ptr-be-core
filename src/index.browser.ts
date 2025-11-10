@@ -1,5 +1,5 @@
 
-// Shared code helpers
+// shared code helpers
 export {
     enumCombineValuesToString,
     enumValuesToArray,
@@ -35,7 +35,7 @@ export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./g
 export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels, UsedTimeseriesSteps } from "./globals/panther/enums.panther.js";
 
 // Panther graph model - edge specific properties
-export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic } from "./globals/panther/models.edges.properties.js";
+export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic, type FullEdgeProperties } from "./globals/panther/models.edges.properties.js";
 
 // Panther graph model - edges and relations
 export { type GraphEdge, type GraphRelation } from "./globals/panther/models.edges.js";
@@ -63,7 +63,8 @@ export {
     type HasTimeseries,
     type HasUrl,
     type HasSpecificName,
-    type HasColor
+    type HasColor,
+    type FullDatasourceProperties
 } from "./globals/panther/models.nodes.properties.datasources.js";
 
 // Panther graph model - named node definitions
@@ -74,19 +75,14 @@ export {
     type Datasource,
     type ApplicationNode,
     type Attribute,
-    type PantherEntity
+    type PantherEntity,
+    type FullPantherEntity
 } from "./globals/panther/models.nodes.js";
-
-// Panther graph model - full interfaces
-// represents groups of properties for complex entities
-export {
-    type FullDatasourceProperties,
-    type FullPantherEntity,
-    type FullEdgeProperties
-} from "./globals/panther/models.groups.js";
 
 // Arrows.app models for import / export
 export {
     type ArrowsNode,
     type ArrowsEdge
 } from "./globals/arrows/models.arrows.js";
+
+

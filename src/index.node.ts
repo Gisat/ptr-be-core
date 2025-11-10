@@ -13,8 +13,8 @@ export { AppLogger } from "./node/logging/logger.js";
 
 // parse and validate nodes from raw input
 export {
-    parseParsePantherNodes as parseChangeNodesFromBody,
-    parseSinglePantherNode as parseSingleNode
+    parseParsePantherNodes,
+    parseSinglePantherNode
 } from "./node/api/parse.changeNodes.js";
 
 // parse and validate edges from raw input

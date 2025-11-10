@@ -1,0 +1,256 @@
+{
+  "style": {
+    "font-family": "sans-serif",
+    "background-color": "#ffffff",
+    "background-image": "",
+    "background-size": "100%",
+    "node-color": "#ffffff",
+    "border-width": 4,
+    "border-color": "#000000",
+    "radius": 50,
+    "node-padding": 5,
+    "node-margin": 2,
+    "outside-position": "auto",
+    "node-icon-image": "",
+    "node-background-image": "",
+    "icon-position": "inside",
+    "icon-size": 64,
+    "caption-position": "inside",
+    "caption-max-width": 200,
+    "caption-color": "#000000",
+    "caption-font-size": 50,
+    "caption-font-weight": "normal",
+    "label-position": "inside",
+    "label-display": "pill",
+    "label-color": "#000000",
+    "label-background-color": "#ffffff",
+    "label-border-color": "#000000",
+    "label-border-width": 4,
+    "label-font-size": 40,
+    "label-padding": 5,
+    "label-margin": 4,
+    "directionality": "directed",
+    "detail-position": "inline",
+    "detail-orientation": "parallel",
+    "arrow-width": 5,
+    "arrow-color": "#000000",
+    "margin-start": 5,
+    "margin-end": 5,
+    "margin-peer": 20,
+    "attachment-start": "normal",
+    "attachment-end": "normal",
+    "relationship-icon-image": "",
+    "type-color": "#000000",
+    "type-background-color": "#ffffff",
+    "type-border-color": "#000000",
+    "type-border-width": 0,
+    "type-font-size": 16,
+    "type-padding": 5,
+    "property-position": "outside",
+    "property-alignment": "colon",
+    "property-color": "#000000",
+    "property-font-size": 16,
+    "property-font-weight": "normal"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "position": {
+        "x": -23,
+        "y": -221
+      },
+      "caption": "TestApp",
+      "labels": [
+        "application"
+      ],
+      "properties": {
+        "nameInternal": "testApp",
+        "nameDisplay": "Testing Application",
+        "description": "Test app for metadata testing"
+      },
+      "style": {}
+    },
+    {
+      "id": "n1",
+      "position": {
+        "x": -268.20607160736967,
+        "y": -221
+      },
+      "caption": "TestPlace",
+      "labels": [
+        "place"
+      ],
+      "properties": {
+        "nameInternal": "test",
+        "nameDisplay": "displayTest",
+        "description": "Long Description",
+        "bbox": "11,22,33,44",
+        "geometry": "\"{geometry: \"here will be\"}\""
+      },
+      "style": {}
+    },
+    {
+      "id": "n2",
+      "position": {
+        "x": -196.38687602168523,
+        "y": -47.61312397831472
+      },
+      "caption": "TestPeriod",
+      "labels": [
+        "period"
+      ],
+      "properties": {
+        "nameInternal": "test",
+        "nameDisplay": "displayTest",
+        "description": "Long Description",
+        "intervalISO": "2020/2025"
+      },
+      "style": {}
+    },
+    {
+      "id": "n3",
+      "position": {
+        "x": -116.93129245185511,
+        "y": 195.04393612656222
+      },
+      "caption": "TestAttribute",
+      "labels": [
+        "attribute"
+      ],
+      "properties": {
+        "nameInternal": "test",
+        "nameDisplay": "displayTest",
+        "description": "Long Description",
+        "unit": "cm",
+        "valueType": "integer"
+      },
+      "style": {}
+    },
+    {
+      "id": "n4",
+      "position": {
+        "x": 207.27589753356924,
+        "y": -47.61312397831472
+      },
+      "caption": "TestLayer",
+      "labels": [
+        "layer"
+      ],
+      "properties": {
+        "nameInternal": "test",
+        "nameDisplay": "displayTest",
+        "description": "Long Description"
+      },
+      "style": {}
+    },
+    {
+      "id": "n5",
+      "position": {
+        "x": 207.27589753356924,
+        "y": -221
+      },
+      "caption": "TestOSM",
+      "labels": [
+        "datasource",
+        "mvt"
+      ],
+      "properties": {
+        "nameInternal": "test",
+        "nameDisplay": "displayTest",
+        "description": "Long Description",
+        "configuration": "\"{'url': 'http://some.app'}\"",
+        "url": "http://some.app",
+        "bands": "1,2,3"
+      },
+      "style": {}
+    },
+    {
+      "id": "n6",
+      "position": {
+        "x": 180.94377193771996,
+        "y": 195.04393612656222
+      },
+      "caption": "",
+      "labels": [
+        "datasource",
+        "attributeSource"
+      ],
+      "properties": {
+        "nameInternal": "test",
+        "nameDisplay": "displayTest",
+        "description": "Long Description",
+        "table": "testTableInPostgis",
+        "columns": "test01,test02"
+      },
+      "style": {}
+    }
+  ],
+  "relationships": [
+    {
+      "id": "n0",
+      "fromId": "n0",
+      "toId": "n1",
+      "type": "",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "id": "n1",
+      "fromId": "n0",
+      "toId": "n2",
+      "type": "",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "id": "n3",
+      "fromId": "n0",
+      "toId": "n4",
+      "type": "",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "id": "n4",
+      "fromId": "n0",
+      "toId": "n5",
+      "type": "",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "id": "n5",
+      "fromId": "n5",
+      "toId": "n4",
+      "type": "",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "id": "n6",
+      "type": "IN_POSTGIS_LOCATION",
+      "style": {},
+      "properties": {
+        "column": "test01"
+      },
+      "fromId": "n3",
+      "toId": "n6"
+    },
+    {
+      "id": "n7",
+      "type": "",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n3"
+    },
+    {
+      "id": "n8",
+      "type": "",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n6"
+    }
+  ]
+}

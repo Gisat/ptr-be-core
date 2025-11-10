@@ -1,5 +1,5 @@
 import { UsedTimeseriesSteps } from "./enums.panther"
-import { HasInterval } from "./models.nodes.properties.general"
+import { HasConfiguration, HasInterval } from "./models.nodes.properties.general"
 
 /**
  * Represents a datasource that has a document ID.
@@ -54,3 +54,29 @@ export interface HasSpecificName {
 export interface HasColor {
     color: string // Hex color code
 }
+
+/**
+ * Represents the complete set of properties describing a datasource within the Panther model.
+ *
+ * This composite interface aggregates several common facets that a datasource may expose:
+ * - {@link HasConfiguration} — provider-specific configuration options (credentials, parameters, etc.).
+ * - {@link HasUrl} — the canonical endpoint or resource URL for the datasource.
+ * - {@link HasBands} — definitions of available bands/layers (e.g. spectral bands or data layers).
+ * - {@link HasTimeseries} — timeseries-related metadata and capabilities.
+ * - {@link HasSpecificName} — an explicit, user-facing name for the datasource.
+ * - {@link HasColor} — a color used for visualization (hex, rgba, or named color).
+ * - {@link HasDocumentId} — a unique document identifier used for persistence/indexing.
+ *
+ * Use this interface whenever a consumer requires the full, canonical set of datasource metadata
+ * and configuration used throughout the application.
+ *
+ * @public
+ * @see HasConfiguration
+ * @see HasUrl
+ * @see HasBands
+ * @see HasTimeseries
+ * @see HasSpecificName
+ * @see HasColor
+ * @see HasDocumentId
+ */
+export interface FullDatasourceProperties extends Partial<HasConfiguration & HasUrl & HasBands & HasTimeseries & HasSpecificName & HasColor & HasDocumentId> { }
