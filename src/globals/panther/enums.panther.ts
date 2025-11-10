@@ -30,7 +30,9 @@ export enum UsedDatasourceLabels {
     PostGIS = "postgis",      // PostGIS database source
     WMTS = "wmts",            // Web Map Tile Service
     WFS = "wfs",              // Web Feature Service
-    GeoPackage = "geopackage" // OGC GeoPackage format
+    GeoPackage = "geopackage", // OGC GeoPackage format
+    MapStyle = "mapStyle", // Map style datasource
+    Timeseries = "timeseries" // Timeseries datasource (with from-to and step)
 }
 
 /**
