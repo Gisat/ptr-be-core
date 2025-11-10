@@ -30,6 +30,24 @@ export const validateNodeLabels = (labels: unknown) => {
   }
 }
 
+/**
+ * Validate a graph edge label.
+ *
+ * The value is first checked for presence (not `undefined`/`null`), then for type (`string`).
+ * The string is normalised using `toLocaleLowerCase()` and validated against the `UsedEdgeLabels` enum.
+ *
+ * @param label - The value to validate; expected to be a string representing an edge label.
+ *
+ * @throws {InvalidRequestError} If `label` is `undefined` or `null`.
+ * @throws {InvalidRequestError} If `label` is not a `string`.
+ * @throws {InvalidRequestError} If the normalised label is not one of the supported values in `UsedEdgeLabels`.
+ *
+ * @example
+ * validateEdgeLabel('CONNECTS'); // succeeds if 'connects' exists in UsedEdgeLabels
+ *
+ * @remarks
+ * Membership is determined via `isInEnum` and error messages include the allowed values (via `enumCombineValuesToString`).
+ */
 export const validateEdgeLabel = (label: unknown) => {
 
   if (label === undefined || label === null) {
