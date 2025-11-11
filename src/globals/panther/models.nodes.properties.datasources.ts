@@ -1,5 +1,5 @@
 import { UsedTimeseriesSteps } from "./enums.panther"
-import { HasConfiguration, HasInterval } from "./models.nodes.properties.general"
+import { HasInterval } from "./models.nodes.properties.general"
 
 /**
  * Represents a datasource that has a document ID.
