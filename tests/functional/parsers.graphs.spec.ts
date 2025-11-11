@@ -1,5 +1,8 @@
-import { UsedEdgeLabels } from "../../dist/index.browser"
-import { filterNodeByLabel, findEdgeByLabel, findNodeByLabel, FullPantherEntity, GraphEdge, parseArrowsJson, UsedDatasourceLabels, UsedNodeLabels } from "../../src/index.node"
+import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../../src/globals/panther/enums.panther"
+import { GraphEdge } from "../../src/globals/panther/models.edges"
+import { FullPantherEntity } from "../../src/globals/panther/models.nodes"
+import { filterNodeByLabel, findEdgeByLabel, findNodeByLabel } from "../../src/globals/panther/utils.panther"
+import { parseArrowsJson } from "../../src/node/api/parse.arrows.json"
 
 import ArrowsImport from "../fixtures/arrows.import.allNodes.json"
 
