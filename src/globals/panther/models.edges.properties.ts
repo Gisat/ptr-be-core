@@ -35,3 +35,13 @@ export interface EdgeForPostgisLocationProperties extends EdgePropertiesBasic {
     featureIdColumn: string | null // Postgis column name inside mentioned table that contains feature ID
     periodIso: string | null // ISO 8601 period, e.g. "2025", "2025-01-01", "2020-01-01/2020-12-31"
 }
+
+/**
+ * Represents a union type for edge properties, which can be either
+ * `EdgeForPostgisLocationProperties` or `EdgePropertiesBasic`.
+ * This type is used to define the possible properties of an edge
+ * in the application.
+ */
+export type FullEdgeProperties =
+    EdgeForPostgisLocationProperties |
+    EdgePropertiesBasic

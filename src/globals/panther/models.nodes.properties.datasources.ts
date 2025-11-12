@@ -54,3 +54,4 @@ export interface HasSpecificName {
 export interface HasColor {
     color: string // Hex color code
 }
+

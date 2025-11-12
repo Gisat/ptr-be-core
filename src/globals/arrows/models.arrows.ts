@@ -1,5 +1,6 @@
 import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../panther/enums.panther";
-import { FullEdgeProperties, FullPantherEntity } from "../panther/models.groups";
+import { FullEdgeProperties } from "../panther/models.edges.properties";
+import { FullPantherEntity } from "../panther/models.nodes";
 
 /**
  * Represents a node in the Arrows diagram/model.
