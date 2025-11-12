@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto"
-import { isArray } from "lodash"
+import _ from "lodash"
 import { validateNodeLabels } from "./validations.shared"
 import { parseSinglePantherNode } from "./parse.changeNodes"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
@@ -107,7 +107,7 @@ export const parseArrowsJson = (body: unknown): { nodes: FullPantherEntity[]; ed
         throw new InvalidRequestError("Invalid JSON format: Missing nodes or relationships")
 
     // Check if nodes and relationships are arrays
-    if (!isArray((body as any).nodes) || !isArray((body as any).relationships))
+    if (!_.isArray((body as any).nodes) || !_.isArray((body as any).relationships))
         throw new InvalidRequestError("Invalid JSON format: nodes and relationships must be arrays")
 
     // Extract nodes and relationships from the body
