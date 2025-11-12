@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto"
-import { isArray } from "lodash"
+import _ from "lodash"
 import { Unsure } from "../../globals/coding/code.types"
 import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 import { HasConfiguration, HasGeometry, HasInterval, HasLevels, HasUnits } from "../../globals/panther/models.nodes.properties.general"
@@ -400,7 +400,7 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
 export const parseParsePantherNodes = (body: unknown): FullPantherEntity[] => {
   const nodeArray = body as any[]
 
-  if (!isArray(nodeArray))
+  if (!_.isArray(nodeArray))
     throw new InvalidRequestError("Request: Grah nodes must be an array")
 
   return nodeArray.map(PantherEntity => parseSinglePantherNode(PantherEntity))
