@@ -83,7 +83,8 @@ export {
     type ApplicationNode,
     type Attribute,
     type PantherEntity,
-    type FullPantherEntity
+    type FullPantherEntity,
+	type FullPantherEntityWithNeighbours
 } from "./globals/panther/models.nodes.js";
 
 // Arrows.app models for import / export

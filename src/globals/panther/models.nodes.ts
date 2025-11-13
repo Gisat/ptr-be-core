@@ -71,3 +71,11 @@ export interface Attribute extends PantherEntity, Partial<HasColor & HasUnits> {
  * optional properties before accessing them.
  */
 export interface FullPantherEntity extends PantherEntity, Partial<HasGeometry & HasInterval & HasLevels & HasConfiguration & HasUrl & HasBands & HasSpecificName & HasColor & HasUnits &  HasDocumentId & HasTimeseries> { }
+
+/**
+ * Represents a full panther entity with its neighbours.
+ */
+export interface FullPantherEntityWithNeighbours {
+	node: FullPantherEntity;
+	neighbours: FullPantherEntity[];
+}
