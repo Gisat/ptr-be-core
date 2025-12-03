@@ -1,0 +1,17 @@
+// Base config for all builds
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "noImplicitAny": false,
+    "strict": true,
+    "esModuleInterop": true,     
+    "allowSyntheticDefaultImports": true, 
+    "forceConsistentCasingInFileNames": true 
+  },
+  "include": ["**/*"],
+}

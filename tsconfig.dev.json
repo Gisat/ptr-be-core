@@ -1,0 +1,14 @@
+// For dev, tests and IDE purposes
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
+  },
+  "exclude": ["node_modules", "dist"]
+}
