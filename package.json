@@ -2,6 +2,10 @@
   "name": "@gisatcz/ptr-be-core",
   "version": "0.0.1",
   "description": "Shared core library for PTR BE services",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gisat/ptr-be-core.git"
+  },
   "type": "module",
   "files": [
     "dist/"
