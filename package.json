@@ -1,6 +1,6 @@
 {
   "name": "@gisatcz/ptr-be-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Shared core library for PTR BE services",
   "repository": {
     "type": "git",
