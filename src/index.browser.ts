@@ -19,6 +19,7 @@ export {
     isoIntervalToTimestamps,
     nowTimestamp,
     nowTimestampIso,
+    nowPlusTime,
     epochToIsoFormat,
     hasIsoFormat,
     isoDateToTimestamp
