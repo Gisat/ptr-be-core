@@ -13,6 +13,13 @@ export const isUrl = (candidate: string) => {
 }
 
 /**
+ * Check, if the string array contain urls
+ * @param candidates Candidate input array, to be checked
+ * @returns Is this string array only from url?
+ */
+export const isArrayOfUrls = (candidates: string[]) => candidates.every(candidate => isUrl(candidate))
+
+/**
  * Check if the value in included in enum posibilities.
  * @param value Value we need to check
  * @param enumEntity Enum type we check againts the value
