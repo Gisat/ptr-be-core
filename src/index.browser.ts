@@ -9,7 +9,8 @@ export {
     notEmptyString,
     randomNumberBetween,
     removeDuplicitiesFromArray,
-    sortStringArray
+    sortStringArray,
+    isUrl
 } from "./globals/coding/code.formating.js";
 
 // code helpers for datetimes
