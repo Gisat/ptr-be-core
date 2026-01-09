@@ -1,6 +1,4 @@
-// logger.ts
 import pino from 'pino'
-
 
 /**
  * Shared pino logger instance used by all logging functions.
@@ -11,6 +9,8 @@ import pino from 'pino'
 const logger = pino({
   timestamp: pino.stdTimeFunctions.isoTime,
   formatters: {
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     level(label, number) {
       return { level: label }
     }
