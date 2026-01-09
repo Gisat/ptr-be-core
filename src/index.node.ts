@@ -8,8 +8,7 @@ export { messageFromError, InvalidRequestError, AuthorizationError } from "./nod
 export { type ApiEndpointResponse } from "./node/api/models.api.js";
 
 // Logger functionality
-export { type AppLogOptions } from "./node/logging/logger.js";
-export { AppLogger } from "./node/logging/logger.js";
+export { loggyDebug, loggyError, loggyInfo, loggyWarn, loggyTrace, loggyFatal, loggyAppStart, loggyRequestReceived, loggyResponseSent } from "./node/logging/logger.js";
 
 // parse and validate nodes from Arrows.app JSON format
 export {
@@ -21,6 +20,7 @@ export {
     parseParsePantherNodes,
     parseSinglePantherNode
 } from "./node/api/parse.changeNodes.js";
+
 
 // parse and validate edges from raw input
 export {
