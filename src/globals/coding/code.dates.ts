@@ -12,6 +12,15 @@ export const nowTimestamp = (regime: "milisecond" | "second" = "milisecond"): nu
 }
 
 /**
+ * Return now local timestamp plus number of seconds to add
+ * @param secondsToAdd Seconds to add from now (1 = now + 1 sec.)
+ * @returns Timestamp of the future (past) on seconds
+ */
+export const nowPlusTime = (secondsToAdd: number) => {
+  return Math.round(DateTime.now().plus({seconds: secondsToAdd}).toSeconds())
+}
+
+/**
  * Convert epoch time value into ISO format
  * @param epochValue Epoch value of the timestamp
  * @returns ISO format of the date
