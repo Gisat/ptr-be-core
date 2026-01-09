@@ -9,7 +9,9 @@ export {
     notEmptyString,
     randomNumberBetween,
     removeDuplicitiesFromArray,
-    sortStringArray
+    sortStringArray,
+    isUrl,
+    isArrayOfUrls
 } from "./globals/coding/code.formating.js";
 
 // code helpers for datetimes
@@ -17,6 +19,7 @@ export {
     isoIntervalToTimestamps,
     nowTimestamp,
     nowTimestampIso,
+    nowPlusTime,
     epochToIsoFormat,
     hasIsoFormat,
     isoDateToTimestamp
