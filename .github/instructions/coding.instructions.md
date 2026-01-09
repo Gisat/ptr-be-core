@@ -2,7 +2,7 @@
 applyTo: "src/**/*.ts"
 ---
 
-# General programming style guidlines for this repository
+# General programming style guidelines for this repository
 - Code is written in TypeScript.
 - Use ES modules (`import` / `export`) for module management.
 - Prefer functional programming paradigms where possible.

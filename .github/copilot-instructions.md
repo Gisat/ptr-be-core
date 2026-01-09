@@ -45,4 +45,4 @@ Read and follow all `.github/instructions/*` files for code and practises clarit
 - Functions to parse and validate Arrows.app JSON format (`src/node/api/parse.arrows.json.ts`).
 - Utility functions for parsing and validating raw input data (`src/node/api/parse.raw.input.ts`).
 - Global types and interfaces shared between frontend and backend (`src/globals/arrows/`, `src/globals/panther/`).
-- General shared coding helpers and formaters (`src/globals/coding/`)
+- General shared coding helpers and formatters (`src/globals/coding/`)
