@@ -3,23 +3,19 @@ import pino from 'pino'
 
 
 /**
- * Build and configure a base `pino` logger instance used by the helpers.
+ * Shared pino logger instance used by all logging functions.
  *
  * The logger uses ISO timestamps and a simple level formatter that exposes
  * the textual level as the `level` property on emitted objects.
- *
- * @returns {import('pino').Logger} A configured pino logger instance.
  */
-const buildBaseLogger = () => {
-  return pino({
-    timestamp: pino.stdTimeFunctions.isoTime,
-    formatters: {
-      level(label, number) {
-        return { level: label }
-      }
+const logger = pino({
+  timestamp: pino.stdTimeFunctions.isoTime,
+  formatters: {
+    level(label, number) {
+      return { level: label }
     }
-  })
-}
+  }
+})
 
 
 /**
@@ -30,7 +26,7 @@ const buildBaseLogger = () => {
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyInfo = (label: string, message: string, options: Record<string, any> = {}): void => {
-  buildBaseLogger().info({ ...options, label, message })
+  logger.info({ ...options, label, message })
 }
 
 
@@ -42,7 +38,7 @@ export const loggyInfo = (label: string, message: string, options: Record<string
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyDebug = (label: string, message: string, options: Record<string, any> = {}): void => {
-  buildBaseLogger().debug({ ...options, label, message })
+  logger.debug({ ...options, label, message })
 }
 
 
@@ -54,7 +50,7 @@ export const loggyDebug = (label: string, message: string, options: Record<strin
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyWarn = (label: string, message: string, options: Record<string, any> = {}): void => {
-  buildBaseLogger().warn({ ...options, label, message })
+  logger.warn({ ...options, label, message })
 }
 
 
@@ -66,7 +62,7 @@ export const loggyWarn = (label: string, message: string, options: Record<string
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyTrace = (label: string, message: string, options: Record<string, any> = {}): void => {
-  buildBaseLogger().trace({ ...options, label, message })
+  logger.trace({ ...options, label, message })
 }
 
 
@@ -80,7 +76,7 @@ export const loggyTrace = (label: string, message: string, options: Record<strin
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyFatal = (label: string, message: string, options: Record<string, any> = {}): void => {
-  buildBaseLogger().fatal({ ...options, label, message })
+  logger.fatal({ ...options, label, message })
 }
 
 
@@ -95,7 +91,7 @@ export const loggyFatal = (label: string, message: string, options: Record<strin
 export const loggyError = (label: string, err: Error | string, options: Record<string, any> = {}): void => {
   const message = typeof err === 'string' ? err : err.message
   const extra = typeof err === 'string' ? options : { ...options, stack: err.stack }
-  buildBaseLogger().error({ ...extra, label, message })
+  logger.error({ ...extra, label, message })
 }
 
 
