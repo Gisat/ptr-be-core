@@ -2,7 +2,7 @@
 Shared TypeScript library for backend and frontend applications of the Panther project.
 
 ## Important Rule
-Read and folow all `.github/instructions/*` files for code and practises clarity.
+Read and follow all `.github/instructions/*` files for code and practises clarity.
 
 ## Repository Summary
 - This repo is a shared TypeScript library used by backend and frontend apps. 
@@ -28,7 +28,7 @@ Read and folow all `.github/instructions/*` files for code and practises clarity
 
 # Testing and Linting
 - Using Vitest as the test framework and typescript for type safety.
-- Please folow `.github/instructions/testing.instructions.md` for testing-related guidelines.
+- Please follow `.github/instructions/testing.instructions.md` for testing-related guidelines.
 - This project uses ESLint major version 8 for code linting.
 - Read `eslint.config.js` for detailed linting rules and configurations.
 
