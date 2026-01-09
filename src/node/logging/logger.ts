@@ -121,7 +121,7 @@ export const loggyRequestReceived = (
   route: string,
   method: string,
   options: Record<string, any> = {}) => {
-  loggyInfo("Request Recieved", `${method}: ${route}`, options)
+  loggyInfo("Request Received", `${method}: ${route}`, options)
 }
 
 
