@@ -38,3 +38,11 @@ Read and folow all `.github/instructions/*` files for code and practises clarity
 - Build declaration files (`.d.ts`) for type safety.
 - Publish the package locally using `yalc` for testing in other projects before actual publishing.
 - Read `.github/instructions/build.instructions.md` for detailed build and publish guidelines.
+
+# Delivered Features
+- Logging utilities for Node.js applications (`src/node/logging/logger.ts`).
+- API response models for consistent API responses (`src/node/api/models.api.ts`).
+- Functions to parse and validate Arrows.app JSON format (`src/node/api/parse.arrows.json.ts`).
+- Utility functions for parsing and validating raw input data (`src/node/api/parse.raw.input.ts`).
+- Global types and interfaces shared between frontend and backend (`src/globals/arrows/`, `src/globals/panther/`).
+- General shared coding helpers and formaters (`src/globals/coding/`)
