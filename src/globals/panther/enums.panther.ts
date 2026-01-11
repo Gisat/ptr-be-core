@@ -20,6 +20,7 @@ export enum UsedNodeLabels {
 export enum UsedDatasourceLabels {
     Attribute = "attributeSource",   // Column(s) with attribute values
     Geojson = "geojson",      // Geojson for web map
+    Icon = "icon",            // Icon for web map layers (deck.gl IconLayer)
     WMS = "wms",              // WMS online source
     COG = "cloudOptimizedGeotiff", // COG online source
     MVT = "mvt",              // MVT (Mapbox Vector Tiles) source
