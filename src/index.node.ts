@@ -38,3 +38,8 @@ export {
 export {
     UsedEnvironments
 } from "./node/apps/enums.general.js";
+
+// utility functions for environment parsing
+export {
+    parsePackageJsonEnvironments
+} from "./node/apps/utils.environment.js";
