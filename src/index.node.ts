@@ -33,3 +33,8 @@ export {
     validateEdgeLabel,
     validateNodeLabels
 } from "./node/api/validations.shared.js";
+
+// enums used in BE applications
+export {
+    UsedEnvironments
+} from "./node/apps/enums.general.js";
