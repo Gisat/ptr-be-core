@@ -43,3 +43,9 @@ export {
 export {
     parsePackageJsonEnvironments
 } from "./node/apps/utils.environment.js";
+
+// Swagger universal types and utilities
+export {
+    type AppSchemaTemplate,
+    SwaggerTypes
+} from "./node/api/swagger.universal.js";
