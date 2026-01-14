@@ -2,7 +2,9 @@
 Shared TypeScript library for backend and frontend applications of the Panther project.
 
 ## Important Rule
-Read and follow all `.github/instructions/*` files for code and practises clarity.
+- Read and follow all `.github/instructions/*` files for code and practises clarity.
+- Predefined prompts can be found in `.github/prompts/`
+
 
 ## Repository Summary
 - This repo is a shared TypeScript library used by backend and frontend apps. 
