@@ -31,9 +31,10 @@
     "pack:check": "npm pack --dry-run",
     "lint": "eslint",
     "test": "vitest --config vitest.config.ts",
+    "test:ci": "vitest run --config vitest.config.ts",
     "build:clean": "rm -rf dist .rollup.cache tsconfig.tsbuildinfo",
     "build": "npm run build:clean && rollup --config",
-    "before:push": "npm run lint && npm run build && npm run test"
+    "before:push": "npm run lint && npm run build && npm run test:ci"
   },
   "author": "",
   "license": "ISC",
