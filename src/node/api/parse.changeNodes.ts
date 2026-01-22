@@ -322,8 +322,7 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
       UsedDatasourceLabels.MVT,
       UsedDatasourceLabels.WFS,
       UsedDatasourceLabels.WMTS,
-      UsedDatasourceLabels.Geojson,
-      UsedDatasourceLabels.Icon,
+      UsedDatasourceLabels.Geojson
     ];
 
     // If node is a Datasource with URL, add URL information
