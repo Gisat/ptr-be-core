@@ -1,7 +1,7 @@
 {
   "name": "@gisatcz/ptr-be-core",
   "version": "0.0.7",
-  "description": "Shared core library for PTR BE services",
+  "description": "Shared core library for PTR BE services and SSR applications",
   "repository": {
     "type": "git",
     "url": "https://github.com/Gisat/ptr-be-core.git"
@@ -40,7 +40,9 @@
   "peerDependencies": {
     "lodash": "^4.17.21",
     "luxon": "^3.6.1",
-    "pino": "^9.6.0"
+    "pino": "^9.6.0",
+    "sqlite": "^5.1.1",
+		"sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^6.1.0",

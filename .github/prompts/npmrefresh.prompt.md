@@ -9,8 +9,8 @@ Process:
 1. delete `node_modules` folder
 2. delete `package-lock.json` file
 3. read `package.json` and prepare two CLIs:
-    - one for installing all dependencies in `peerDependencies` with `npm install <packages_in_peerDependencies> --save`
-    - second for installing all devDependencies in `devDependencies` with `npm install <packages_in_devDependencies> --save-dev`
+    - one for installing all dependencies in `peerDependencies` with `npm install <packages_in_peerDependencies> --save`. Use newest major versions. Dependencies must stay in `peerDependencies`, not in `dependencies`.
+    - second for installing all devDependencies in `devDependencies` with `npm install <packages_in_devDependencies> --save-dev`. Focus on newest major versions.
 5. save both CLIs into `docs/npm-refresh-commands.md` file with header "NPM Refresh Commands" and short description of the process
 6. execute both CLIs
 7. check if `package.json` needs to be restructured according to `.github/instructions/package-json.instructions.md` file, if yes, restructure it
