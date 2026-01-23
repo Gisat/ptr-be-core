@@ -1,5 +1,5 @@
-import { AppDb } from "./db.connection";
-import { UsedSqlTables } from "./db.defaults";
+import { AppDb } from "./sqlite.connection";
+import { UsedSqlTables } from "./enums.sqlite";
 
 /**
  * Retrieves the application state associated with the specified key from the database.

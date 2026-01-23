@@ -1,5 +1,5 @@
-import { AppDb } from "./db.connection";
-import { UsedSqlTables } from "./db.defaults";
+import { AppDb } from "./sqlite.connection";
+import { UsedSqlTables } from "./enums.sqlite";
 
 /**
  * Saves a state to the database with the specified key.

@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { Database, open } from 'sqlite';
-import { UsedSqlTables } from './db.defaults';
+import { UsedSqlTables } from './enums.sqlite';
 
 /**
  * Represents a SQLite database connection for the application.
