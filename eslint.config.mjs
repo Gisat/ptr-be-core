@@ -3,8 +3,15 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
+    ignores: [
+      '**/dev/*',
+      '**/dist/*',
+      '**/tests/*',
+      'tsconfig.json',
+    ]
+  },
+  {
     files: ["**/*.ts"],
-    ignores: ["**/node_modules/**", "**/dist/**", "vitest.config.ts"],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -16,10 +23,10 @@ export default defineConfig([
       "@typescript-eslint": tseslint.plugin,
     },
     extends: [
-      "@typescript-eslint/recommended", 
+      "@typescript-eslint/recommended",
     ],
     rules: {
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ]);
