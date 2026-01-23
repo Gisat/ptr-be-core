@@ -49,3 +49,27 @@ export {
     type AppSchemaTemplate,
     SwaggerTypes
 } from "./node/api/swagger.universal.js";
+
+// SQLite enums
+export {
+    UsedSqlTables,
+} from "./node/sqlite/enums.sqlite.js";
+
+// SQLite default constants
+export {
+    DEFAULT_DB_NAME,
+    DEFAULT_DB_STATE_EXPIRATION_SEC
+} from "./node/sqlite/defaults.sqlite.js";
+
+// SQLite database connection
+export { openDb, type AppDb } from "./node/sqlite/sqlite.connection.js";
+
+// SQLite commands for app state management
+export {
+    dbSaveState
+} from "./node/sqlite/sqlite.commands.js";
+
+// SQLite queries for app state retrieval
+export {
+    dbNeedAppState
+} from "./node/sqlite/sqlite.queries.js";
