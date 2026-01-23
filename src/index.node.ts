@@ -2,7 +2,7 @@
 export * from "./index.browser.js";
 
 // API error handling
-export { messageFromError, InvalidRequestError, AuthorizationError } from "./node/api/errors.api.js";
+export { InvalidRequestError, AuthorizationError, ServerError, SSROnlyError } from "./node/api/models.errors.js";
 
 // API models and helpers
 export { type ApiEndpointResponse } from "./node/api/models.api.js";

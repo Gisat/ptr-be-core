@@ -5,7 +5,7 @@ import { parseSinglePantherNode } from "./parse.changeNodes"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
 import { UsedEdgeLabels } from "../../globals/panther/enums.panther"
 import { isInEnum } from "../../globals/coding/code.formating"
-import { InvalidRequestError } from "./errors.api"
+import { InvalidRequestError } from "./models.errors"
 import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 
 /**

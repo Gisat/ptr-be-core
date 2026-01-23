@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import { InvalidRequestError } from "../../node/api/errors.api"
+import { InvalidRequestError } from "../../node/api/models.errors"
 
 /**
  * Return epoch timestamp

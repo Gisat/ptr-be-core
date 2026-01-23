@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { enumCombineValuesToString, isInEnum } from "../../globals/coding/code.formating"
-import { InvalidRequestError } from "./errors.api"
+import { InvalidRequestError } from "./models.errors"
 import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
 
 
