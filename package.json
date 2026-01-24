@@ -38,6 +38,7 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
+    "openid-client": "^6.8.1",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "lodash": "^4.17.21",
