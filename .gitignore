@@ -36,3 +36,8 @@ coverage/
 *.nogit.*
 CHANGELOG.md
 CONTRIBUTING.md
+
+# AI Agent Specific
+GEMINI.md
+CLAUDE.md
+AGENTS.md
