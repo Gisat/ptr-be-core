@@ -1,6 +1,7 @@
-import { Issuer } from 'openid-client';
-import { SSROnlyError } from '../../index.node';
+import * as openid from 'openid-client';
 import { Unsure } from '../../index.browser';
+import { SSROnlyError } from '../api/models.errors';
+import { messageFromError } from '../api/parsing.errors';
 
 
 /**
@@ -8,81 +9,76 @@ import { Unsure } from '../../index.browser';
  * @returns Set of functions to handle OpenID (OAuth2) operations using official openid library with server side environments
  */
 export const ssrOpenidContext = (clientId: string, issuerUrl: string, redirectUrl: string) => {
-	
-	/**
-	 * Read server side environment values and validate them
-	 * @returns
-	 */
-	const checkContextEnvironmens = () => {
-		if (!issuerUrl)
-			throw new SSROnlyError('Missing OID issuer URL');
-
-		if (!clientId)
-			throw new SSROnlyError('Missing OID client ID');
-
-		if (!redirectUrl)
-			throw new SSROnlyError('Missing OID redirect url back to this app (OAuth2 callback path)');
-		return {
-			issuerUrl,
-			clientId,
-			redirectUrl,
-		};
-	};
 
 	/**
 	 * Creates the active client for OpenID operations
 	 * @returns OpenID set up client ready to be used
 	 */
-	async function oidSetupClient() {
-		// check environments
-		const oidEnvironments = checkContextEnvironmens();
+	async function oidSetupIssuerConfiguration() {
+		try {
 
-		// prepare Open ID Issuer client
-		const oidIssuer = await Issuer.discover(oidEnvironments.issuerUrl);
-		const oidClient = new oidIssuer.Client({
-			client_id: oidEnvironments.clientId,
-			redirect_uris: [oidEnvironments.redirectUrl],
-			response_types: ['code'],
-			token_endpoint_auth_method: 'none',
-		});
+			console.log('OIDC Setup Issuer Configuration:', { clientId, issuerUrl, redirectUrl });
 
-		// return client
-		return oidClient;
+			if (!issuerUrl)
+				throw new SSROnlyError('OIDC ENV: Missing OID issuer URL');
+
+			if (!clientId)
+				throw new SSROnlyError('OIDC ENV: Missing OID client ID');
+
+			if (!redirectUrl)
+				throw new SSROnlyError('OIDC ENV: Missing OID redirect url back to this app (OAuth2 callback path)');
+
+			// prepare Open ID Issuer client
+			const url = new URL(issuerUrl)
+
+			console.log('OIDC Discovering from URL:', url.toString());
+
+			const config = await openid.discovery(url, clientId);
+
+			console.log('OIDC Config Complete:', config);
+
+			// return configuration
+			return config;
+		} catch (error: unknown) {
+			console.error('OIDC Setup Error:', error);
+			console.error('OIDC Setup Error Message:', messageFromError(error));
+			console.error('OIDC Setup Error Stack:', (error instanceof Error) ? error.stack : 'no stack');
+			console.error('OIDC Setup Error Type:', (error instanceof Error) ? error.cause : 'no cause');
+			throw new SSROnlyError(`OIDC Config Setup: Failed to setup OID client: ${messageFromError(error)}`);
+		}
 	}
 
-	/**
-	 * Exported handler for authorisation process usinf OpenID Connect code flow
-	 */
-	async function handleInternalKeycloak() {
-		const oidClient = await oidSetupClient();
-		const url = oidClient.authorizationUrl({
-			scope: 'openid email profile',
-		});
-		return url;
-	}
-	
-	async function handleLogout(tokenExchangeUrl: Unsure<string>) {
-		if (!tokenExchangeUrl)
-			throw new SSROnlyError('Missing URL for exchange');
+	async function handleUserOpenID() {
+		try {
 
-		return { tokenExchangeUrl };
+			console.log('OIDC Handle User OpenID');
+
+			// get issuer configuration
+			const oidConfig = await oidSetupIssuerConfiguration();
+
+			// prepare parameters for authorisation URL
+			// TODO: state, nonce, PKCE
+			const parameters: Record<string, string> = {
+				redirect_uri: redirectUrl,
+				scope: 'openid email'
+			}
+
+			console.log('OIDC Build Authorization URL:', parameters);
+			const url = openid.buildAuthorizationUrl(oidConfig, parameters)
+
+			console.log('OIDC Auth URL:', url.toString());
+
+			return url;
+		} catch (error: unknown) {
+			throw new SSROnlyError(`OIDC Build Authorization: Failed to build authorisation URL: ${messageFromError(error)}`);
+		}
 	}
 
-	/**
-	 * Obtain tokens from redirect by sending OAuth2 code back to issuer
-	 * @param params Use NextRequest
-	 * @param urlOrigin Origin of the URL from callback route
-	 * @returns Tokens from the IAM
-	 */
 	async function handleAuthCallback(params: any, tokenExchangeUrl: Unsure<string>) {
-		// initialize Open ID client
-		const oidClient = await oidSetupClient();
 
-		// prepare OID callback params for provider
-		const callbackParams = oidClient.callbackParams(params);
+		const oidConfig = await oidSetupIssuerConfiguration();
 
-		// OID Provider response with tokens
-		const tokens = await oidClient.callback(checkContextEnvironmens().redirectUrl, callbackParams);
+		const tokens = await openid.authorizationCodeGrant(oidConfig, new URL(redirectUrl), { idTokenExpected: true });
 
 		// do we have tokens and all values?
 		if (!tokens.access_token)
@@ -113,8 +109,15 @@ export const ssrOpenidContext = (clientId: string, issuerUrl: string, redirectUr
 		};
 	}
 
+	async function handleLogout(tokenExchangeUrl: Unsure<string>) {
+		if (!tokenExchangeUrl)
+			throw new SSROnlyError('Missing URL for exchange');
+
+		return { tokenExchangeUrl };
+	}
+
 	return {
-		handleInternalKeycloak,
+		handleAuthCode: handleUserOpenID,
 		handleAuthCallback,
 		handleLogout,
 	};

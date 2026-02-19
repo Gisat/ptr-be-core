@@ -1,3 +1,38 @@
-node_modules
-dist
-.rollup.cache
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+yalc.lock
+.yalc/
+
+# TypeScript / build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Logs
+logs
+*.log
+.nyc_output
+coverage/
+
+# IDE / devcontainer
+.vscode/
+.idea/
+.devcontainer/
+
+# Misc
+*.nogit.*
+CHANGELOG.md
+CONTRIBUTING.md
