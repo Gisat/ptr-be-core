@@ -14,12 +14,16 @@ The NPM contains two standalone builds made from Typescript by Rollup.
 
 Production build and publishing is realised by Github Workflow.
 
-### Rollup and Package.json
+## Configuration Files
 As mentioned, Rollup set up in `rollup.config.js` make two standalone builds named by purpose. 
 
 Important is setup in `package.json`
 - `type` with value `module`
 - `exports`, each for one NPM target 
+- Empty `dependencies`.
+- All required dependencies defined in `peerDependencies` field.
+
+Each build platform has defined standalone `tsconfig` in the repository root. Final `tsconfig.json` is merged together by platform or purpose.
 
 ## Installation (DEV)
 - Install Node and NPM
