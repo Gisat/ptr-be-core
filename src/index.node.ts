@@ -5,6 +5,11 @@ export * from "./index.browser.js";
 // API error handling
 export { InvalidRequestError, AuthorizationError, ServerError, SSROnlyError } from "./node/api/models.errors.js";
 
+export {
+    messageFromError
+} from "./node/api/parsing.errors.js";
+
+
 // API models and helpers
 export { type ApiEndpointResponse } from "./node/api/models.api.js";
 
