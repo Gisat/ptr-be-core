@@ -79,9 +79,3 @@ export {
 export {
     dbNeedAppState
 } from "./node/sqlite/sqlite.queries.js";
-
-
-// OpenID Connect functionality for server-side rendering apps (FE API routes)
-export {
-    ssrOpenidContext
-} from "./node/auth/openid.ssr.js";
