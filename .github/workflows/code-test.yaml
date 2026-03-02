@@ -1,10 +1,13 @@
 name: test-the-code-with-infrastructure
 on: workflow_call
 
+permissions:
+  contents: read
+
 jobs:
   integration-test:
     runs-on: ubuntu-latest
-    cancel-timeout-minutes: 5
+    timeout-minutes: 5
 
     steps:
       - name: Checkout code
@@ -13,7 +16,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '24'
 
       - name: Install dependencies
         run: npm install

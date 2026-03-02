@@ -8,11 +8,19 @@ on:
     - dev
     - rc
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tests-and-linting:
     uses: ./.github/workflows/code-test.yaml
 
   docker-build:
+    needs: tests-and-linting
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
