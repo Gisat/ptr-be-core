@@ -9,28 +9,17 @@ on:
     - rc
 
 jobs:
-  code:
-    runs-on: ubuntu-latest
+  tests-and-linting:
+    uses: ./.github/workflows/code-test.yaml
 
+  docker-build:
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: npm install
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-    - name: Run tests
-      run: npm test
-
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build project
-      run: npm run build
+    - name: Build Docker image
+      run: docker build -t image:test .

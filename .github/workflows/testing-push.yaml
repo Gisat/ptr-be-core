@@ -1,0 +1,8 @@
+name: testing-push-workflow
+on:
+  push:
+      branches:
+        - test/*
+jobs:
+    test:
+        uses: ./.github/workflows/integration-test.yaml
