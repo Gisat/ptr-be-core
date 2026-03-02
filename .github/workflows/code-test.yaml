@@ -1,11 +1,11 @@
-name: test-the-code-with-infrastructure
+name: test-build-and-lint
 on: workflow_call
 
 permissions:
   contents: read
 
 jobs:
-  integration-test:
+  pull-request-checker:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
