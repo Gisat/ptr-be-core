@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { InvalidRequestError } from "./errors.api"
+import { InvalidRequestError } from "./models.errors"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
 import { enumValuesToString, isInEnum } from "../../globals/coding/code.formating"
 import { UsedEdgeLabels } from "../../globals/panther/enums.panther"
