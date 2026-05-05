@@ -36,11 +36,13 @@ export interface HasEdges{
 /**
  * Represents a node and its neighbouring nodes.
  *
- * @typeParam T - The type of the node and its neighbours.
+ * @typeParam T - The type of the node.
+ * @typeParam U - The type of the neighbours.
  * @property node - The main node, or `null` if not present.
  * @property neighbours - An array of neighbouring nodes.
- * @property edges - An array of edges connecting the node to its neighbours.
  */
-export interface NodeWithNeighbours<T> extends HasNeighbours<T>, HasEdges {
-    node: T;
+export interface NodeWithNeighbours<T, U>{
+    node: T ;
+    neighbours: U[];
+    edges: GraphEdge[];
 }
