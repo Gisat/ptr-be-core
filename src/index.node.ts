@@ -68,7 +68,10 @@ export {
 } from "./node/sqlite/defaults.sqlite.js";
 
 // SQLite database connection
-export { openDb, type AppDb } from "./node/sqlite/sqlite.connection.js";
+export { 
+    openDb, 
+    type AppDb 
+} from "./node/sqlite/sqlite.connection.js";
 
 // SQLite commands for app state management
 export {
