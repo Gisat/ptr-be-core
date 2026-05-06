@@ -1,3 +1,9 @@
+## [57.1.0](https://github.com/Gisat/ptr-be-core/compare/v57.0.0...v57.1.0) (2026-05-06)
+
+### Features
+
+* edit commands ([39cf0ec](https://github.com/Gisat/ptr-be-core/commit/39cf0ec7cc5e639128c2330466b59645e0fc96eb))
+
 # [57.0.0](https://github.com/Gisat/ptr-be-core/compare/v56.0.0...v57.0.0) (2026-04-14)
 
 
