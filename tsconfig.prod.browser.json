@@ -2,9 +2,11 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "rootDir": "src",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "bundler"
   },
+  "include": ["src/index.browser.ts"],
   "exclude": ["node_modules", "dist", "tests", "**/*.test.ts", "**/*.spec.ts", "vitest.config.ts"]
 }
