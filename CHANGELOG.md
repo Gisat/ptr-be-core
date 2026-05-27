@@ -1,3 +1,9 @@
+## [57.1.2](https://github.com/Gisat/ptr-be-core/compare/v57.1.1...v57.1.2) (2026-05-27)
+
+### Bug Fixes
+
+* lazy load sqlite3 native module to prevent GLIBC errors at import time ([47f183e](https://github.com/Gisat/ptr-be-core/commit/47f183e3bb71b230db9c20e8b8ddbe44409f6e80))
+
 ## [57.1.1](https://github.com/Gisat/ptr-be-core/compare/v57.1.0...v57.1.1) (2026-05-12)
 
 ### Bug Fixes
