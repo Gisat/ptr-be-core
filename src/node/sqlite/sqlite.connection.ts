@@ -1,4 +1,4 @@
-import sqlite3 from 'sqlite3';
+import type sqlite3 from 'sqlite3';
 import { Database, open } from 'sqlite';
 import { UsedSqlTables } from './enums.sqlite';
 
@@ -25,6 +25,7 @@ export type AppDb = Database<sqlite3.Database, sqlite3.Statement>
  * ```
  */
 export async function openDb(filename: string): Promise<AppDb> {
+	const { default: sqlite3 } = await import('sqlite3');
 	const db = await open({
 		filename, //database file will be created if it does not exist
 		driver: sqlite3.Database,
