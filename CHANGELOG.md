@@ -1,3 +1,13 @@
+## [58.0.0](https://github.com/Gisat/ptr-be-core/compare/v57.1.2...v58.0.0) (2026-06-02)
+
+### ⚠ BREAKING CHANGES
+
+* resolve moderate npm audit vulnerabilities
+
+### security
+
+* resolve moderate npm audit vulnerabilities ([b3f0d73](https://github.com/Gisat/ptr-be-core/commit/b3f0d736f7bc8a7786c01829232459a0f4e02912))
+
 ## [57.1.2](https://github.com/Gisat/ptr-be-core/compare/v57.1.1...v57.1.2) (2026-05-27)
 
 ### Bug Fixes
