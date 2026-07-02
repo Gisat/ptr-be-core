@@ -1,3 +1,5 @@
+## [58.0.2](https://github.com/Gisat/ptr-be-core/compare/v58.0.1...v58.0.2) (2026-07-02)
+
 ## [58.0.1](https://github.com/Gisat/ptr-be-core/compare/v58.0.0...v58.0.1) (2026-07-02)
 
 ## [58.0.0](https://github.com/Gisat/ptr-be-core/compare/v57.1.2...v58.0.0) (2026-06-02)
