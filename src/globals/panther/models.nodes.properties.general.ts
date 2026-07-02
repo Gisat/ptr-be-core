@@ -4,8 +4,8 @@
  */
 export interface HasInterval {
     intervalIso: string,
-    validFrom: number,
-    validTo: number
+    timestampFrom: number,
+    timestampTo: number
 }
 
 /**

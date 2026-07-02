@@ -71,8 +71,8 @@ const parseWithInterval = (bodyRaw: any): HasInterval => {
   const [from, to] = isoIntervalToTimestamps(intervalIso)
   const intervalResult: HasInterval = {
     intervalIso,
-    validFrom: from,
-    validTo: to
+    timestampFrom: from,
+    timestampTo: to
   }
 
   return intervalResult

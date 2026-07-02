@@ -57,8 +57,8 @@ describe("Parse graph structures (nodes and edges)", () => {
     const datasourceTimeseriesVector = findNodeByLabel(nodes, UsedDatasourceLabels.Timeseries)
 
     expect(datasourceTimeseriesVector?.documentId).toBeDefined()
-    expect(datasourceTimeseriesVector?.validFrom).toBeDefined()
-    expect(datasourceTimeseriesVector?.validTo).toBeDefined()
+    expect(datasourceTimeseriesVector?.timestampFrom).toBeDefined()
+    expect(datasourceTimeseriesVector?.timestampTo).toBeDefined()
     expect(datasourceTimeseriesVector?.intervalIso).toBeDefined()
     expect(datasourceTimeseriesVector?.step).toBeDefined()
 
