@@ -83,7 +83,7 @@ export const isoIntervalToTimestamps = (interval: string): [number, number] => {
   // valid interval with two parts
   else {
     if (!intervals.every(interval => hasIsoFormat(interval)))
-      throw new InvalidRequestError("Parameter utcIntervalIso is not ISO 8601 time interval (date01/date02) or year");
+      throw new InvalidRequestError("Parameter intervalIso is not ISO 8601 time interval (date01/date02) or year");
 
     const [int1, int2] = intervals.map(intervalIso => {
       const cleared = intervalIso.replace(" ", "")

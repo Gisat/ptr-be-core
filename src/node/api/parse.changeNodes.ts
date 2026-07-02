@@ -62,15 +62,15 @@ const paseHasLevels = (levelBody: unknown): HasLevels => {
  */
 const parseWithInterval = (bodyRaw: any): HasInterval => {
   const {
-    intervalISO,
+    intervalIso,
   } = bodyRaw
 
-  if (!intervalISO)
+  if (!intervalIso)
     throw new InvalidRequestError("Period must have UTC interval in ISO format")
 
-  const [from, to] = isoIntervalToTimestamps(intervalISO)
+  const [from, to] = isoIntervalToTimestamps(intervalIso)
   const intervalResult: HasInterval = {
-    validIntervalIso: intervalISO,
+    intervalIso,
     validFrom: from,
     validTo: to
   }
