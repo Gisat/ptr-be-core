@@ -3,7 +3,7 @@
  * Example: Period is connected to some time range.
  */
 export interface HasInterval {
-    validIntervalIso: string,
+    intervalIso: string,
     validFrom: number,
     validTo: number
 }

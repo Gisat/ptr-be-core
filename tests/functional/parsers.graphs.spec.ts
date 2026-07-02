@@ -59,7 +59,7 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(datasourceTimeseriesVector?.documentId).toBeDefined()
     expect(datasourceTimeseriesVector?.validFrom).toBeDefined()
     expect(datasourceTimeseriesVector?.validTo).toBeDefined()
-    expect(datasourceTimeseriesVector?.validIntervalIso).toBeDefined()
+    expect(datasourceTimeseriesVector?.intervalIso).toBeDefined()
     expect(datasourceTimeseriesVector?.step).toBeDefined()
 
     const timeseriesEdge = findEdgeByLabel(edges, UsedEdgeLabels.InPostgisLocation)

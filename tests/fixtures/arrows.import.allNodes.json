@@ -103,7 +103,7 @@
         "nameInternal": "test",
         "nameDisplay": "displayTest",
         "description": "Long Description",
-        "intervalISO": "2020/2025"
+        "intervalIso": "2020/2025"
       },
       "style": {}
     },
@@ -184,7 +184,7 @@
         "description": "Long Description",
         "table": "testTableInPostgis",
         "columns": "test01,test02",
-        "intervalISO": "2020/2025",
+        "intervalIso": "2020/2025",
         "step": "year",
         "documentId": "someVector"
       },
