@@ -16,7 +16,7 @@ These packages are required at runtime by consumers of this library. They are ke
 in `peerDependencies` using `--save-peer`.
 
 ```bash
-npm install sqlite@latest sqlite3@latest lodash@latest luxon@latest pino@latest --save-peer
+npm install lodash@latest luxon@latest pino@latest --save-peer
 ```
 
 ## Step 3 — Install devDependencies (development-only dependencies)
