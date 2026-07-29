@@ -1,3 +1,9 @@
+## [58.0.3](https://github.com/Gisat/ptr-be-core/compare/v58.0.2...v58.0.3) (2026-07-29)
+
+### Bug Fixes
+
+* Merge pull request [#62](https://github.com/Gisat/ptr-be-core/issues/62) from Gisat/jul26-remove-sqlite ([34f4466](https://github.com/Gisat/ptr-be-core/commit/34f4466e3aea7e8841bbffbbf13f19d18c893873))
+
 ## [58.0.2](https://github.com/Gisat/ptr-be-core/compare/v58.0.1...v58.0.2) (2026-07-02)
 
 ## [58.0.1](https://github.com/Gisat/ptr-be-core/compare/v58.0.0...v58.0.1) (2026-07-02)
