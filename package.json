@@ -32,8 +32,6 @@
     "pack:check": "npm pack --dry-run"
   },
   "peerDependencies": {
-    "sqlite": "^5.1.1",
-    "sqlite3": "^6.0.1",
     "lodash": "^4.18.1",
     "luxon": "^3.7.2",
     "pino": "^10.3.1"
