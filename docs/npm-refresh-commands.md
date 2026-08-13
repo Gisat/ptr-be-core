@@ -16,7 +16,7 @@ These packages are required at runtime by consumers of this library. They are ke
 in `peerDependencies` using `--save-peer`.
 
 ```bash
-npm install lodash@latest luxon@latest pino@latest --save-peer
+npm install pino@^10.3.1 --save-peer
 ```
 
 ## Step 3 — Install devDependencies (development-only dependencies)
@@ -24,5 +24,5 @@ npm install lodash@latest luxon@latest pino@latest --save-peer
 These packages are only needed during development, linting, building and testing.
 
 ```bash
-npm install @types/lodash@latest @types/luxon@latest @types/node@latest vitest@latest vite@latest vite-tsconfig-paths@latest @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest typescript-eslint@latest eslint@latest eslint-plugin-node@latest @rollup/plugin-json@latest @rollup/plugin-node-resolve@latest @rollup/plugin-typescript@latest rollup@latest rollup-plugin-dts@latest typescript@latest tsc-alias@latest tsconfig-paths@latest tslib@latest ts-node@latest tsx@latest --save-dev
+npm install @types/node@^26.2.0 typescript-eslint@^8.67.0 @stylistic/eslint-plugin@^5.10.0 eslint@^10.8.1 @rollup/plugin-node-resolve@^16.0.3 @rollup/plugin-typescript@^12.3.0 rollup@^4.62.4 tslib@^2.8.1 typescript@^6.0.3 vite@^8.2.1 vitest@^4.1.10 --save-dev
 ```
