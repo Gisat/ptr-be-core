@@ -36,26 +36,16 @@
     "pino": "^10.3.1"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^26.1.2",
-    "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^8.65.0",
     "eslint": "^10.8.0",
-    "eslint-plugin-node": "^11.1.0",
     "rollup": "^4.62.3",
-    "rollup-plugin-dts": "^6.4.1",
-    "ts-node": "^10.9.2",
-    "tsc-alias": "^1.9.1",
-    "tsconfig-paths": "^4.2.0",
     "tslib": "^2.8.1",
-    "tsx": "^4.23.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.65.0",
     "vite": "^8.1.5",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.10"
   },
   "repository": {
