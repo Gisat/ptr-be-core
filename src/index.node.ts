@@ -60,3 +60,8 @@ export {
     type AppSchemaTemplate,
     SwaggerTypes
 } from "./node/api/swagger.universal.js";
+
+// Used HTTP heasers across backend services
+export {
+    UsedHeaderNames, UsedHeaderValues
+} from "./node/api/enums.http.headers.js"
