@@ -16,23 +16,23 @@ export { type ApiEndpointResponse } from "./node/api/models.api.js";
 // Logger functionality
 export { loggyDebug, loggyError, loggyInfo, loggyWarn, loggyTrace, loggyFatal, loggyAppStart, loggyRequestReceived, loggyResponseSent } from "./node/logging/logger.js";
 
-// parse and validate nodes from Arrows.app JSON format
+// handle API errors
 export {
-    parseArrowsJson,
-} from "./node/api/parse.arrows.json.js";
+    handleRouteError,
+} from "./node/api/parsing.errors.js";
 
 // parse and validate nodes from raw input
 export {
     parseParsePantherNodes,
     parseSinglePantherNode
-} from "./node/api/parse.changeNodes.js";
+} from "./node/panther/parse.changeNodes.js";
 
 
 // parse and validate edges from raw input
 export {
     parseRichEdges,
     parseEqualEdges
-} from "./node/api/parse.changesEdges.js";
+} from "./node/panther/parse.changesEdges.js";
 
 // validations for panther graph model label enums
 export {
