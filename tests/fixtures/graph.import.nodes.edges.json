@@ -1,0 +1,117 @@
+{
+  "nodes": [
+    {
+      "key": "n0",
+      "labels": ["application"],
+      "nameInternal": "testApp",
+      "nameDisplay": "Testing Application",
+      "description": "Test app for metadata testing"
+    },
+    {
+      "key": "n1",
+      "labels": ["place"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "bbox": "11,22,33,44",
+      "geometry": "{geometry: \"here will be\"}"
+    },
+    {
+      "key": "n2",
+      "labels": ["period"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "intervalIso": "2020/2025"
+    },
+    {
+      "key": "n3",
+      "labels": ["attribute"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "unit": "cm",
+      "valueType": "integer"
+    },
+    {
+      "key": "n4",
+      "labels": ["layer"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description"
+    },
+    {
+      "key": "n5",
+      "labels": ["datasource", "cloudOptimizedGeotiff"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "url": "http://some.app",
+      "bands": "1,2,3",
+      "bandNames": "pm1, pm2, pm3",
+      "bandPeriods": "2020, 2021, 2022"
+    },
+    {
+      "key": "n6",
+      "labels": ["datasource", "attributeSource", "timeseries"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "intervalIso": "2020/2025",
+      "step": "year",
+      "documentId": "someVector"
+    }
+  ],
+  "edges": [
+    {
+      "label": "RELATED",
+      "fromKey": "n0",
+      "toKey": "n1",
+      "properties": {}
+    },
+    {
+      "label": "RELATED",
+      "fromKey": "n0",
+      "toKey": "n2",
+      "properties": {}
+    },
+    {
+      "label": "RELATED",
+      "fromKey": "n0",
+      "toKey": "n4",
+      "properties": {}
+    },
+    {
+      "label": "RELATED",
+      "fromKey": "n0",
+      "toKey": "n5",
+      "properties": {}
+    },
+    {
+      "label": "RELATED",
+      "fromKey": "n5",
+      "toKey": "n4",
+      "properties": {}
+    },
+    {
+      "label": "IN_POSTGIS_LOCATION",
+      "fromKey": "n3",
+      "toKey": "n6",
+      "properties": {
+        "column": "test01"
+      }
+    },
+    {
+      "label": "RELATED",
+      "fromKey": "n0",
+      "toKey": "n3",
+      "properties": {}
+    },
+    {
+      "label": "RELATED",
+      "fromKey": "n0",
+      "toKey": "n6",
+      "properties": {}
+    }
+  ]
+}
