@@ -10,6 +10,7 @@
  * and the value can be a string, number, boolean, or null.
  */
 export interface EdgePropertiesBasic {
+
     // TODO: Some basic shared part of properties inside all edges
     [key: string]: string | number | boolean | null
 }

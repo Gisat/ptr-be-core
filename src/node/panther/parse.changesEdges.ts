@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { InvalidRequestError } from "../api/models.errors"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
 import { enumValuesToString, isInEnum } from "../../globals/coding/code.formating"
@@ -33,15 +32,17 @@ export const parseRichEdges = (body: unknown): GraphEdge[] => {
 
         return parsedEdge
     }
+
     const edgesRaw = body as any[]
     
-    if (!_.isArray(edgesRaw))
+    if (!Array.isArray(edgesRaw))
         throw new InvalidRequestError("Graph edges must be an array of edges")
 
     if (edgesRaw.length === 0)
         throw new InvalidRequestError("Graph edges array must not be empty")
 
     const parsedEdges = edgesRaw.map(edge => parseSingleEdge(edge))
+
     return parsedEdges
 }
 
@@ -60,7 +61,7 @@ export const parseEqualEdges = (body: unknown): GraphRelation[] => {
      */
     const parseSingleEdgeRelation = (edgeRelation: unknown): GraphRelation => {
 
-        if (!_.isArray(edgeRelation))
+        if (!Array.isArray(edgeRelation))
             throw new InvalidRequestError("Every graph relation must be two element string tuple [string, string]")
 
         if (edgeRelation.length !== 2)
@@ -72,7 +73,7 @@ export const parseEqualEdges = (body: unknown): GraphRelation[] => {
         return edgeRelation as GraphRelation
     }
 
-    if (!_.isArray(relations))
+    if (!Array.isArray(relations))
         throw new InvalidRequestError("Graph edges must be an array of tuples")
 
     const validatedGraphEdges = relations.map(edge => parseSingleEdgeRelation(edge))

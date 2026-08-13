@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { enumCombineValuesToString, isInEnum } from "../../globals/coding/code.formating"
 import { InvalidRequestError } from "./models.errors"
 import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
@@ -18,7 +17,7 @@ export const validateNodeLabels = (labels: unknown) => {
     throw new InvalidRequestError("Graph node labels are required.")
   }
 
-  if (!_.isArray(labels))
+  if (!Array.isArray(labels))
     throw new InvalidRequestError(`Graph node labels must be an array of strings.`)
 
   if (labels.length === 0)

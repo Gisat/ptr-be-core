@@ -1,5 +1,4 @@
 import { randomUUID } from "crypto"
-import _ from "lodash"
 import { Unsure } from "../../globals/coding/code.types"
 import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 import { HasConfiguration, HasGeometry, HasInterval, HasLevels, HasUnits } from "../../globals/panther/models.nodes.properties.general"
@@ -69,6 +68,7 @@ const parseWithInterval = (bodyRaw: any): HasInterval => {
     throw new InvalidRequestError("Period must have UTC interval in ISO format")
 
   const [from, to] = isoIntervalToTimestamps(intervalIso)
+
   const intervalResult: HasInterval = {
     intervalIso,
     timestampFrom: from,
@@ -240,6 +240,7 @@ const parseHasDocumentId = (bodyRaw: any): HasDocumentId => {
  */
 const parseWithTimeseries = (bodyRaw: any): HasTimeseries => {
   const timeseriesIntervals = parseWithInterval(bodyRaw)
+
   const { step } = bodyRaw
 
   if (!step)
@@ -264,6 +265,7 @@ const parseWithTimeseries = (bodyRaw: any): HasTimeseries => {
  */
 const parseHasBands = (bodyRaw: any, required = false): Unsure<HasBands> => {
   const { bands, bandNames, bandPeriods } = bodyRaw
+
   let result: any
 
   if (required && (!bands || !bandNames || !bandPeriods))
@@ -372,6 +374,7 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
     // If node is an Attribute, add color information and units
     if (label === UsedNodeLabels.Attribute) {
       const parsedColor = parseWithColor(bodyNodeEntity, false);
+
       const parsedUnit = parseWithUnits(bodyNodeEntity, false);
       
       // Add parsed unit if available
@@ -400,7 +403,7 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
 export const parseParsePantherNodes = (body: unknown): FullPantherEntity[] => {
   const nodeArray = body as any[]
 
-  if (!_.isArray(nodeArray))
+  if (!Array.isArray(nodeArray))
     throw new InvalidRequestError("Request: Grah nodes must be an array")
 
   return nodeArray.map(PantherEntity => parseSinglePantherNode(PantherEntity))

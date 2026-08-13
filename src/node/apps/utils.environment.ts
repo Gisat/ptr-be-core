@@ -25,7 +25,9 @@ export const parsePackageJsonEnvironments = (cwdPath: string) => {
 
     // Read package.json for application
     const packageJsonPath = join(cwdPath, "package.json");
+
     const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+
     const { name: pkgName, description: pkgDescription, version: pkgVersion } = packageJson
 
     if (!pkgName || !pkgDescription || !pkgVersion)

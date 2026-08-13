@@ -90,6 +90,7 @@ export const loggyFatal = (label: string, message: string, options: Record<strin
  */
 export const loggyError = (label: string, err: Error | string, options: Record<string, any> = {}): void => {
   const message = typeof err === 'string' ? err : err.message
+
   const extra = typeof err === 'string' ? options : { ...options, stack: err.stack }
   logger.error({ ...extra, label, message })
 }

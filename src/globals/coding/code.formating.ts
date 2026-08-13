@@ -6,6 +6,7 @@
 export const isUrl = (candidate: string) => {
   try {
     new URL(candidate)
+
     return true
   } catch {
     return false
@@ -27,6 +28,7 @@ export const isArrayOfUrls = (candidates: string[]) => candidates.every(candidat
  */
 export const isInEnum = (value: any, enumEntity: any) => {
     const allEnumValues = Object.values(enumEntity) as string[]
+
     return allEnumValues.includes(value)
   }
 
@@ -84,7 +86,9 @@ export const enumValuesToArray = (enumType: any) => Object.values(enumType) as s
  */
 export const randomNumberBetween = (min: number, max: number) => {
   const minAr = Math.ceil(min)
+
   const maxAr = Math.floor(max)
+
   return Math.floor(Math.random()*(maxAr - minAr + 1) + min)
 }
 
@@ -114,11 +118,13 @@ export const randomNumberBetween = (min: number, max: number) => {
 export const flattenObject = (obj: any, prefix = ''): Record<string, any> => {
     return Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
         const propName = prefix ? `${prefix}.${key}` : key
+
         if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
             Object.assign(acc, flattenObject(obj[key], propName))
         } else {
             acc[propName] = obj[key]
         }
+
         return acc
     }, {})
 }
