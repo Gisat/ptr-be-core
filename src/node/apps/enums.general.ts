@@ -1,5 +1,5 @@
 /**
- * What environment setups we use for the BE applications
+ * Environment setups used by BE applications.
  */
 export enum UsedEnvironments {
   Prod = "prod",

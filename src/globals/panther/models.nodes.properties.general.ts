@@ -1,6 +1,6 @@
 /**
- * Datasource that has relevant time interval.
- * Example: Period is connected to some time range.
+ * Represents a time interval with ISO 8601 string and computed timestamps.
+ * Used by Period nodes and timeseries datasources.
  */
 export interface HasInterval {
     intervalIso: string,
@@ -9,14 +9,16 @@ export interface HasInterval {
 }
 
 /**
- * Entity with custom configuration
+ * Entity with a custom JSON configuration string.
+ * Stores serialised configuration for datasources, applications, etc.
  */
 export interface HasConfiguration {
     configuration: string // JSON string
 }
 
 /**
- * Place node - somewhere in the world
+ * Entity with geographic geometry and bounding box.
+ * Used by Place nodes to define spatial location.
  */
 export interface HasGeometry {
     geometry: any,
@@ -24,14 +26,16 @@ export interface HasGeometry {
 }
 
 /**
- * Place node - somewhere in the world
+ * Entity with a numeric level value.
+ * Used by AreaTreeLevel nodes to define hierarchy depth.
  */
 export interface HasLevels {
     level: number,
 }
 
 /**
- * Represents an entity that has a unit of measurement.
+ * Represents an entity that has a measurement unit and value type.
+ * Used by Attribute nodes to describe property types.
  */
 export interface HasUnits{
     unit: string

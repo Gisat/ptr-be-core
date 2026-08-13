@@ -1,7 +1,8 @@
 /**
- * Universal API model as resource for endpoint response with body and headers
- * Generic type T is type of body
- * Headers can be null
+ * Universal API response model.
+ * Wraps the response body and optional headers into a single structure.
+ *
+ * @typeParam T - The type of the response body.
  */
 export interface ApiEndpointResponse<T>{
     intoBody: T;

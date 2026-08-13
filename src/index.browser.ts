@@ -1,4 +1,10 @@
-// shared code helpers
+/**
+ * Browser entry point for ptr-be-core.
+ * Re-exports shared utilities available in both browser and Node.js environments.
+ * Groups exports by domain: formatting, dates, CSV, Panther graph models, types, and Arrows models.
+ */
+
+// shared code helpers — formatting, validation, and enum utilities
 export {
     enumCombineValuesToString,
     enumValuesToArray,
@@ -13,7 +19,7 @@ export {
     isArrayOfUrls
 } from "./globals/coding/code.formating.js";
 
-// code helpers for datetimes
+// code helpers for datetimes — timestamp and ISO format conversions
 export {
     isoIntervalToTimestamps,
     nowTimestamp,
@@ -24,13 +30,13 @@ export {
     isoDateToTimestamp
 } from "./globals/coding/code.dates.js";
 
-// code helpers for CSV formats
+// code helpers for CSV formats — parse comma-separated values
 export {
     csvParseNumbers,
     csvParseStrings
 } from "./globals/coding/formats.csv.js";
 
-// code helpers for Panther graph models
+// code helpers for Panther graph models — node and edge lookups
 export {
     filterNodeByLabel,
     findEdgeByLabel,
@@ -38,26 +44,26 @@ export {
     findNodeByLabel
 } from "./globals/panther/utils.panther.js";
 
-// Shared geenral code types
+// Shared general code types — Nullable, Unsure, Nullish, UsurePromise
 export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
 
-// Panther graph model - labels for nodes and edges
+// Panther graph model — labels for nodes, edges, datasources and timeseries steps
 export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels, UsedTimeseriesSteps } from "./globals/panther/enums.panther.js";
 
-// Panther graph model - edge specific properties
+// Panther graph model — edge-specific property interfaces
 export { type EdgeForPostgisLocationProperties, type EdgePropertiesBasic, type FullEdgeProperties } from "./globals/panther/models.edges.properties.js";
 
-// Panther graph model - edges and relations
+// Panther graph model — edge and relation tuple types
 export { type GraphEdge, type GraphRelation } from "./globals/panther/models.edges.js";
 
-// Panther graph model - Nodes with neighbours models
+// Panther graph model — node structural types (neighbours, edges)
 export { 
     type HasEdges, 
     type HasNeighbours, 
     type NodeWithNeighbours 
 } from "./globals/panther/models.nodes.structure.js";
 
-// Panther graph model - node definitions with specific properties
+// Panther graph model — general node property interfaces (geometry, interval, config, levels, units)
 export {
     type HasConfiguration,
     type HasGeometry,
@@ -66,7 +72,7 @@ export {
     type HasUnits
 } from "./globals/panther/models.nodes.properties.general.js";
 
-// Panther graph model - Datasource specific node properties
+// Panther graph model — datasource-specific node property interfaces (bands, url, color, etc.)
 export {
     type HasBands,
     type HasDocumentId,
@@ -76,7 +82,7 @@ export {
     type HasColor,
 } from "./globals/panther/models.nodes.properties.datasources.js";
 
-// Panther graph model - named node definitions
+// Panther graph model — named node definitions (Place, Period, Datasource, etc.)
 export {
     type Place,
     type Period,
@@ -88,7 +94,7 @@ export {
     type FullPantherEntity
 } from "./globals/panther/models.nodes.js";
 
-// Arrows.app models for import / export
+// Arrows.app models for import / export of diagram data
 export {
     type ArrowsNode,
     type ArrowsEdge
