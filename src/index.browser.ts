@@ -93,11 +93,3 @@ export {
     type PantherEntity,
     type FullPantherEntity
 } from "./globals/panther/models.nodes.js";
-
-// Arrows.app models for import / export of diagram data
-export {
-    type ArrowsNode,
-    type ArrowsEdge
-} from "./globals/arrows/models.arrows.js";
-
-
