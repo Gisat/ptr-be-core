@@ -1,21 +1,72 @@
-import pino from 'pino'
+import { hostname } from 'node:os'
 
 /**
- * Shared pino logger instance used by all logging functions.
- *
- * The logger uses ISO timestamps and a simple level formatter that exposes
- * the textual level as the `level` property on emitted objects.
+ * Log levels supported by the native logger, ordered from least to most severe.
  */
-const logger = pino({
-  timestamp: pino.stdTimeFunctions.isoTime,
-  formatters: {
+const logLevels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'] as const
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    level(label, number) {
-      return { level: label }
+type LogLevel = typeof logLevels[number]
+
+const configuredLevel = process.env.LOG_LEVEL?.toLowerCase()
+
+const logLevel: LogLevel = logLevels.includes(configuredLevel as LogLevel)
+  ? configuredLevel as LogLevel
+  : 'info'
+
+const logLevelThreshold = logLevels.indexOf(logLevel)
+
+const consoleMethods: Record<Exclude<LogLevel, 'silent'>, (...data: any[]) => void> = {
+  trace: console.debug,
+  debug: console.debug,
+  info: console.info,
+  warn: console.warn,
+  error: console.error,
+  fatal: console.error,
+}
+
+/**
+ * Serialize metadata while safely handling values unsupported by JSON.stringify.
+ */
+const serialize = (entry: Record<string, any>): string => {
+  const ancestors: object[] = []
+
+  return JSON.stringify(entry, function (_key, value) {
+    if (typeof value === 'bigint') return Number(value)
+
+    if (typeof value === 'object' && value !== null) {
+      while (ancestors.length > 0 && ancestors.at(-1) !== this) ancestors.pop()
+
+      if (ancestors.includes(value)) return '[Circular]'
+      ancestors.push(value)
     }
-  }
-})
+
+    return value
+  })
+}
+
+/**
+ * Emit one newline-delimited JSON record through the native console.
+ */
+const log = (
+  level: Exclude<LogLevel, 'silent'>,
+  label: string,
+  message: string,
+  options: Record<string, any>,
+): void => {
+  if (logLevels.indexOf(level) < logLevelThreshold) return
+
+  const entry = serialize({
+    level,
+    time: new Date().toISOString(),
+    pid: process.pid,
+    hostname: hostname(),
+    ...options,
+    label,
+    message,
+  })
+
+  consoleMethods[level](entry)
+}
 
 
 /**
@@ -26,7 +77,7 @@ const logger = pino({
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyInfo = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.info({ ...options, label, message })
+  log('info', label, message, options)
 }
 
 
@@ -38,7 +89,7 @@ export const loggyInfo = (label: string, message: string, options: Record<string
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyDebug = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.debug({ ...options, label, message })
+  log('debug', label, message, options)
 }
 
 
@@ -50,7 +101,7 @@ export const loggyDebug = (label: string, message: string, options: Record<strin
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyWarn = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.warn({ ...options, label, message })
+  log('warn', label, message, options)
 }
 
 
@@ -62,7 +113,7 @@ export const loggyWarn = (label: string, message: string, options: Record<string
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyTrace = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.trace({ ...options, label, message })
+  log('trace', label, message, options)
 }
 
 
@@ -76,7 +127,7 @@ export const loggyTrace = (label: string, message: string, options: Record<strin
  * @param {Record<string, any>} [options={}] - Additional metadata to include.
  */
 export const loggyFatal = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.fatal({ ...options, label, message })
+  log('fatal', label, message, options)
 }
 
 
@@ -92,7 +143,7 @@ export const loggyError = (label: string, err: Error | string, options: Record<s
   const message = typeof err === 'string' ? err : err.message
 
   const extra = typeof err === 'string' ? options : { ...options, stack: err.stack }
-  logger.error({ ...extra, label, message })
+  log('error', label, message, extra)
 }
 
 

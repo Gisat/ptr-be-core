@@ -32,9 +32,7 @@
     "before:push": "npm run format && npm run lint && npm run build && npm run test",
     "pack:check": "npm pack --dry-run"
   },
-  "peerDependencies": {
-    "pino": "^10.3.1"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/node": "^26.2.0",
     "vitest": "^4.1.10",

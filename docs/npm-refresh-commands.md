@@ -15,9 +15,7 @@ rm -rf node_modules && rm -f package-lock.json
 These packages are required at runtime by consumers of this library. They are kept
 in `peerDependencies` using `--save-peer`.
 
-```bash
-npm install pino@^10.3.1 --save-peer
-```
+There are currently no runtime peer dependencies to install.
 
 ## Step 3 — Install devDependencies (development-only dependencies)
 
