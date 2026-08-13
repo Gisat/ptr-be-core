@@ -29,10 +29,8 @@ export interface EdgePropertiesBasic {
  * @property {string | null} periodIso - The ISO 8601 period, e.g., "2025", "2025-01-01", or "2020-01-01/2020-12-31".
  */
 export interface EdgeForPostgisLocationProperties extends EdgePropertiesBasic {
-    tableName: string // Postgis table name
     column: string // Postgis column name inside mentioned table
     featureId: string | number | null // Postgis feature ID
-    featureIdColumn: string | null // Postgis column name inside mentioned table that contains feature ID
     periodIso: string | null // ISO 8601 period, e.g. "2025", "2025-01-01", "2020-01-01/2020-12-31"
 }
 
