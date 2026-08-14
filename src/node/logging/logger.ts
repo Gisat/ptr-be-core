@@ -1,106 +1,165 @@
-import pino from 'pino'
+import { hostname } from 'node:os'
 
 /**
- * Shared pino logger instance used by all logging functions.
- *
- * The logger uses ISO timestamps and a simple level formatter that exposes
- * the textual level as the `level` property on emitted objects.
+ * Log levels supported by the native logger, ordered from least to most severe.
  */
-const logger = pino({
-  timestamp: pino.stdTimeFunctions.isoTime,
-  formatters: {
+const logLevels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'] as const
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    level(label, number) {
-      return { level: label }
+type LogLevel = typeof logLevels[number]
+
+// Read log level from environment, default to 'info'
+const configuredLevel = process.env.LOG_LEVEL?.toLowerCase()
+
+const logLevel: LogLevel = logLevels.includes(configuredLevel as LogLevel)
+  ? configuredLevel as LogLevel
+  : 'info'
+
+// Compute the numeric threshold index for filtering
+const logLevelThreshold = logLevels.indexOf(logLevel)
+
+// Map each log level to the corresponding console method
+const consoleMethods: Record<Exclude<LogLevel, 'silent'>, (...data: any[]) => void> = {
+  trace: console.debug,
+  debug: console.debug,
+  info: console.info,
+  warn: console.warn,
+  error: console.error,
+  fatal: console.error,
+}
+
+/**
+ * Serialize a log entry object to JSON, handling bigints and circular references.
+ */
+const serialize = (entry: Record<string, any>): string => {
+  const ancestors: object[] = []
+
+  return JSON.stringify(entry, function (_key, value) {
+    // Convert bigint to number for JSON compatibility
+    if (typeof value === 'bigint') return Number(value)
+
+    // Detect and mark circular references
+    if (typeof value === 'object' && value !== null) {
+      while (ancestors.length > 0 && ancestors.at(-1) !== this) ancestors.pop()
+
+      if (ancestors.includes(value)) return '[Circular]'
+      ancestors.push(value)
     }
-  }
-})
+
+    return value
+  })
+}
+
+/**
+ * Emit a single newline-delimited JSON record through the native console.
+ * Skips emission if the entry's level is below the configured threshold.
+ */
+const log = (
+  level: Exclude<LogLevel, 'silent'>,
+  label: string,
+  message: string,
+  options: Record<string, any>,
+): void => {
+  // Skip if this level is below the configured threshold
+  if (logLevels.indexOf(level) < logLevelThreshold) return
+
+  // Build the structured log entry
+  const entry = serialize({
+    level,
+    time: new Date().toISOString(),
+    pid: process.pid,
+    hostname: hostname(),
+    ...options,
+    label,
+    message,
+  })
+
+  consoleMethods[level](entry)
+}
 
 
 /**
  * Log an informational message.
  *
- * @param {string} label - Short label or category for the log entry.
- * @param {string} message - Human-readable log message.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param label - Short label or category for the log entry.
+ * @param message - Human-readable log message.
+ * @param options - Additional metadata to include.
  */
 export const loggyInfo = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.info({ ...options, label, message })
+  log('info', label, message, options)
 }
 
 
 /**
  * Log a debug-level message.
  *
- * @param {string} label - Short label or category for the log entry.
- * @param {string} message - Human-readable debug message.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param label - Short label or category for the log entry.
+ * @param message - Human-readable debug message.
+ * @param options - Additional metadata to include.
  */
 export const loggyDebug = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.debug({ ...options, label, message })
+  log('debug', label, message, options)
 }
 
 
 /**
  * Log a warning-level message.
  *
- * @param {string} label - Short label or category for the log entry.
- * @param {string} message - Human-readable warning message.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param label - Short label or category for the log entry.
+ * @param message - Human-readable warning message.
+ * @param options - Additional metadata to include.
  */
 export const loggyWarn = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.warn({ ...options, label, message })
+  log('warn', label, message, options)
 }
 
 
 /**
  * Log a trace-level message.
  *
- * @param {string} label - Short label or category for the log entry.
- * @param {string} message - Human-readable trace message.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param label - Short label or category for the log entry.
+ * @param message - Human-readable trace message.
+ * @param options - Additional metadata to include.
  */
 export const loggyTrace = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.trace({ ...options, label, message })
+  log('trace', label, message, options)
 }
 
 
 /**
  * Log a fatal message.
- *
  * Use for unrecoverable errors that will abort the process.
  *
- * @param {string} label - Short label or category for the log entry.
- * @param {string} message - Human-readable fatal message.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param label - Short label or category for the log entry.
+ * @param message - Human-readable fatal message.
+ * @param options - Additional metadata to include.
  */
 export const loggyFatal = (label: string, message: string, options: Record<string, any> = {}): void => {
-  logger.fatal({ ...options, label, message })
+  log('fatal', label, message, options)
 }
 
 
 /**
- * Log an error. When an `Error` instance is provided, its stack is included
- * in the logged metadata.
+ * Log an error. When an Error instance is provided, its stack trace is included.
  *
- * @param {string} label - Short label or category for the log entry.
- * @param {Error|string} err - The error object or an error message string.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param label - Short label or category for the log entry.
+ * @param err - The error object or an error message string.
+ * @param options - Additional metadata to include.
  */
 export const loggyError = (label: string, err: Error | string, options: Record<string, any> = {}): void => {
   const message = typeof err === 'string' ? err : err.message
+
+  // Include stack trace if an Error object is provided
   const extra = typeof err === 'string' ? options : { ...options, stack: err.stack }
-  logger.error({ ...extra, label, message })
+  log('error', label, message, extra)
 }
 
 
 /**
  * Convenience logger for application start information.
  *
- * @param {string} host - Hostname or IP the app is bound to.
- * @param {number} port - Port number the app is listening on.
- * @param {Record<string, any>} [options={}] - Additional metadata to include.
+ * @param host - Hostname or IP the app is bound to.
+ * @param port - Port number the app is listening on.
+ * @param options - Additional metadata to include.
  */
 export const loggyAppStart = (
   host: string,
@@ -113,9 +172,9 @@ export const loggyAppStart = (
 /**
  * Log that an HTTP request was received.
  *
- * @param {string} route - The route or URL path requested.
- * @param {string} method - HTTP method (GET, POST, etc.).
- * @param {Record<string, any>} [options={}] - Additional metadata to include (e.g., headers, id).
+ * @param route - The route or URL path requested.
+ * @param method - HTTP method (GET, POST, etc.).
+ * @param options - Additional metadata to include.
  */
 export const loggyRequestReceived = (
   route: string,
@@ -128,10 +187,10 @@ export const loggyRequestReceived = (
 /**
  * Log that an HTTP response was sent.
  *
- * @param {string} route - The route or URL path the response corresponds to.
- * @param {string} method - HTTP method (GET, POST, etc.).
- * @param {number} status - HTTP status code returned.
- * @param {Record<string, any>} [options={}] - Additional metadata to include (e.g., timings).
+ * @param route - The route or URL path the response corresponds to.
+ * @param method - HTTP method.
+ * @param status - HTTP status code returned.
+ * @param options - Additional metadata to include.
  */
 export const loggyResponseSent = (
   route: string,

@@ -20,6 +20,7 @@ describe('flattenObject', () => {
             },
             d: 2
         }
+
         const expected = {
             'a.b.c': 1,
             'd': 2
@@ -56,6 +57,7 @@ describe('isInEnum', () => {
 describe('sortStringArray', () => {
     it('should sort an array of strings', () => {
         const arr = ['banana', 'apple', 'cherry']
+
         const expected = ['apple', 'banana', 'cherry']
         expect(sortStringArray(arr)).toEqual(expected)
     })
@@ -64,6 +66,7 @@ describe('sortStringArray', () => {
 describe('removeDuplicitiesFromArray', () => {
     it('should remove duplicate values from an array', () => {
         const arr = [1, 2, 2, 3, 4, 4, 5]
+
         const expected = [1, 2, 3, 4, 5]
         expect(removeDuplicitiesFromArray(arr)).toEqual(expected)
     })
@@ -128,7 +131,9 @@ describe('enumValuesToArray', () => {
 describe('randomNumberBetween', () => {
     it('should return a number between the specified range', () => {
         const min = 1
+
         const max = 10
+
         const result = randomNumberBetween(min, max)
         expect(result).toBeGreaterThanOrEqual(min)
         expect(result).toBeLessThanOrEqual(max)

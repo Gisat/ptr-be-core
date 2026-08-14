@@ -1,20 +1,21 @@
 import { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels } from "../../src/globals/panther/enums.panther"
 import { GraphEdge } from "../../src/globals/panther/models.edges"
 import { FullPantherEntity } from "../../src/globals/panther/models.nodes"
+import { parseParsePantherNodes } from "../../src/node/panther/parse.changeNodes"
+import { parseRichEdges } from "../../src/node/panther/parse.changesEdges"
 import { filterNodeByLabel, findEdgeByLabel, findNodeByLabel } from "../../src/globals/panther/utils.panther"
-import { parseArrowsJson } from "../../src/node/api/parse.arrows.json"
 
-import ArrowsImport from "../fixtures/arrows.import.allNodes.json"
+import GraphImport from "../fixtures/graph.import.nodes.edges.json"
 
 describe("Parse graph structures (nodes and edges)", () => {
 
   let nodes: FullPantherEntity[] = []
+
   let edges: GraphEdge[] = []
 
   beforeAll(() => {
-    const parsed = parseArrowsJson(ArrowsImport)
-    nodes = parsed.nodes
-    edges = parsed.edges
+    nodes = parseParsePantherNodes(GraphImport.nodes)
+    edges = parseRichEdges(GraphImport.edges)
   })
 
   it("Check parsed nodes by labels", () => {
@@ -42,18 +43,18 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(pantherEntity?.nameDisplay).toBeDefined()
     expect(pantherEntity?.lastUpdatedAt).toBeDefined()
     expect(pantherEntity?.labels).toBeDefined()
-    })
+  })
 
-    it("Check parsed COG datasource", () => {
+  it("Check parsed COG datasource", () => {
     const datasourceCog = findNodeByLabel(nodes, UsedDatasourceLabels.COG)
 
     expect(datasourceCog?.url).toBeDefined()
     expect(datasourceCog?.bands).toBeDefined()
     expect(datasourceCog?.bandNames).toBeDefined()
     expect(datasourceCog?.bandPeriods).toBeDefined()
-    })
+  })
 
-    it("Check parsed timeseries datasources", () => {
+  it("Check parsed timeseries datasources", () => {
     const datasourceTimeseriesVector = findNodeByLabel(nodes, UsedDatasourceLabels.Timeseries)
 
     expect(datasourceTimeseriesVector?.documentId).toBeDefined()
@@ -64,6 +65,6 @@ describe("Parse graph structures (nodes and edges)", () => {
 
     const timeseriesEdge = findEdgeByLabel(edges, UsedEdgeLabels.InPostgisLocation)
     expect(timeseriesEdge?.properties?.column).toBeDefined()
-    })
+  })
 
 })

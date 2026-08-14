@@ -4,7 +4,8 @@ import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasU
 import { Nullable } from "../coding/code.types.js"
 
 /**
- * General graph node - same for all metadatata entities
+ * Base graph node shared by all metadata entities.
+ * Every entity has labels, a unique key, display/internal names, a description, and a last-updated timestamp.
  */
 export interface PantherEntity {
     labels: Array<string | UsedNodeLabels | UsedDatasourceLabels>,
@@ -16,58 +17,41 @@ export interface PantherEntity {
 }
 
 /**
- * Place node - somewhere in the world
+ * Place node — represents a geographic location with geometry.
  */
 export interface Place extends PantherEntity, HasGeometry { }
 
 /**
- * Period node - selected time in timeline
+ * Period node — represents a time range with interval.
  */
 export interface Period extends PantherEntity, HasInterval { }
 
 /**
- * Area tree node - tree of areas
+ * Area tree level node — represents a level in a hierarchical area tree.
  */
 export interface AreaTreeLevel extends PantherEntity, HasLevels { }
 
 /**
- * Datasource with source configuration
+ * Datasource node — represents a data source with optional configuration, URL, bands, timeseries, etc.
  */
 export interface Datasource extends PantherEntity, Partial<HasConfiguration & HasUrl & HasBands & HasTimeseries & HasSpecificName & HasColor & HasDocumentId> { }
 
 /**
- * Application node - main entity in metadata model
+ * Application node — the main root entity in the metadata model, with optional configuration.
  */
 export interface ApplicationNode extends PantherEntity, Partial<HasConfiguration> { }
 
 /**
- * Attribute node - describes a property of an entity
- * Like "temperature", "humidity", "population", etc.
+ * Attribute node — describes a property of an entity (e.g. "temperature", "population").
+ * May have optional color and unit information.
  */
 export interface Attribute extends PantherEntity, Partial<HasColor & HasUnits> {
 }
 
 /**
- * Represents a comprehensive Panther entity composed of the required core
- * PantherEntity shape plus a collection of optional feature mixins.
- *
- * The base PantherEntity provides the mandatory identity and core fields.
- * The additional capabilities are included via Partial<...>, so they may be
- * absent at runtime:
- * - HasGeometry: spatial geometry (e.g. GeoJSON) for spatial features.
- * - HasInterval: temporal interval or validity range for the entity.
- * - HasLevels: hierarchical or zoom/detail levels.
- * - HasConfiguration: rendering or domain-specific configuration data.
- * - HasUrl: an external URL or resource locator.
- * - HasBands: spectral band information (useful for raster/multiband data).
- * - HasSpecificName: alternate or more specific naming fields.
- * - HasColor: color or styling metadata.
- * - HasUnits: measurement units for numeric values.
- * - HasDocumentId: backend/document database identifier.
- * - HasTimeseries: timeseries metadata or embedded series data.
- *
- * Use this interface when you need a single type that can represent a fully
- * featured Panther entity. Consumers should always check for the presence of
- * optional properties before accessing them.
+ * Full-featured Panther entity combining the base entity with all optional property mixins.
+ * Properties like geometry, interval, levels, configuration, URL, bands, specific name,
+ * color, units, document ID, and timeseries are all optional.
+ * Consumers should check for presence before accessing optional fields.
  */
 export interface FullPantherEntity extends PantherEntity, Partial<HasGeometry & HasInterval & HasLevels & HasConfiguration & HasUrl & HasBands & HasSpecificName & HasColor & HasUnits &  HasDocumentId & HasTimeseries> { }

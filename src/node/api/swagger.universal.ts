@@ -1,6 +1,7 @@
 /**
- * Universal Swagger types and utilities
- * This interface can be extended for more precise typing if needed.
+ * Universal schema template for API endpoint documentation.
+ * Supports body, querystring, params, headers, response schemas plus metadata fields.
+ * Can be extended with additional properties via the index signature.
  */
 export interface AppSchemaTemplate {
   body?: Record<string, any>;
@@ -15,7 +16,7 @@ export interface AppSchemaTemplate {
 }
 
 /**
- * Shared swagger types used in API documentation
+ * Shared Swagger data types used in API documentation schemas.
  */
 export enum SwaggerTypes {
   String = "string",

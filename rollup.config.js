@@ -1,6 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve'; // Resolves node_modules imports
 import typescript from '@rollup/plugin-typescript'; // Compiles TypeScript files
-import json from '@rollup/plugin-json'; // Allows importing JSON files
 import { exec } from 'child_process';
 
 import { createRequire } from 'module'; // Enables using require in ES modules
@@ -18,7 +17,6 @@ export default [
       ...Object.keys(pkg.peerDependencies || {}), // Excludes peer dependencies from the bundle
     ],
     plugins: [
-      json(), // Enables JSON imports
       resolve({ extensions: ['.mjs', '.cjs', '.js', '.ts'] }), // Resolves file extensions
       typescript({ tsconfig: './tsconfig.prod.browser.json' }) // Uses the specified TypeScript configuration
     ],
@@ -61,7 +59,6 @@ export default [
       ...Object.keys(pkg.peerDependencies || {}), // Excludes peer dependencies from the bundle
     ],
     plugins: [
-      json(), // Enables JSON imports
       resolve({ extensions: ['.mjs', '.cjs', '.js', '.ts'] }), // Resolves file extensions
       typescript({ tsconfig: './tsconfig.prod.node.json' }) // Uses the specified TypeScript configuration
     ],

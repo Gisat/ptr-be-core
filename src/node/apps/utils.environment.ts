@@ -5,29 +5,24 @@ import { loggyWarn } from '../logging/logger';
 /**
  * Parse package.json metadata from a given working directory.
  *
- * Reads the file at path.join(cwdPath, "package.json"), parses it as JSON and returns the
- * package's name, description and version.
+ * Reads package.json, extracts name, description, and version.
+ * Logs a warning if any of these fields are missing.
  *
- * @param cwdPath - Absolute or relative path to the application's working directory containing package.json.
- * @returns An object with the extracted properties:
- *  - pkgName: string | undefined — value of package.json's "name" field
- *  - pkgDescription: string | undefined — value of package.json's "description" field
- *  - pkgVersion: string | undefined — value of package.json's "version" field
- * @throws {Error} Propagates errors from fs.readFileSync or JSON.parse if the file cannot be read or contains invalid JSON.
- * @remarks
- * - If any of the required fields (name, description, version) are missing the function will still return,
- *   but will call loggyWarn to emit a warning.
- * - This function does not validate the semantics of the values (e.g. semver format for version).
- * @example
- * const { pkgName, pkgDescription, pkgVersion } = parsePackageJsonEnvironments("/path/to/app");
+ * @param cwdPath - Absolute or relative path to the application's working directory.
+ * @returns Object with pkgName, pkgDescription, and pkgVersion (all string | undefined).
+ * @throws {Error} If the file cannot be read or parsed (propagates from fs/JSON).
  */
 export const parsePackageJsonEnvironments = (cwdPath: string) => {
 
-    // Read package.json for application
+    // Build the path to package.json and read it
     const packageJsonPath = join(cwdPath, "package.json");
+
     const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+
+    // Extract required fields
     const { name: pkgName, description: pkgDescription, version: pkgVersion } = packageJson
 
+    // Warn if any essential fields are missing
     if (!pkgName || !pkgDescription || !pkgVersion)
         loggyWarn("Environment parse:", `Package.json is missing some of the required fields: name, description, version`)
 

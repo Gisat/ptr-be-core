@@ -58,6 +58,7 @@ describe("Code helper functions", () => {
 
     test("randomNumberBetween", () => {
         const min = 1, max = 10;
+
         const random = randomNumberBetween(min, max);
         expect(random).toBeGreaterThanOrEqual(min);
         expect(random).toBeLessThanOrEqual(max);

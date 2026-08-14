@@ -1,5 +1,6 @@
 /**
- * We miss a API parameter needed to process action
+ * Error indicating a required API parameter is missing or invalid.
+ * Results in an HTTP 400 response.
  */
 class InvalidRequestError extends Error{
   constructor(message: string){
@@ -8,7 +9,8 @@ class InvalidRequestError extends Error{
 }
 
 /**
- * Where client has general authorization issue
+ * Error indicating the client failed authorization.
+ * Results in an HTTP 401 response.
  */
 class AuthorizationError extends Error{
   constructor(){
@@ -17,7 +19,8 @@ class AuthorizationError extends Error{
 }
 
 /**
- * General backend server side error
+ * General backend server-side error.
+ * Results in an HTTP 500 response.
  */
 class ServerError extends Error{
   constructor(message: string){
@@ -26,7 +29,7 @@ class ServerError extends Error{
 }
 
 /**
- * Error to indicate that some functionality is SSR only
+ * Error indicating a feature is only available in SSR (Server-Side Rendering) context.
  */
 class SSROnlyError extends Error{
   constructor(message: string){

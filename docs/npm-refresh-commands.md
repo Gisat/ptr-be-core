@@ -1,28 +1,21 @@
 # NPM Refresh Commands
 
-This document contains CLI commands for a clean reinstall of all NPM packages.
-The process removes `node_modules` and `package-lock.json`, then reinstalls all
-dependencies using the newest major versions available on the npm registry.
+This document contains the commands for a clean reinstall of every declared NPM package. Remove the existing install and lockfile first, then reinstall the latest compatible releases.
 
-## Step 1 — Clean existing install
+## Clean existing install
 
-```bash
+```sh
 rm -rf node_modules && rm -f package-lock.json
 ```
 
-## Step 2 — Install peerDependencies (runtime dependencies)
+## Install peer dependencies
 
-These packages are required at runtime by consumers of this library. They are kept
-in `peerDependencies` using `--save-peer`.
+There are currently no packages in `peerDependencies`, so no peer-dependency install command is needed. When peer dependencies are added, install them with `npm install <packages> --save-peer` so they remain peer dependencies.
 
-```bash
-npm install lodash@latest luxon@latest pino@latest --save-peer
+## Install development dependencies
+
+```sh
+npm install @types/node@latest vitest@latest @stylistic/eslint-plugin@latest eslint@latest typescript-eslint@latest @rollup/plugin-node-resolve@latest @rollup/plugin-typescript@latest rollup@latest tslib@latest typescript@6.0.3 vite@latest --save-dev
 ```
 
-## Step 3 — Install devDependencies (development-only dependencies)
-
-These packages are only needed during development, linting, building and testing.
-
-```bash
-npm install @types/lodash@latest @types/luxon@latest @types/node@latest vitest@latest vite@latest vite-tsconfig-paths@latest @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest typescript-eslint@latest eslint@latest eslint-plugin-node@latest @rollup/plugin-json@latest @rollup/plugin-node-resolve@latest @rollup/plugin-typescript@latest rollup@latest rollup-plugin-dts@latest typescript@latest tsc-alias@latest tsconfig-paths@latest tslib@latest ts-node@latest tsx@latest --save-dev
-```
+TypeScript is pinned to the newest compatible 6.x release because `typescript-eslint@8.67.0` requires TypeScript `<6.1.0`.

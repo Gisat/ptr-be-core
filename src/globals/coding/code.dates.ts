@@ -1,51 +1,60 @@
-import { DateTime } from "luxon"
 import { InvalidRequestError } from "../../node/api/models.errors"
 
 /**
- * Return epoch timestamp
- * @param regime Set if you want milisecond format or second format
- * @returns 
+ * Return current epoch timestamp in either milliseconds or seconds.
+ *
+ * @param regime - Choose between "millisecond" (default) or "second" format.
+ * @returns Current epoch timestamp as a number.
  */
 export const nowTimestamp = (regime: "milisecond" | "second" = "milisecond"): number => {
-  const timestamp = DateTime.now().toMillis()
+  const timestamp = Date.now()
+
+  // Convert to seconds if requested, otherwise return milliseconds
   return regime === "second" ? Math.round((timestamp / 1000)) : timestamp
 }
 
 /**
- * Return now local timestamp plus number of seconds to add
- * @param secondsToAdd Seconds to add from now (1 = now + 1 sec.)
- * @returns Timestamp of the future (past) on seconds
+ * Return current epoch timestamp in seconds plus an offset.
+ *
+ * @param secondsToAdd - Number of seconds to add from now (use negative for past).
+ * @returns Future (or past) timestamp in seconds.
  */
 export const nowPlusTime = (secondsToAdd: number) => {
-  return Math.round(DateTime.now().plus({seconds: secondsToAdd}).toSeconds())
+  return Math.round(Date.now() / 1000 + secondsToAdd)
 }
 
 /**
- * Convert epoch time value into ISO format
- * @param epochValue Epoch value of the timestamp
- * @returns ISO format of the date
+ * Convert an epoch timestamp to ISO 8601 string format.
+ *
+ * @param epochValue - Epoch timestamp in milliseconds.
+ * @returns ISO 8601 formatted date string.
  */
-export const epochToIsoFormat = (epochValue: number) => DateTime.fromMillis(epochValue).toISO() as string
+export const epochToIsoFormat = (epochValue: number) => new Date(epochValue).toISOString()
 
 /**
- * Return epoch timestamp
- * @param regime Set if you want milisecond format or second format
- * @returns 
+ * Return current time as an ISO 8601 string.
+ *
+ * @returns Current timestamp in ISO 8601 format.
  */
 export const nowTimestampIso = () => {
-  const timestamp = DateTime.now().toISO()
+  const timestamp = new Date().toISOString()
+
   return timestamp as string
 }
 
 /**
- * Check if input date is valid for ISO format
- * @param dateToCheck 
- * @returns 
+ * Check if a string is a valid ISO 8601 date format.
+ *
+ * @param dateToCheck - String to validate as ISO date.
+ * @returns True if the string matches ISO 8601 format, false otherwise.
  */
  export const hasIsoFormat = (dateToCheck: string) => {
   try{
     const toDate = new Date(Date.parse(dateToCheck))
-    const isoCheck = toDate.toISOString().includes(dateToCheck) 
+
+    // Verify that round-tripping through Date preserves the original string
+    const isoCheck = toDate.toISOString().includes(dateToCheck)
+ 
     return isoCheck
   }
   catch{
@@ -54,39 +63,46 @@ export const nowTimestampIso = () => {
 }
 
 /**
- * Convert date in ISO formtat to milisecond timestamp
- * @param isoDate Date in ISO 8601 format
- * @returns Timestamp representing the date in miliseconds
+ * Convert an ISO 8601 date string to a millisecond timestamp.
+ *
+ * @param isoDate - Date in ISO 8601 format.
+ * @returns Timestamp in milliseconds.
  */
-export const isoDateToTimestamp = (isoDate: string) => DateTime.fromISO(isoDate).toMillis()
+export const isoDateToTimestamp = (isoDate: string) => new Date(isoDate).getTime()
 
 /**
- * Format ISO 8601 interval to from-to values
- * @param interval Defined inteval in ISO format (from/to) of the UTC
- * @returns Tuple - from timestamp and to timestamp
+ * Parse an ISO 8601 time interval (from/to) into a tuple of millisecond timestamps.
+ *
+ * Supports formats: "YYYY-MM-DD/YYYY-MM-DD" or a single year "YYYY".
+ *
+ * @param interval - ISO 8601 interval string (e.g. "2025-01-01/2025-12-31" or "2025").
+ * @returns Tuple [fromTimestamp, toTimestamp] in milliseconds.
+ * @throws {InvalidRequestError} If the interval has more than two parts or is not valid ISO 8601.
  */
 export const isoIntervalToTimestamps = (interval: string): [number, number] => {
 
   // Split the interval into two parts
   const intervals = interval.split("/")
 
-  // interval as a single year has just one part
+  // Single year interval — expand to full year range and recurse
   if (intervals.length == 1) {
     const newIso = `${interval}-01-01/${interval}-12-31`
+
     return isoIntervalToTimestamps(newIso)
   }
 
-  // interval with two parts or less than one
+  // Reject intervals with more than two parts or empty
   else if (intervals.length > 2 || intervals.length < 1)
     throw new InvalidRequestError("Interval can have only two parameters")
 
-  // valid interval with two parts
+  // Valid two-part interval — validate each part and convert to timestamps
   else {
     if (!intervals.every(interval => hasIsoFormat(interval)))
       throw new InvalidRequestError("Parameter intervalIso is not ISO 8601 time interval (date01/date02) or year");
 
     const [int1, int2] = intervals.map(intervalIso => {
       const cleared = intervalIso.replace(" ", "")
+
       return isoDateToTimestamp(cleared)
     })
 

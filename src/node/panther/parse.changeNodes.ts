@@ -1,21 +1,21 @@
 import { randomUUID } from "crypto"
-import _ from "lodash"
 import { Unsure } from "../../globals/coding/code.types"
 import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 import { HasConfiguration, HasGeometry, HasInterval, HasLevels, HasUnits } from "../../globals/panther/models.nodes.properties.general"
-import { InvalidRequestError } from "./models.errors"
+import { InvalidRequestError } from "../api/models.errors"
 import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "../../globals/panther/models.nodes.properties.datasources"
 import { UsedDatasourceLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
-import { validateNodeLabels } from "./validations.shared"
+import { validateNodeLabels } from "../api/validations.shared"
 import { isoIntervalToTimestamps, nowTimestamp } from "../../globals/coding/code.dates"
 import { csvParseNumbers, csvParseStrings } from "../../globals/coding/formats.csv"
 
 /**
- * Extract and parse basic entitry from request body
- * This parse function is used in other parsers, becuase basic entity is part of other models
- * @param bodyRaw Body from http request
- * @param key Optional - key value for existing recods in database
- * @returns Parsed entity - all unwanted parameters are gone
+ * Extract and parse basic entity fields from a raw request body.
+ * Fields parsed: labels, nameInternal, nameDisplay, description, key.
+ * Generates a UUID for key if not provided.
+ *
+ * @param bodyRaw - Raw HTTP request body.
+ * @returns Parsed PantherEntity with validated labels and generated defaults.
  */
 const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
   const {
@@ -26,8 +26,10 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
     key
   } = bodyRaw as any
 
+  // Validate labels against allowed enums
   validateNodeLabels(labels)
 
+  // Build the basic entity with defaults for missing fields
   const basicGraphResult: PantherEntity = {
     lastUpdatedAt: nowTimestamp(),
     key: key ?? randomUUID(),
@@ -41,9 +43,10 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
 }
 
 /**
- * Parse node of type area tree level 
- * @param levelBody Content from request
- * @returns Parsed area tree level
+ * Parse the level property from raw body for area tree level nodes.
+ *
+ * @param levelBody - Raw body containing level data.
+ * @returns Parsed HasLevels object with the level value.
  */
 const paseHasLevels = (levelBody: unknown): HasLevels => {
   const { level } = levelBody as any
@@ -56,19 +59,25 @@ const paseHasLevels = (levelBody: unknown): HasLevels => {
 }
 
 /**
- * Parse body to period entity
- * @param bodyRaw Request body content - can be anything
- * @returns Parsed entity - all unwanted parameters are gone
+ * Parse interval data from raw body for period nodes.
+ * Extracts intervalIso and converts it to timestamps.
+ *
+ * @param bodyRaw - Raw body containing interval data.
+ * @returns Parsed HasInterval with ISO string and computed timestamps.
+ * @throws {InvalidRequestError} If intervalIso is missing or invalid.
  */
 const parseWithInterval = (bodyRaw: any): HasInterval => {
   const {
     intervalIso,
   } = bodyRaw
 
+  // Interval is required for period nodes
   if (!intervalIso)
     throw new InvalidRequestError("Period must have UTC interval in ISO format")
 
+  // Parse ISO interval into from/to timestamps
   const [from, to] = isoIntervalToTimestamps(intervalIso)
+
   const intervalResult: HasInterval = {
     intervalIso,
     timestampFrom: from,
@@ -78,22 +87,37 @@ const parseWithInterval = (bodyRaw: any): HasInterval => {
   return intervalResult
 }
 
+/**
+ * Parse configuration from raw body, optionally required.
+ * Stringifies object configurations to JSON strings.
+ *
+ * @param bodyRaw - Raw body containing configuration data.
+ * @param required - If true, throws when configuration is missing.
+ * @returns HasConfiguration object or undefined if not required and missing.
+ * @throws {InvalidRequestError} If required and configuration is missing.
+ */
 const parseWithConfiguration = (bodyRaw: any, required = false): Unsure<HasConfiguration> => {
   const { configuration } = bodyRaw
 
+  // Throw if configuration is required but missing
   if (!configuration && required)
     throw new InvalidRequestError("Configuration is required")
 
+  // Skip if configuration is not provided
   if (!configuration)
     return
 
+  // Stringify object configs for consistent storage format
   return { configuration: typeof configuration === 'string' ? configuration : JSON.stringify(configuration) }
 }
 
 /**
- * Parse body to place entity
- * @param bodyRaw Request body content - can be anything
- * @returns 
+ * Parse geometry data including bounding box and GeoJSON geometry.
+ * Bbox is parsed from CSV string to an array of 4 coordinates.
+ *
+ * @param bodyRaw - Raw body containing geometry and bbox.
+ * @returns Parsed HasGeometry object.
+ * @throws {InvalidRequestError} If bbox CSV does not contain exactly 4 numbers.
  */
 const parseHasGeometry = (bodyRaw: any) => {
   const {
@@ -102,12 +126,12 @@ const parseHasGeometry = (bodyRaw: any) => {
   } = bodyRaw
 
   /**
-   * Convert bbox from CSV string to array of 4 coordinates
-   * @returns Parsed bounding box from CSV string
+   * Convert bbox from CSV string to array of 4 coordinate numbers.
    */
   const bboxFromCSV = () => {
     const bboxFromCSV = csvParseNumbers(bbox as string)
 
+    // Validate bbox has exactly 4 values (xmin, ymin, xmax, ymax)
     if (bboxFromCSV.length !== 4)
       throw new InvalidRequestError("bbox must be an array of 4 numbers")
 
@@ -123,37 +147,42 @@ const parseHasGeometry = (bodyRaw: any) => {
 }
 
 /**
- * Parses the input object and extracts the `url` property.
- * If the `url` property is not present or is undefined, it returns `null` for `url`.
+ * Parse URL property from raw body.
  *
- * @param bodyRaw - The raw input object that may contain a `url` property.
- * @returns An object with a single `url` property, which is either the extracted value or `null`.
+ * @param bodyRaw - Raw body containing URL data.
+ * @param isRequired - If true, throws when URL is missing (default: true).
+ * @returns HasUrl object or undefined if not required and missing.
+ * @throws {InvalidRequestError} If required and URL is missing.
  */
 const parseHasUrl = (bodyRaw: any, isRequired = true): Unsure<HasUrl> => {
   const { url } = bodyRaw
 
+  // Throw if URL is required but missing
   if (isRequired && !url)
     throw new InvalidRequestError("Url is required for the node")
 
+  // Skip if URL is not provided
   if (!url) return
 
   return { url }
 }
 
 /**
- * Parses the `specificName` property from the provided object and returns it wrapped in a `HasSpecificName` type.
+ * Parse the specificName property from raw body.
  *
- * @param bodyRaw - The raw input object potentially containing the `specificName` property.
- * @param isRequired - If `true`, throws an `InvalidRequestError` when `specificName` is missing. Defaults to `false`.
- * @returns An object with the `specificName` property if present, or `undefined` if not required and missing.
- * @throws {InvalidRequestError} If `isRequired` is `true` and `specificName` is not provided.
+ * @param bodyRaw - Raw body containing specificName data.
+ * @param isRequired - If true, throws when specificName is missing (default: false).
+ * @returns HasSpecificName object or undefined if not required and missing.
+ * @throws {InvalidRequestError} If required and specificName is missing.
  */
 const parseHasSpecificName = (bodyRaw: any, isRequired = false): Unsure<HasSpecificName> => {
   const { specificName } = bodyRaw
 
+  // Throw if specificName is required but missing
   if (isRequired && !specificName)
     throw new InvalidRequestError("Property specificName is required for the node")
 
+  // Skip if not provided
   if (!specificName) return
 
   return { specificName }
@@ -162,40 +191,38 @@ const parseHasSpecificName = (bodyRaw: any, isRequired = false): Unsure<HasSpeci
 
 
 /**
- * Parses the `color` property from the provided `bodyRaw` object and returns it
- * wrapped in an object if it exists. If the `isRequired` flag is set to `true`
- * and the `color` property is missing, an error is thrown.
+ * Parse the color property from raw body.
  *
- * @param bodyRaw - The raw input object containing the `color` property.
- * @param isRequired - A boolean indicating whether the `color` property is required.
- *                      Defaults to `false`.
- * @returns An object containing the `color` property if it exists, or `undefined` if not required.
- * @throws {InvalidRequestError} If `isRequired` is `true` and the `color` property is missing.
+ * @param bodyRaw - Raw body containing color data.
+ * @param isRequired - If true, throws when color is missing (default: false).
+ * @returns HasColor object or undefined if not required and missing.
+ * @throws {InvalidRequestError} If required and color is missing.
  */
 const parseWithColor = (bodyRaw: any, isRequired = false): Unsure<HasColor> => {
   const { color } = bodyRaw
 
+  // Throw if color is required but missing
   if (isRequired && !color)
     throw new InvalidRequestError("Property color is required for the node")
 
+  // Skip if not provided
   if (!color) return
 
   return { color }
 }
 
 /**
- * Parses the provided raw body object to extract unit and valueType properties.
- * Ensures that the required properties are present if `isRequired` is set to true.
+ * Parse unit and valueType properties from raw body.
  *
- * @param bodyRaw - The raw input object containing the properties to parse.
- * @param isRequired - A boolean indicating whether the `unit` and `valueType` properties are mandatory.
- *                      Defaults to `false`.
- * @returns An object containing the `unit` and `valueType` properties, or `null` if they are not provided.
- * @throws {InvalidRequestError} If `isRequired` is true and either `unit` or `valueType` is missing.
+ * @param bodyRaw - Raw body containing unit and valueType data.
+ * @param isRequired - If true, throws when unit or valueType is missing (default: false).
+ * @returns HasUnits object or undefined if not required and missing.
+ * @throws {InvalidRequestError} If required and unit or valueType is missing.
  */
 const parseWithUnits = (bodyRaw: any, isRequired = false): Unsure<HasUnits> => {
   const { unit, valueType } = bodyRaw
 
+  // Throw if required fields are missing
   if (isRequired && (!unit || !valueType))
     throw new InvalidRequestError("Properties unit and valueType are required for the node")
 
@@ -203,19 +230,16 @@ const parseWithUnits = (bodyRaw: any, isRequired = false): Unsure<HasUnits> => {
 }
 
 /**
- * Parse and validate the `documentId` property from a raw request body.
+ * Parse the documentId property from raw body.
  *
- * Extracts `documentId` from `bodyRaw` and returns it as an object matching
- * HasDocumentId, wrapped in the Unsure type. If `documentId` is missing or
- * falsy, the function throws an InvalidRequestError.
- *
- * @param bodyRaw - The raw request body (e.g. parsed JSON) expected to contain `documentId`.
- * @returns Unsure<HasDocumentId> — an object with the `documentId` property.
- * @throws {InvalidRequestError} Thrown when `documentId` is not present on `bodyRaw`.
+ * @param bodyRaw - Raw body containing documentId data.
+ * @returns HasDocumentId object with the documentId value.
+ * @throws {InvalidRequestError} If documentId is missing.
  */
 const parseHasDocumentId = (bodyRaw: any): HasDocumentId => {
   const { documentId } = bodyRaw
 
+  // Document ID is required
   if (!documentId)
     throw new InvalidRequestError("Property documentId is required for the node")
 
@@ -223,25 +247,19 @@ const parseHasDocumentId = (bodyRaw: any): HasDocumentId => {
 }
 
 /**
- * Parse timeseries information from a raw request body.
+ * Parse timeseries data including interval and step granularity.
+ * Delegates interval parsing to parseWithInterval.
  *
- * Delegates interval parsing to `parseWithInterval(bodyRaw)` and then
- * attaches the `step` value from the provided `bodyRaw` to the resulting
- * timeseries object. The function does not mutate the input object.
- *
- * @param bodyRaw - Raw request payload (unknown/loose shape). Expected to
- *                  contain whatever fields `parseWithInterval` requires and
- *                  optionally a `step` property.
- * @returns A `HasTimeseries` object composed of the interval-related fields
- *          returned by `parseWithInterval` plus the `step` property from
- *          `bodyRaw` (which may be `undefined` if not present).
- * @throws Rethrows any errors produced by `parseWithInterval` when the input
- *         body is invalid for interval parsing.
+ * @param bodyRaw - Raw body containing timeseries data.
+ * @returns HasTimeseries object with interval fields and step.
+ * @throws {InvalidRequestError} If step is missing.
  */
 const parseWithTimeseries = (bodyRaw: any): HasTimeseries => {
   const timeseriesIntervals = parseWithInterval(bodyRaw)
+
   const { step } = bodyRaw
 
+  // Step is required for timeseries datasources
   if (!step)
     throw new InvalidRequestError("Property step is required for timeseries datasource")
 
@@ -249,36 +267,35 @@ const parseWithTimeseries = (bodyRaw: any): HasTimeseries => {
 }
 
 /**
- * Parses the `bands`, `bandNames`, and `bandPeriods` properties from the provided raw input object.
- * 
- * - If `required` is `true`, throws an `InvalidRequestError` if any of the properties are missing.
- * - Converts CSV strings to arrays:
- *   - `bands` is parsed as an array of numbers.
- *   - `bandNames` and `bandPeriods` are parsed as arrays of trimmed strings.
- * - Returns an object containing any of the parsed properties that were present in the input.
+ * Parse bands, bandNames, and bandPeriods from CSV strings in raw body.
  *
- * @param bodyRaw - The raw input object potentially containing `bands`, `bandNames`, and `bandPeriods` as CSV strings.
- * @param required - If `true`, all three properties are required and an error is thrown if any are missing. Defaults to `false`.
- * @returns An object with the parsed properties, or `undefined` if none are present.
- * @throws {InvalidRequestError} If `required` is `true` and any property is missing.
+ * @param bodyRaw - Raw body containing bands data.
+ * @param required - If true, throws when any band property is missing (default: false).
+ * @returns HasBands object with parsed arrays, or undefined if no band data present.
+ * @throws {InvalidRequestError} If required and any band property is missing.
  */
 const parseHasBands = (bodyRaw: any, required = false): Unsure<HasBands> => {
   const { bands, bandNames, bandPeriods } = bodyRaw
+
   let result: any
 
+  // Throw if bands are required but missing
   if (required && (!bands || !bandNames || !bandPeriods))
     throw new InvalidRequestError("Bands, bandNames and bandPeriods are required for the node")
 
+  // Parse bands from CSV string to number array
   if (bands) {
     result = result ?? {}
     Object.assign(result, { bands: csvParseNumbers(bands as string) })
   }
 
+  // Parse bandNames from CSV string to trimmed string array
   if (bandNames) {
     result = result ?? {}
     Object.assign(result, { bandNames: csvParseStrings(bandNames as string) })
   }
 
+  // Parse bandPeriods from CSV string to trimmed string array
   if (bandPeriods) {
     result = result ?? {}
     Object.assign(result, { bandPeriods: csvParseStrings(bandPeriods as string) })
@@ -288,34 +305,35 @@ const parseHasBands = (bodyRaw: any, required = false): Unsure<HasBands> => {
 }
 
 /**
- * Parse single graph node from body entity 
- * @param bodyNodeEntity Entity from request body
- * @returns Parsed object for specific node
+ * Parse a single graph node from a raw request body entity.
+ * Applicable property parsers are applied based on the node's labels.
+ *
+ * @param bodyNodeEntity - Single entity from the request body.
+ * @returns Fully parsed FullPantherEntity with all applicable properties.
  */
 export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEntity => {
 
-  // Parse basic node properties first
+  // Parse basic node properties first — labels, key, names, description
   let node: PantherEntity = parseBasicNodeFromBody(bodyNodeEntity)
 
-  // Parse additional properties for specific node types
-  // single for loop is used to avoid multiple labels array iterations
+  // Iterate over labels once to apply all relevant property parsers
   for (const label of node.labels) {
 
-    // If node is a Period, add interval information
+    // Period — add interval information
     if (label === UsedNodeLabels.Period)
       node = { ...node, ...parseWithInterval(bodyNodeEntity) };
 
-    // If node is a Place, add geographic information
+    // Place — add geographic geometry and bbox
     if (label === UsedNodeLabels.Place)
       node = { ...node, ...parseHasGeometry(bodyNodeEntity) };
 
-    // If node is a Datasource or Application, add configuration when available
+    // Datasource or Application — add optional configuration
     if (label === UsedNodeLabels.Datasource || label === UsedNodeLabels.Application) {
       const parsedConfiguration = parseWithConfiguration(bodyNodeEntity, false);
       node = parsedConfiguration ? { ...node, ...parsedConfiguration } : node;
     }
 
-    // If node is a online Datasource, add URL information
+    // Online datasources with URLs — add URL
     const datasourcesWithUrl = [
       UsedDatasourceLabels.COG,
       UsedDatasourceLabels.WMS,
@@ -325,36 +343,34 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
       UsedDatasourceLabels.Geojson
     ];
 
-    // If node is a Datasource with URL, add URL information
     if (datasourcesWithUrl.includes(label as UsedDatasourceLabels)) {
       const parsedUrl = parseHasUrl(bodyNodeEntity, true);
       node = parsedUrl ? { ...node, ...parsedUrl } : node;
     }
 
-    // If node is a Datasource with bands, add bands information
+    // Raster datasources — add optional band information
     const datasourcesWithPossibleBands = [
       UsedDatasourceLabels.COG,
     ];
 
-    // If node is a Datasource can have bands, add them
     if (datasourcesWithPossibleBands.includes(label as UsedDatasourceLabels)) {
       const parsedBands = parseHasBands(bodyNodeEntity, false);
       node = parsedBands ? { ...node, ...parsedBands } : node;
     }
 
-    // If node is a Style, add specific name information
+    // Style or MapStyle — add specific name
     if (label === UsedNodeLabels.Style || label === UsedDatasourceLabels.MapStyle) {
       const parsedSpecificName = parseHasSpecificName(bodyNodeEntity, true);
       node = parsedSpecificName ? { ...node, ...parsedSpecificName } : node;
     }
 
-    // If node is a Datasource with timeseries, add timeseries information
+    // Timeseries datasource — add interval and step
     if (label === UsedDatasourceLabels.Timeseries) {
       const parsedTimeseries = parseWithTimeseries(bodyNodeEntity);
       node = { ...node, ...parsedTimeseries };
     }
 
-    // If node is a Datasource with document ID, add document ID information
+    // Datasources with document ID — PostGIS and Timeseries
     const datasourcesWithDocumentId = [
       UsedDatasourceLabels.PostGIS,
       UsedDatasourceLabels.Timeseries
@@ -365,22 +381,21 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
       node = { ...node, ...parsedDocumentId };
     }
 
-    // If node is an AreaTreeLevel, add level information
+    // AreaTreeLevel — add level information
     if (label === UsedNodeLabels.AreaTreeLevel)
       node = { ...node, ...paseHasLevels(bodyNodeEntity) };
 
-    // If node is an Attribute, add color information and units
+    // Attribute — add optional color and unit information
     if (label === UsedNodeLabels.Attribute) {
       const parsedColor = parseWithColor(bodyNodeEntity, false);
+
       const parsedUnit = parseWithUnits(bodyNodeEntity, false);
       
-      // Add parsed unit if available
       node = parsedUnit ? { 
         ...node, 
         ...parsedUnit 
       } : node;
 
-      // Add parsed color if available
       node = parsedColor ? { 
         ...node, 
         ...parsedColor 
@@ -393,16 +408,20 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
 }
 
 /**
- * Parse array of graph nodes from request body
- * @param body Array of graph nodes inside http request body
- * @returns Array of parsed graph nodes in correct form
+ * Parse an array of graph nodes from a raw request body.
+ *
+ * @param body - Array of graph node objects from the HTTP request body.
+ * @returns Array of parsed FullPantherEntity objects.
+ * @throws {InvalidRequestError} If body is not an array.
  */
 export const parseParsePantherNodes = (body: unknown): FullPantherEntity[] => {
   const nodeArray = body as any[]
 
-  if (!_.isArray(nodeArray))
+  // Validate the body is an array
+  if (!Array.isArray(nodeArray))
     throw new InvalidRequestError("Request: Grah nodes must be an array")
 
+  // Parse each node entity through the single-node parser
   return nodeArray.map(PantherEntity => parseSinglePantherNode(PantherEntity))
 }
 
