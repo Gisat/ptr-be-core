@@ -1,3 +1,15 @@
+## [58.1.0](https://github.com/Gisat/ptr-be-core/compare/v58.0.3...v58.1.0) (2026-08-14)
+
+### Features
+
+* Added enums for HTTP headers used across services ([7d8cb63](https://github.com/Gisat/ptr-be-core/commit/7d8cb63bc57ed9a6a32eefa18b0767d52a3cc90e))
+* implement staging changes for ptr-be-core ([8aaf119](https://github.com/Gisat/ptr-be-core/commit/8aaf119af98e3813c837496f443b6ef01a9e17c9))
+
+### Bug Fixes
+
+* **feedback file:** remove unused dependencies and fixed eslint rules ([d8eb3a7](https://github.com/Gisat/ptr-be-core/commit/d8eb3a7936799e55a7a67777f4acef0851098d2e))
+* npm cleaning ([a02263c](https://github.com/Gisat/ptr-be-core/commit/a02263ce60134a0d167743fb93e5934682c1caa8))
+
 ## [58.0.3](https://github.com/Gisat/ptr-be-core/compare/v58.0.2...v58.0.3) (2026-07-29)
 
 ### Bug Fixes
