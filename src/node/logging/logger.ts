@@ -5,6 +5,7 @@ import { hostname } from 'node:os'
  */
 const logLevels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'] as const
 
+/** Union of supported log level names derived from the `logLevels` array. */
 type LogLevel = typeof logLevels[number]
 
 // Read log level from environment, default to 'info'
@@ -29,6 +30,9 @@ const consoleMethods: Record<Exclude<LogLevel, 'silent'>, (...data: any[]) => vo
 
 /**
  * Serialize a log entry object to JSON, handling bigints and circular references.
+ *
+ * @param entry - Log entry fields to serialize.
+ * @returns The entry serialized as a JSON string.
  */
 const serialize = (entry: Record<string, any>): string => {
   const ancestors: object[] = []
@@ -52,6 +56,11 @@ const serialize = (entry: Record<string, any>): string => {
 /**
  * Emit a single newline-delimited JSON record through the native console.
  * Skips emission if the entry's level is below the configured threshold.
+ *
+ * @param level - The severity level for this log entry.
+ * @param label - Short classification label.
+ * @param message - Human-readable message body.
+ * @param options - Extra metadata key-value pairs.
  */
 const log = (
   level: Exclude<LogLevel, 'silent'>,

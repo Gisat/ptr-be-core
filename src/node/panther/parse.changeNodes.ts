@@ -125,10 +125,13 @@ const parseHasGeometry = (bodyRaw: any) => {
     geometry,
   } = bodyRaw
 
-  /**
+/**
    * Convert bbox from CSV string to array of 4 coordinate numbers.
+   *
+   * @returns An array of 4 numbers: [xmin, ymin, xmax, ymax].
+   * @throws {InvalidRequestError} If the parsed bbox does not have exactly 4 values.
    */
-  const bboxFromCSV = () => {
+  const bboxFromCSV = (): number[] => {
     const bboxFromCSV = csvParseNumbers(bbox as string)
 
     // Validate bbox has exactly 4 values (xmin, ymin, xmax, ymax)
