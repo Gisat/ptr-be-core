@@ -1,3 +1,11 @@
+/**
+ * CSV Tansport format
+ * We encode the filter into CSV format
+ * The singe filter is a single CSL line
+ * Format : attibute , fromValue , toValue , equal , orderBy , ascending , groupBy
+ */
+
+
 /** Describes a filter query for Panther attribute-based filtering. */
 export interface PantherAttributeQuery {
     /** Attribute name to filter on. */
@@ -36,8 +44,50 @@ export const PantherFilter = () => {
         descend: () => (filter.ascending = "descend", build),
         groupBy: (column: string) => (filter.groupBy = column, build),
         /** Return a shallow copy of the assembled filter object. */
-        result: () => ({ ...filter })
+        result: () => ({ ...filter }),
+        /** Serialize the assembled filter into a CSV line, keeping empty slots for unset fields. */
+        returnLineCSV: () => [
+            filter.attributeName,
+            filter.fromValue,
+            filter.toValue,
+            filter.equal,
+            filter.orderBy,
+            filter.ascending,
+            filter.groupBy
+        ].map((v) => v ?? "").join(", ")
     }
 
     return build
+}
+
+/** Converts a raw CSV field back into a boolean, number, or string value. */
+const parseCSVValue = (value: string): string | number | boolean => {
+    if (value === "true") return true
+    if (value === "false") return false
+    if (value !== "" && !isNaN(Number(value))) return Number(value)
+    return value
+}
+
+/**
+ * Parses a CSV line in the declared transport format back into a {@link PantherAttributeQuery}.
+ * Empty slots become undefined; numeric and boolean values are converted back to native types.
+ *
+ * @param line - CSV line produced by `returnLineCSV`.
+ * @returns The reconstructed filter query.
+ */
+export const parseFilterCSV = (line: string): PantherAttributeQuery => {
+    // Split into fields and strip surrounding whitespace
+    const [attributeName, fromValue, toValue, equal, orderBy, ascending, groupBy] =
+        line.split(", ").map((field) => field.trim())
+
+    // Rebuild the filter, leaving empty slots undefined and defaulting sort direction
+    return {
+        attributeName,
+        fromValue: fromValue !== "" ? Number(fromValue) : undefined,
+        toValue: toValue !== "" ? Number(toValue) : undefined,
+        equal: equal !== "" ? parseCSVValue(equal) : undefined,
+        orderBy: orderBy !== "" ? orderBy : undefined,
+        ascending: (ascending === "ascend" || ascending === "descend" ? ascending : "ascend"),
+        groupBy: groupBy !== "" ? groupBy : undefined
+    }
 }
