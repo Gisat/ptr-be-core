@@ -1,5 +1,5 @@
 /**
- * CSV Tansport format
+ * INFO: CSV Tansport format
  * We encode the filter into CSV format
  * The singe filter is a single CSL line
  * Format : chainingInfo,  attibute , fromValue , toValue , equal , orderBy , ascending , groupBy
@@ -57,7 +57,7 @@ export const PantherFilter = () => {
         /** Return all filters assembled so far. */
         result: () => [...filters, { ...current }],
         /** Serialise all filters into multi-line CSV, preserving empty slots for unset fields. */
-        returnLineCSV: () => [...filters, current].map((f) => [
+        returnCSV: () => [...filters, current].map((f) => [
             f.chainingInfo ?? "",
             f.attributeName,
             f.fromValue,
@@ -72,14 +72,6 @@ export const PantherFilter = () => {
     return build
 }
 
-/** Converts a raw CSV field back into a boolean, number, or string value. */
-const parseCSVValue = (value: string): string | number | boolean => {
-    if (value === "true") return true
-    if (value === "false") return false
-    if (value !== "" && !isNaN(Number(value))) return Number(value)
-    return value
-}
-
 /**
  * Parses multi-line CSV (one filter per row) back into an array of {@link PantherAttributeQuery}.
  * Empty slots become undefined; numeric and boolean values are converted back to native types.
@@ -87,7 +79,16 @@ const parseCSVValue = (value: string): string | number | boolean => {
  * @param lines - Multi-line CSV produced by `returnLineCSV`.
  * @returns The reconstructed list of filter queries.
  */
-export const parseFilterCSV = (lines: string): PantherAttributeQuery[] => {
+export const parsePantherFilterCSV = (lines: string): PantherAttributeQuery[] => {
+
+    /** Converts a raw CSV field back into a boolean, number, or string value. */
+    const parseCSVValue = (value: string): string | number | boolean => {
+        if (value === "true") return true
+        if (value === "false") return false
+        if (value !== "" && !isNaN(Number(value))) return Number(value)
+        return value
+    }
+
     return lines.split("\n")
         .filter((line) => line.trim() !== "")
         .map((line) => {
