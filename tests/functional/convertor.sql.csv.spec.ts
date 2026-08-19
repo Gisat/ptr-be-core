@@ -1,4 +1,4 @@
-import { PantherFilter, parsePantherFilterCSV } from "../../src/globals/filtering/convertor.sql.csv"
+import { PantherFilter, parsePantherFilterCSV, webEncodeFilterCSV, webDecodeFilterCSV } from "../../src/globals/filtering/convertor.sql.csv"
 
 describe("PantherFilter builder - single filter", () => {
     test("attribute and range setters build the expected filter", () => {
@@ -107,6 +107,28 @@ describe("PantherFilter returnCSV - serialization", () => {
         expect(csv.split("\n")).toHaveLength(2)
         expect(csv.split("\n")[1].startsWith("or, ")).toBe(true)
     })
+
+    test("returnEncodedCSV serializes to a single-line Base64url string", () => {
+        const builder = PantherFilter()
+            .attribute("price")
+            .from(10)
+            .to(100)
+            .descend()
+            .nextAttribute("qty", "and")
+            .ascend()
+            .equal(5)
+
+        const encoded = builder.returnEncodedCSV()
+
+        expect(encoded).toMatch(/^[A-Za-z0-9_-]+$/)
+        expect(encoded).not.toContain("\n")
+        expect(encoded).not.toContain("+")
+        expect(encoded).not.toContain("/")
+        expect(encoded).not.toContain("=")
+
+        expect(JSON.parse(JSON.stringify(webDecodeFilterCSV(encoded))))
+            .toEqual(JSON.parse(JSON.stringify(builder.result())))
+    })
 })
 
 describe("parsePantherFilterCSV - parsing", () => {
@@ -187,5 +209,51 @@ describe("PantherFilter CSV round-trip", () => {
 
         expect(JSON.parse(JSON.stringify(parsePantherFilterCSV(builder.returnCSV()))))
             .toEqual(JSON.parse(JSON.stringify(builder.result())))
+    })
+})
+
+describe("webEncodeFilterCSV / webDecodeFilterCSV - Base64url transport", () => {
+    test("encoded output is single-line, URL-safe, and opaque", () => {
+        const filters = PantherFilter().attribute("price").from(10).to(100).descend().result()
+
+        const encoded = webEncodeFilterCSV(filters)
+
+        expect(encoded).toMatch(/^[A-Za-z0-9_-]+$/)
+        expect(encoded).not.toContain("\n")
+        expect(encoded).not.toContain("+")
+        expect(encoded).not.toContain("/")
+        expect(encoded).not.toContain("=")
+        expect(encoded).not.toBe(", price, 10, 100, , , descend, ")
+    })
+
+    test("round-trip reproduces the filters", () => {
+        const builder = PantherFilter()
+            .attribute("price")
+            .from(10)
+            .to(100)
+            .descend()
+            .nextAttribute("qty", "and")
+            .ascend()
+            .equal(5)
+            .nextAttribute("active", "or")
+            .descend()
+            .equal(true)
+
+        const decoded = webDecodeFilterCSV(webEncodeFilterCSV(builder.result()))
+
+        expect(JSON.parse(JSON.stringify(decoded)))
+            .toEqual(JSON.parse(JSON.stringify(builder.result())))
+    })
+
+    test("throws on empty input", () => {
+        expect(() => webDecodeFilterCSV(""))
+            .toThrow(/non-empty/i)
+        expect(() => webDecodeFilterCSV("   "))
+            .toThrow(/non-empty/i)
+    })
+
+    test("throws on invalid Base64url characters", () => {
+        expect(() => webDecodeFilterCSV("not valid !!!"))
+            .toThrow(/invalid Base64url/i)
     })
 })

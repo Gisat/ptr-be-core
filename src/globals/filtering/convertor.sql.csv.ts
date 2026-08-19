@@ -4,6 +4,11 @@
  * The singe filter is a single CSL line
  * Format : chainingInfo,  attibute , fromValue , toValue , equal , orderBy , ascending , groupBy
  * ChainingInfo: empty for first row, then "and" or "or"
+ *
+ * Transport: `webEncodeFilterCSV` wraps this CSV in a single-line
+ * RFC 4648 §5 Base64url string (URL-safe, unpadded) for opacity and safe
+ * use in URLs/query params. A consuming backend must decode with the same
+ * scheme. This is encoding for compactness, not encryption.
  */
 
 
@@ -105,7 +110,15 @@ export const PantherFilter = () => {
             f.orderBy,
             f.ascending,
             f.groupBy
-        ].map((v) => v ?? "").join(", ")).join("\n")
+        ].map((v) => v ?? "").join(", ")).join("\n"),
+
+        /**
+         * Serialize all filters into the single-line RFC 4648 §5 Base64url
+         * transport string (opaque, URL-safe). Decode with `webDecodeFilterCSV`.
+         *
+         * @returns The Base64url-encoded transport string.
+         */
+        returnEncodedCSV: () => webEncodeFilterCSV([...filters, current])
     }
 
     return build
@@ -155,4 +168,96 @@ export const parsePantherFilterCSV = (lines: string): PantherAttributeQuery[] =>
                 groupBy: groupBy !== "" ? groupBy : undefined
             }
         })
+}
+
+/**
+ * Encodes a string into RFC 4648 §5 Base64url (URL-safe, no padding).
+ * Works in both browsers (`btoa`) and Node (`Buffer`).
+ *
+ * @param value - Raw string to encode.
+ * @returns The Base64url-encoded string.
+ */
+const webToBase64url = (value: string): string => {
+    const base64 = typeof Buffer !== "undefined"
+        ? Buffer.from(value, "utf8").toString("base64")
+        : btoa(value)
+
+    return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
+}
+
+/**
+ * Decodes a RFC 4648 §5 Base64url string back to its original form.
+ * Throws if the input is not valid Base64url.
+ *
+ * @param value - Base64url-encoded string.
+ * @returns The decoded string.
+ */
+const webFromBase64url = (value: string): string => {
+    const normalized = value.replace(/-/g, "+").replace(/_/g, "/")
+
+    const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4)
+
+    if (typeof Buffer !== "undefined") {
+        return Buffer.from(padded, "base64").toString("utf8")
+    }
+
+    return atob(padded)
+}
+
+/**
+ * Builds the same multi-line CSV serialization used by `PantherFilter.returnCSV`
+ * from a list of filter queries.
+ *
+ * @param filters - The filter queries to serialize.
+ * @returns The multi-line CSV string.
+ */
+const toCSV = (filters: PantherAttributeQuery[]): string => filters.map((f) => [
+    f.chainingInfo ?? "",
+    f.attributeName,
+    f.fromValue,
+    f.toValue,
+    f.equal,
+    f.orderBy,
+    f.ascending,
+    f.groupBy
+].map((v) => v ?? "").join(", ")).join("\n")
+
+/**
+ * Serializes filter queries into a single opaque, URL-safe transport string
+ * (RFC 4648 §5 Base64url encoding of the CSV format documented above).
+ *
+ * This does not encrypt the payload; it only makes it compact and hard to
+ * guess. A separate backend must decode it with the same scheme.
+ *
+ * @param filters - The filter queries to encode.
+ * @returns A single-line Base64url string.
+ */
+export const webEncodeFilterCSV = (filters: PantherAttributeQuery[]): string =>
+    webToBase64url(toCSV(filters))
+
+/**
+ * Deserializes a Base64url transport string back into filter queries.
+ *
+ * Validates that the input is a non-empty Base64url string before decoding.
+ *
+ * @param encoded - The single-line Base64url string produced by `webEncodeFilterCSV`.
+ * @returns The reconstructed list of filter queries.
+ * @throws If the input is empty or not valid Base64url encoding.
+ */
+export const webDecodeFilterCSV = (encoded: string): PantherAttributeQuery[] => {
+    if (typeof encoded !== "string" || encoded.trim() === "") {
+        throw new Error("webDecodeFilterCSV: input must be a non-empty Base64url string, got empty value")
+    }
+
+    if (!/^[A-Za-z0-9_-]+$/.test(encoded)) {
+        throw new Error("webDecodeFilterCSV: input contains invalid Base64url characters (expected A-Za-z0-9, '_' or '-')")
+    }
+
+    const csv = webFromBase64url(encoded)
+
+    if (csv.trim() === "") {
+        throw new Error("webDecodeFilterCSV: decoded payload is empty")
+    }
+
+    return parsePantherFilterCSV(csv)
 }
