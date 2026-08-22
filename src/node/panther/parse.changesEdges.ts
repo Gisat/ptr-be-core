@@ -15,6 +15,10 @@ export const parseRichEdges = (body: unknown): GraphEdge[] => {
 
     /**
      * Parse a single edge object, validating its label, fromKey, and toKey.
+     *
+     * @param edge - Raw edge object from the request body.
+     * @returns Parsed GraphEdge with validated label, keys, and properties.
+     * @throws {InvalidRequestError} If label, fromKey, or toKey are missing or invalid.
      */
     const parseSingleEdge = (edge: unknown): GraphEdge => {
 
@@ -79,6 +83,10 @@ export const parseEqualEdges = (body: unknown): GraphRelation[] => {
     /**
      * Validate a single edge relation tuple.
      * Must be a two-element array of strings with different values.
+     *
+     * @param edgeRelation - Raw relation tuple from the request body.
+     * @returns Validated GraphRelation tuple.
+     * @throws {InvalidRequestError} If the relation is not a valid two-element tuple.
      */
     const parseSingleEdgeRelation = (edgeRelation: unknown): GraphRelation => {
 
