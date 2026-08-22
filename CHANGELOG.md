@@ -1,3 +1,12 @@
+## [58.2.0](https://github.com/Gisat/ptr-be-core/compare/v58.1.0...v58.2.0) (2026-08-22)
+
+### Features
+
+* add Base64url encoding/decoding for URL-safe filter CSV transport ([d618bf7](https://github.com/Gisat/ptr-be-core/commit/d618bf7d344b096dfca956449ad0c8fdde59a39c))
+* add chaining support to filter builder with nextAttribute and multi-line CSV ([b0ba682](https://github.com/Gisat/ptr-be-core/commit/b0ba6820e39b3df66ff500f6fc1b12fa32be7fe6))
+* add returnLineCSV and parseFilterCSV for CSV transport format ([5b995e7](https://github.com/Gisat/ptr-be-core/commit/5b995e7a689c2a7ae4746400737b27ceb63e663a))
+* export PantherFilter, parsePantherFilterCSV and PantherAttributeQuery from browser entry ([93c4643](https://github.com/Gisat/ptr-be-core/commit/93c4643898826250f65121a15f0b060fe8ffa359))
+
 ## [58.1.0](https://github.com/Gisat/ptr-be-core/compare/v58.0.3...v58.1.0) (2026-08-14)
 
 ### Features
