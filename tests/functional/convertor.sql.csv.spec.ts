@@ -35,6 +35,12 @@ describe("PantherFilter builder - single filter", () => {
         expect(asBooleanFalse[0].equal).toBe(false)
     })
 
+    test("equalMany accepts an array of mixed values", () => {
+        const filter = PantherFilter().attribute("colour").equalMany(["red", 5, true]).result()
+
+        expect(filter[0].equalMany).toEqual(["red", 5, true])
+    })
+
     test("result returns copies that do not mutate on later setter calls", () => {
         const builder = PantherFilter().attribute("price").from(1)
         const first = builder.result()
@@ -90,7 +96,13 @@ describe("PantherFilter returnCSV - serialization", () => {
     test("single filter serializes with empty slots preserved", () => {
         const line = PantherFilter().attribute("price").from(10).to(100).descend().returnCSV()
 
-        expect(line).toBe(", price, 10, 100, , , descend, , ")
+        expect(line).toBe(", price, 10, 100, , , , descend, , ")
+    })
+
+    test("equalMany serializes as a JSON array in its column", () => {
+        const line = PantherFilter().attribute("colour").equalMany(["red", 5, true]).returnCSV()
+
+        expect(line).toBe(', colour, , , , ["red",5,true], , , , ')
     })
 
     test("multi-filter chain serializes to newline-joined rows", () => {
@@ -102,7 +114,7 @@ describe("PantherFilter returnCSV - serialization", () => {
             .ascend()
             .returnCSV()
 
-        expect(csv).toBe(", price, , , , , descend, , \nand, qty, , , 5, , ascend, , ")
+        expect(csv).toBe(", price, , , , , , descend, , \nand, qty, , , 5, , , ascend, , ")
     })
 
     test("or chaining uses or in the chaining column", () => {
@@ -121,7 +133,7 @@ describe("PantherFilter returnCSV - serialization", () => {
             .geometry({ type: "Polygon", coordinates: [[[0, 0], [1, 1]]] })
             .returnCSV()
 
-        expect(csv).toBe(', area, , , , , , , {"type":"Polygon","coordinates":[[[0,0],[1,1]]]}')
+        expect(csv).toBe(', area, , , , , , , , {"type":"Polygon","coordinates":[[[0,0],[1,1]]]}')
     })
 
     test("returnEncodedCSV serializes to a single-line Base64url string", () => {
@@ -149,7 +161,7 @@ describe("PantherFilter returnCSV - serialization", () => {
 
 describe("parsePantherFilterCSV - parsing", () => {
     test("parses a single line into one filter with native types", () => {
-        const parsed = parsePantherFilterCSV(", price, 10, 100, , name, descend, type")
+        const parsed = parsePantherFilterCSV(", price, 10, 100, , , name, descend, type")
 
         expect(parsed).toHaveLength(1)
         expect(parsed[0]).toEqual({
@@ -164,16 +176,22 @@ describe("parsePantherFilterCSV - parsing", () => {
 
     test("converts boolean and number equal values back to native types", () => {
         const parsed = parsePantherFilterCSV(
-            ", active, , , true, , ascend, \n, qty, , , 5, , ascend, "
+            ", active, , , true, , , ascend, , \n, qty, , , 5, , , ascend, "
         )
 
         expect(parsed[0].equal).toBe(true)
         expect(parsed[1].equal).toBe(5)
     })
 
+    test("parses equalMany as a mixed-type JSON array", () => {
+        const parsed = parsePantherFilterCSV(', colour, , , , ["red",5,true], , ascend, , ')
+
+        expect(parsed[0].equalMany).toEqual(["red", 5, true])
+    })
+
     test("parses multi-line input and sets chainingInfo on subsequent rows", () => {
         const parsed = parsePantherFilterCSV(
-            ", a, , , , , ascend, \nand, b, , , , , ascend, \nor, c, , , , , ascend, "
+            ", a, , , , , , ascend, \nand, b, , , , , , ascend, \nor, c, , , , , , ascend, "
         )
 
         expect(parsed).toHaveLength(3)
@@ -183,11 +201,12 @@ describe("parsePantherFilterCSV - parsing", () => {
     })
 
     test("empty slots become undefined instead of empty strings", () => {
-        const parsed = parsePantherFilterCSV(", name, , , , , , , ")
+        const parsed = parsePantherFilterCSV(", name, , , , , , , , ")
 
         expect(parsed[0].fromValue).toBeUndefined()
         expect(parsed[0].toValue).toBeUndefined()
         expect(parsed[0].equal).toBeUndefined()
+        expect(parsed[0].equalMany).toBeUndefined()
         expect(parsed[0].orderBy).toBeUndefined()
         expect(parsed[0].groupBy).toBeUndefined()
         expect(parsed[0].geometry).toBeUndefined()
@@ -195,7 +214,7 @@ describe("parsePantherFilterCSV - parsing", () => {
 
     test("parses a geometry JSON cell back into a polygon", () => {
         const parsed = parsePantherFilterCSV(
-            ', area, , , , , ascend, , {"type":"Polygon","coordinates":[[[0,0],[1,1]]]}'
+            ', area, , , , , , , , {"type":"Polygon","coordinates":[[[0,0],[1,1]]]}'
         )
 
         expect(parsed[0].geometry).toEqual({
@@ -205,20 +224,20 @@ describe("parsePantherFilterCSV - parsing", () => {
     })
 
     test("throws on a malformed geometry JSON cell", () => {
-        expect(() => parsePantherFilterCSV(", area, , , , , ascend, , not-json"))
+        expect(() => parsePantherFilterCSV(", area, , , , , , ascend, , not-json"))
             .toThrow()
     })
 
     test("missing or invalid ascending defaults to ascend", () => {
-        const missing = parsePantherFilterCSV(", a, , , , , , ")
-        const invalid = parsePantherFilterCSV(", a, , , , , sideways, ")
+        const missing = parsePantherFilterCSV(", a, , , , , , , , ")
+        const invalid = parsePantherFilterCSV(", a, , , , , , sideways, , ")
 
         expect(missing[0].ascending).toBe("ascend")
         expect(invalid[0].ascending).toBe("ascend")
     })
 
     test("skips empty lines and trailing newlines", () => {
-        const parsed = parsePantherFilterCSV("\n  \n, a, , , , , ascend, \n\n, b, , , , , ascend, \n")
+        const parsed = parsePantherFilterCSV("\n  \n, a, , , , , , ascend, , \n\n, b, , , , , , ascend, , \n")
 
         expect(parsed).toHaveLength(2)
         expect(parsed[0].attributeName).toBe("a")
