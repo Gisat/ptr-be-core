@@ -1,3 +1,10 @@
+## [58.3.0](https://github.com/Gisat/ptr-be-core/compare/v58.2.0...v58.3.0) (2026-08-25)
+
+### Features
+
+* add equalMany filter to SQL builder and CSV format ([4c5d98d](https://github.com/Gisat/ptr-be-core/commit/4c5d98db5531848cd53cc8c835a7a287e937dfd7))
+* add optional polygon geometry to filter chain and CSV format ([1771510](https://github.com/Gisat/ptr-be-core/commit/1771510aa39e91efb8dea5bf784da684f69c1b00))
+
 ## [58.2.0](https://github.com/Gisat/ptr-be-core/compare/v58.1.0...v58.2.0) (2026-08-22)
 
 ### Features
