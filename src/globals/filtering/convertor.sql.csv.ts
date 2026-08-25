@@ -2,8 +2,9 @@
  * INFO: CSV Tansport format
  * We encode the filter into CSV format
  * The singe filter is a single CSL line
- * Format : chainingInfo,  attibute , fromValue , toValue , equal , orderBy , ascending , groupBy
+ * Format : chainingInfo,  attibute , fromValue , toValue , equal , equalMany , orderBy , ascending , groupBy , geometry
  * ChainingInfo: empty for first row, then "and" or "or"
+ * Geometry is an optional GeoJSON Polygon serialized as a JSON string in its own cell.
  *
  * Transport: `webEncodeFilterCSV` wraps this CSV in a single-line
  * RFC 4648 §5 Base64url string (URL-safe, unpadded) for opacity and safe
@@ -11,6 +12,12 @@
  * scheme. This is encoding for compactness, not encryption.
  */
 
+
+/** GeoJSON Polygon geometry: an outer ring of [lng, lat] coordinate tuples. */
+export interface Polygon {
+    type: "Polygon"
+    coordinates: number[][][]
+}
 
 /** Describes a filter query for Panther attribute-based filtering. */
 export interface PantherAttributeQuery {
@@ -30,6 +37,9 @@ export interface PantherAttributeQuery {
     /** Exact match value (string, number, or boolean). */
     equal?: string | number | boolean
 
+    /** Multiple possible exact-match values. */
+    equalMany?: (string | number | boolean)[]
+
     /** Column to order results by. */
     orderBy?: string
 
@@ -38,6 +48,9 @@ export interface PantherAttributeQuery {
 
     /** Column to group results by. */
     groupBy?: string
+
+    /** Optional spatial polygon to filter by. */
+    geometry?: Polygon
 }
 
 /**
@@ -67,6 +80,9 @@ export const PantherFilter = () => {
         /** Set an exact match value (string, number, or boolean). */
         equal: (value: string | number | boolean) => (current.equal = value, build),
 
+        /** Set multiple possible exact-match values. */
+        equalMany: (values: (string | number | boolean)[]) => (current.equalMany = values, build),
+
         /** Set the column to order results by. */
         orderBy: (column: string) => (current.orderBy = column, build),
 
@@ -78,6 +94,9 @@ export const PantherFilter = () => {
 
         /** Set the column to group results by. */
         groupBy: (column: string) => (current.groupBy = column, build),
+
+        /** Set a spatial polygon to filter by. */
+        geometry: (value: Polygon) => (current.geometry = value, build),
 
         /**
          * Commit current filter and start a new one with the given chaining operator.
@@ -107,9 +126,11 @@ export const PantherFilter = () => {
             f.fromValue,
             f.toValue,
             f.equal,
+            f.equalMany ? JSON.stringify(f.equalMany) : "",
             f.orderBy,
             f.ascending,
-            f.groupBy
+            f.groupBy,
+            f.geometry ? JSON.stringify(f.geometry) : ""
         ].map((v) => v ?? "").join(", ")).join("\n"),
 
         /**
@@ -152,8 +173,8 @@ export const parsePantherFilterCSV = (lines: string): PantherAttributeQuery[] =>
     return lines.split("\n")
         .filter((line) => line.trim() !== "")
         .map((line) => {
-            // Split into 8 columns: chainingInfo, attributeName, fromValue, toValue, equal, orderBy, ascending, groupBy
-            const [chainingInfo, attributeName, fromValue, toValue, equal, orderBy, ascending, groupBy] =
+            // Split into 10 columns: chainingInfo, attributeName, fromValue, toValue, equal, equalMany, orderBy, ascending, groupBy, geometry
+            const [chainingInfo, attributeName, fromValue, toValue, equal, equalMany, orderBy, ascending, groupBy, geometry] =
                 line.split(", ").map((field) => field.trim())
 
             // Rebuild the filter, leaving empty slots undefined and defaulting sort direction
@@ -163,9 +184,11 @@ export const parsePantherFilterCSV = (lines: string): PantherAttributeQuery[] =>
                 fromValue: fromValue !== "" ? Number(fromValue) : undefined,
                 toValue: toValue !== "" ? Number(toValue) : undefined,
                 equal: equal !== "" ? parseCSVValue(equal) : undefined,
+                equalMany: equalMany !== "" && equalMany ? JSON.parse(equalMany) : undefined,
                 orderBy: orderBy !== "" ? orderBy : undefined,
                 ascending: (ascending === "ascend" || ascending === "descend" ? ascending : "ascend"),
-                groupBy: groupBy !== "" ? groupBy : undefined
+                groupBy: groupBy !== "" ? groupBy : undefined,
+                geometry: geometry !== "" && geometry ? JSON.parse(geometry) : undefined
             }
         })
 }
@@ -217,9 +240,11 @@ const toCSV = (filters: PantherAttributeQuery[]): string => filters.map((f) => [
     f.fromValue,
     f.toValue,
     f.equal,
+    f.equalMany ? JSON.stringify(f.equalMany) : "",
     f.orderBy,
     f.ascending,
-    f.groupBy
+    f.groupBy,
+    f.geometry ? JSON.stringify(f.geometry) : ""
 ].map((v) => v ?? "").join(", ")).join("\n")
 
 /**
