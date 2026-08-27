@@ -1,3 +1,9 @@
+## [58.4.0](https://github.com/Gisat/ptr-be-core/compare/v58.3.0...v58.4.0) (2026-08-27)
+
+### Features
+
+* add attributeSet node type ([b9244ad](https://github.com/Gisat/ptr-be-core/commit/b9244ad9ecb755b9c4015987e1c0174edd06baf3))
+
 ## [58.3.0](https://github.com/Gisat/ptr-be-core/compare/v58.2.0...v58.3.0) (2026-08-25)
 
 ### Features
