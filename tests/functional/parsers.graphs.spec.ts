@@ -21,12 +21,13 @@ describe("Parse graph structures (nodes and edges)", () => {
   it("Check parsed nodes by labels", () => {
 
     // Check number of parsed nodes and edges
-    expect(nodes.length).toBe(7)
+    expect(nodes.length).toBe(8)
     expect(edges.length).toBe(8)
 
     // Check specific nodes count by label
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Application).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Attribute).length).toBe(1)
+    expect(filterNodeByLabel(nodes, UsedNodeLabels.AttributeSet).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Place).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Period).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Datasource).length).toBe(2)
@@ -34,6 +35,15 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.COG).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Attribute).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Timeseries).length).toBe(1)
+  })
+
+  it("Check parsed attributeSet node", () => {
+    const attributeSet = findNodeByLabel(nodes, UsedNodeLabels.AttributeSet)
+
+    expect(attributeSet?.nameInternal).toBeDefined()
+    expect(attributeSet?.nameDisplay).toBeDefined()
+    expect(attributeSet?.description).toBeDefined()
+    expect(attributeSet?.labels).toContain(UsedNodeLabels.AttributeSet)
   })
 
   it("Check parsed basic panther entity", () => {

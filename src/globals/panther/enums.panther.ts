@@ -11,7 +11,8 @@ export enum UsedNodeLabels {
     Layer = "layer", // Layer node for map layer (layer have a style and a datasource)
     Style = "style", // Style node for map layer or a feature
     Feature = "feature", // Feature node for map layer,
-    Attribute = "attribute" // Attribute node for properties of entities, like "temperature", "population", etc.
+    Attribute = "attribute", // Attribute node for properties of entities, like "temperature", "population", etc.
+    AttributeSet = "attributeSet" // Attribute set node grouping related attribute nodes
 }
 
 /**

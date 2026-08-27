@@ -60,6 +60,13 @@
       "intervalIso": "2020/2025",
       "step": "year",
       "documentId": "someVector"
+    },
+    {
+      "key": "n7",
+      "labels": ["attributeSet"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description"
     }
   ],
   "edges": [
