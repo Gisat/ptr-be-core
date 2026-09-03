@@ -1,3 +1,10 @@
+## [58.6.0](https://github.com/Gisat/ptr-be-core/compare/v58.5.0...v58.6.0) (2026-09-03)
+
+### Features
+
+* add common node property extras ([cc9000a](https://github.com/Gisat/ptr-be-core/commit/cc9000a01a20f8ab3a0105d79870bd4ca72d3404))
+* validate extras runtime values as neo4j map ([6a218d4](https://github.com/Gisat/ptr-be-core/commit/6a218d413bd48f12131f74c4c31a3fc4aed22825))
+
 ## [58.5.0](https://github.com/Gisat/ptr-be-core/compare/v58.4.0...v58.5.0) (2026-09-03)
 
 ### Features
