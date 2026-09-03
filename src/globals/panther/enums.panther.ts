@@ -12,7 +12,7 @@ export enum UsedNodeLabels {
     Style = "style", // Style node for map layer or a feature
     Feature = "feature", // Feature node for map layer,
     Attribute = "attribute", // Attribute node for properties of entities, like "temperature", "population", etc.
-    AttributeSet = "attributeSet" // Attribute set node grouping related attribute nodes
+    Tag = "tag" // Tag node grouping related nodes
 }
 
 /**
@@ -33,7 +33,8 @@ export enum UsedDatasourceLabels {
     WFS = "wfs",              // Web Feature Service
     GeoPackage = "geopackage", // OGC GeoPackage format
     MapStyle = "mapStyle", // Map style datasource
-    Timeseries = "timeseries" // Timeseries datasource (with from-to and step)
+    Timeseries = "timeseries", // Timeseries datasource (with from-to and step)
+    External = "external" // External datasource served from an external URL
 }
 
 /**

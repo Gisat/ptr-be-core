@@ -21,29 +21,30 @@ describe("Parse graph structures (nodes and edges)", () => {
   it("Check parsed nodes by labels", () => {
 
     // Check number of parsed nodes and edges
-    expect(nodes.length).toBe(8)
+    expect(nodes.length).toBe(9)
     expect(edges.length).toBe(8)
 
     // Check specific nodes count by label
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Application).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Attribute).length).toBe(1)
-    expect(filterNodeByLabel(nodes, UsedNodeLabels.AttributeSet).length).toBe(1)
+    expect(filterNodeByLabel(nodes, UsedNodeLabels.Tag).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Place).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Period).length).toBe(1)
-    expect(filterNodeByLabel(nodes, UsedNodeLabels.Datasource).length).toBe(2)
+    expect(filterNodeByLabel(nodes, UsedNodeLabels.Datasource).length).toBe(3)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Layer).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.COG).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Attribute).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Timeseries).length).toBe(1)
+    expect(filterNodeByLabel(nodes, UsedDatasourceLabels.External).length).toBe(1)
   })
 
-  it("Check parsed attributeSet node", () => {
-    const attributeSet = findNodeByLabel(nodes, UsedNodeLabels.AttributeSet)
+  it("Check parsed tag node", () => {
+    const tag = findNodeByLabel(nodes, UsedNodeLabels.Tag)
 
-    expect(attributeSet?.nameInternal).toBeDefined()
-    expect(attributeSet?.nameDisplay).toBeDefined()
-    expect(attributeSet?.description).toBeDefined()
-    expect(attributeSet?.labels).toContain(UsedNodeLabels.AttributeSet)
+    expect(tag?.nameInternal).toBeDefined()
+    expect(tag?.nameDisplay).toBeDefined()
+    expect(tag?.description).toBeDefined()
+    expect(tag?.labels).toContain(UsedNodeLabels.Tag)
   })
 
   it("Check parsed basic panther entity", () => {
@@ -77,6 +78,13 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(datasourceCog?.bands).toBeDefined()
     expect(datasourceCog?.bandNames).toBeDefined()
     expect(datasourceCog?.bandPeriods).toBeDefined()
+  })
+
+  it("Check parsed external datasource", () => {
+    const datasourceExternal = findNodeByLabel(nodes, UsedDatasourceLabels.External)
+
+    expect(datasourceExternal?.url).toBeDefined()
+    expect(datasourceExternal?.labels).toContain(UsedDatasourceLabels.External)
   })
 
   it("Check parsed timeseries datasources", () => {
