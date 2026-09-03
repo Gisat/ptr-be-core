@@ -46,3 +46,6 @@ AGENTS.md
 
 # Kilo CLI workspace temp dir (managed by kilo-docker wrapper)
 tmp/
+
+# Kilo CLI planning documents (ephemeral, per-session)
+plans/
