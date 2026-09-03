@@ -33,7 +33,8 @@ export enum UsedDatasourceLabels {
     WFS = "wfs",              // Web Feature Service
     GeoPackage = "geopackage", // OGC GeoPackage format
     MapStyle = "mapStyle", // Map style datasource
-    Timeseries = "timeseries" // Timeseries datasource (with from-to and step)
+    Timeseries = "timeseries", // Timeseries datasource (with from-to and step)
+    External = "external" // External datasource served from an external URL
 }
 
 /**

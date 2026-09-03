@@ -67,6 +67,14 @@
       "nameInternal": "test",
       "nameDisplay": "displayTest",
       "description": "Long Description"
+    },
+    {
+      "key": "n8",
+      "labels": ["datasource", "external"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "url": "http://external.example.com/data"
     }
   ],
   "edges": [
