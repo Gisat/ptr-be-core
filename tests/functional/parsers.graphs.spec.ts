@@ -55,6 +55,21 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(pantherEntity?.labels).toBeDefined()
   })
 
+  it("Check parsed extras common property", () => {
+    const pantherEntity = findNodeByLabel(nodes, UsedNodeLabels.Application)
+
+    expect(pantherEntity?.extras).toEqual({
+      source: "gisat",
+      tags: ["demo", "test"],
+      meta: { owner: "team-x" }
+    })
+    expect(pantherEntity?.extras?.tags).toEqual(["demo", "test"])
+    expect(pantherEntity?.extras?.meta?.owner).toBe("team-x")
+
+    const periodWithoutExtras = findNodeByLabel(nodes, UsedNodeLabels.Period)
+    expect(periodWithoutExtras?.extras).toBeNull()
+  })
+
   it("Check parsed COG datasource", () => {
     const datasourceCog = findNodeByLabel(nodes, UsedDatasourceLabels.COG)
 

@@ -1,3 +1,5 @@
+import type { Neo4jMap, Nullable } from "../coding/code.types.js"
+
 /**
  * Represents a time interval with ISO 8601 string and computed timestamps.
  * Used by Period nodes and timeseries datasources.
@@ -40,4 +42,13 @@ export interface HasLevels {
 export interface HasUnits{
     unit: string
     valueType: 'string' | 'number' | 'boolean' | 'date' | 'json'
+}
+
+/**
+ * Common node property with arbitrary key-value data.
+ * Keys are strings, values follow the Neo4j Map type
+ * (https://neo4j.com/docs/cypher-manual/current/values-and-types/maps).
+ */
+export interface HasExtras {
+    extras: Nullable<Neo4jMap>
 }

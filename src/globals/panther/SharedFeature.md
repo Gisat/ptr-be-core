@@ -24,6 +24,12 @@ Combination of multiple nodes can be used as multiple-level labeling. Like `[Dat
 ### Properties
 Can be anything inside the node. Can be `key`, `name` or any general property we need.
 
+Every node also carries an `extras` common property — a
+[Neo4j Map](https://neo4j.com/docs/cypher-manual/current/values-and-types/maps)
+of arbitrary key-value pairs (scalars, lists, nested maps) for
+application-specific data that has no dedicated property. It is `null` when
+the request does not provide it.
+
 ## Edge Structure
 Edge is connection betwee two nodes. Can be directed (from-to). 
 

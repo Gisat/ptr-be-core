@@ -11,7 +11,7 @@ import { csvParseNumbers, csvParseStrings } from "../../globals/coding/formats.c
 
 /**
  * Extract and parse basic entity fields from a raw request body.
- * Fields parsed: labels, nameInternal, nameDisplay, description, key.
+ * Fields parsed: labels, nameInternal, nameDisplay, description, key, extras.
  * Generates a UUID for key if not provided.
  *
  * @param bodyRaw - Raw HTTP request body.
@@ -23,6 +23,7 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
     nameInternal,
     nameDisplay,
     description,
+    extras,
     key
   } = bodyRaw as any
 
@@ -36,6 +37,7 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
     nameInternal: nameInternal as string ?? "",
     nameDisplay: nameDisplay as string ?? "",
     description: description as string ?? "",
+    extras: extras ?? null,
     labels: labels as string[]
   }
 
