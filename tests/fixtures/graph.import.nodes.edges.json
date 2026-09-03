@@ -63,7 +63,7 @@
     },
     {
       "key": "n7",
-      "labels": ["attributeSet"],
+      "labels": ["tag"],
       "nameInternal": "test",
       "nameDisplay": "displayTest",
       "description": "Long Description"
