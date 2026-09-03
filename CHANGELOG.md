@@ -1,3 +1,10 @@
+## [58.5.0](https://github.com/Gisat/ptr-be-core/compare/v58.4.0...v58.5.0) (2026-09-03)
+
+### Features
+
+* add external datasource sub-label ([5491e6f](https://github.com/Gisat/ptr-be-core/commit/5491e6f05c1d4032cf77382239aa07e30877599b))
+* rename attributeSet node label to tag ([e7ae637](https://github.com/Gisat/ptr-be-core/commit/e7ae637e23c58b2da5acde985009318d7b45c3cb))
+
 ## [58.4.0](https://github.com/Gisat/ptr-be-core/compare/v58.3.0...v58.4.0) (2026-08-27)
 
 ### Features

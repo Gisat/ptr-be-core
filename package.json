@@ -1,6 +1,6 @@
 {
   "name": "@gisatcz/ptr-be-core",
-  "version": "58.4.0",
+  "version": "58.5.0",
   "description": "Shared core library for PTR BE services and SSR applications",
   "type": "module",
   "files": [
