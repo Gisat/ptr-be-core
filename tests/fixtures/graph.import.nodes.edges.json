@@ -5,7 +5,8 @@
       "labels": ["application"],
       "nameInternal": "testApp",
       "nameDisplay": "Testing Application",
-      "description": "Test app for metadata testing"
+      "description": "Test app for metadata testing",
+      "extras": { "source": "gisat", "tags": ["demo", "test"], "meta": { "owner": "team-x" } }
     },
     {
       "key": "n1",
