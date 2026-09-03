@@ -63,10 +63,9 @@ export {
     type NodeWithNeighbours 
 } from "./globals/panther/models.nodes.structure.js";
 
-// Panther graph model — general node property interfaces (extras, geometry, interval, config, levels, units)
+// Panther graph model — general node property interfaces (geometry, interval, config, levels, units)
 export {
     type HasConfiguration,
-    type HasExtras,
     type HasGeometry,
     type HasInterval,
     type HasLevels,

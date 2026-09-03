@@ -1,19 +1,20 @@
-import { HasExtras, HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUnits } from "./models.nodes.properties.general.js"
+import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUnits } from "./models.nodes.properties.general.js"
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther.js"
 import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "./models.nodes.properties.datasources.js"
-import { Nullable } from "../coding/code.types.js"
+import { Neo4jMap, Nullable } from "../coding/code.types.js"
 
 /**
  * Base graph node shared by all metadata entities.
  * Every entity has labels, a unique key, display/internal names, a description,
  * arbitrary extras, and a last-updated timestamp.
  */
-export interface PantherEntity extends HasExtras {
+export interface PantherEntity {
     labels: Array<string | UsedNodeLabels | UsedDatasourceLabels>,
     key: string
     nameDisplay: string,
     nameInternal: string,
     description: Nullable<string>,
+    extras: Nullable<Neo4jMap>,
     lastUpdatedAt: number,
 }
 
