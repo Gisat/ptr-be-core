@@ -44,8 +44,8 @@ export {
     findNodeByLabel
 } from "./globals/panther/utils.panther.js";
 
-// Shared general code types — Nullable, Unsure, Nullish, UsurePromise, Neo4jMap, Neo4jMapValue
-export { type Neo4jMap, type Neo4jMapValue, type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
+// Shared general code types — Nullable, Unsure, Nullish, UsurePromise
+export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
 
 // Panther graph model — labels for nodes, edges, datasources and timeseries steps
 export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels, UsedTimeseriesSteps } from "./globals/panther/enums.panther.js";
