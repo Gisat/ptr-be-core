@@ -8,10 +8,9 @@
 // Re-export browser-specific exports
 export * from "./index.browser.js";
 
-// Neo4j Map value types — used for the common node "extras" property
+// Neo4j Map value type — used for the common node "extras" property
 export {
-    type Neo4jMap,
-    type Neo4jMapValue
+    type Neo4jMap
 } from "./node/panther/models.neo4j.js";
 
 // API error handling — custom error classes for request validation, auth, server, and SSR-only errors

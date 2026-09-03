@@ -4,6 +4,7 @@ import { FullPantherEntity } from "../../src/globals/panther/models.nodes"
 import { parseParsePantherNodes } from "../../src/node/panther/parse.changeNodes"
 import { parseRichEdges } from "../../src/node/panther/parse.changesEdges"
 import { filterNodeByLabel, findEdgeByLabel, findNodeByLabel } from "../../src/globals/panther/utils.panther"
+import { InvalidRequestError } from "../../src/node/api/models.errors"
 
 import GraphImport from "../fixtures/graph.import.nodes.edges.json"
 
@@ -69,6 +70,54 @@ describe("Parse graph structures (nodes and edges)", () => {
 
     const periodWithoutExtras = findNodeByLabel(nodes, UsedNodeLabels.Period)
     expect(periodWithoutExtras?.extras).toBeNull()
+  })
+
+  it("Rejects extras that are not objects", () => {
+    const nodeWithArrayExtras = {
+      key: "bad-extras-1",
+      labels: ["application"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      extras: ["unsupported"]
+    }
+
+    expect(() => parseParsePantherNodes([nodeWithArrayExtras])).toThrow(InvalidRequestError)
+  })
+
+  it("Rejects extras with unsupported values", () => {
+    const nodeWithUnsupportedNestedExtras = {
+      key: "bad-extras-2",
+      labels: ["application"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      extras: { nested: { date: new Date() } }
+    }
+
+    const parseNodeWithUnsupportedExtras = () => parseParsePantherNodes([nodeWithUnsupportedNestedExtras])
+
+    expect(parseNodeWithUnsupportedExtras).toThrow(InvalidRequestError)
+    expect(parseNodeWithUnsupportedExtras).toThrow('Value of "extras.nested.date" is not supported in a Neo4j Map.')
+  })
+
+  it("Accepts extras with all supported value types", () => {
+    const nodeWithFullExtras = {
+      key: "good-extras",
+      labels: ["application"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      extras: {
+        string: "value",
+        number: 42,
+        boolean: true,
+        nullValue: null,
+        array: ["a", 1, false, null, { deep: true }],
+        nested: { deep: { deeper: "ok" } }
+      }
+    }
+
+    const parsed = parseParsePantherNodes([nodeWithFullExtras])
+
+    expect(parsed[0].extras).toEqual(nodeWithFullExtras.extras)
   })
 
   it("Check parsed COG datasource", () => {

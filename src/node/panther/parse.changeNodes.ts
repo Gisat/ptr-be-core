@@ -6,6 +6,7 @@ import { InvalidRequestError } from "../api/models.errors"
 import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "../../globals/panther/models.nodes.properties.datasources"
 import { UsedDatasourceLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
 import { validateNodeLabels } from "../api/validations.shared"
+import { validateNeo4jMap } from "./validations.neo4j"
 import { isoIntervalToTimestamps, nowTimestamp } from "../../globals/coding/code.dates"
 import { csvParseNumbers, csvParseStrings } from "../../globals/coding/formats.csv"
 
@@ -29,6 +30,9 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
 
   // Validate labels against allowed enums
   validateNodeLabels(labels)
+
+  // Validate extras, when provided, only holds Neo4j-supported values
+  validateNeo4jMap(extras)
 
   // Build the basic entity with defaults for missing fields
   const basicGraphResult: PantherEntity = {
