@@ -1,3 +1,9 @@
+## [58.7.0](https://github.com/Gisat/ptr-be-core/compare/v58.6.0...v58.7.0) (2026-09-07)
+
+### Features
+
+* add obj datasource sub-label ([bd45526](https://github.com/Gisat/ptr-be-core/commit/bd455262a124c7f9899bbf5db743fb5346acbd4c))
+
 ## [58.6.0](https://github.com/Gisat/ptr-be-core/compare/v58.5.0...v58.6.0) (2026-09-03)
 
 ### Features
