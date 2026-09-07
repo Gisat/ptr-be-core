@@ -2,6 +2,7 @@ import { InvalidRequestError } from "../api/models.errors"
 import { GraphEdge, GraphRelation } from "../../globals/panther/models.edges"
 import { enumValuesToString, isInEnum } from "../../globals/coding/code.formating"
 import { UsedEdgeLabels } from "../../globals/panther/enums.panther"
+import { validateNeo4jProperties } from "./validations.neo4j"
 
 /**
  * Parse and validate an array of rich edge objects from a request body.
@@ -43,6 +44,9 @@ export const parseRichEdges = (body: unknown): GraphEdge[] => {
         // Prevent self-referencing edges
         if (fromKey === toKey)
             throw new InvalidRequestError(`Cannot connect two same keys in graph edge (${fromKey})`)
+
+        // Validate properties, when provided, only hold Neo4j-supported property values
+        validateNeo4jProperties(properties)
 
         // Build the parsed edge object
         const parsedEdge: GraphEdge = {

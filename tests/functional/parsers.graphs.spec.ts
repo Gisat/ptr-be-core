@@ -157,4 +157,51 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(timeseriesEdge?.properties?.column).toBeDefined()
   })
 
+  it("Rejects rich edge properties with nested objects", () => {
+    const edgeWithObjectProperty = [{
+      label: UsedEdgeLabels.InPostgisLocation,
+      fromKey: "n0",
+      toKey: "n1",
+      properties: { column: "test01", params: { srid: 4326 } }
+    }]
+
+    const parseEdgeWithObjectProperty = () => parseRichEdges(edgeWithObjectProperty)
+
+    expect(parseEdgeWithObjectProperty).toThrow(InvalidRequestError)
+    expect(parseEdgeWithObjectProperty).toThrow('Value of "properties.params" is not supported as a Neo4j property value.')
+  })
+
+  it("Rejects rich edge properties with lists of objects", () => {
+    const edgeWithListOfObjectsProperty = [{
+      label: UsedEdgeLabels.InPostgisLocation,
+      fromKey: "n0",
+      toKey: "n1",
+      properties: { column: "test01", tags: [{ name: "demo" }] }
+    }]
+
+    const parseEdgeWithListOfObjectsProperty = () => parseRichEdges(edgeWithListOfObjectsProperty)
+
+    expect(parseEdgeWithListOfObjectsProperty).toThrow(InvalidRequestError)
+    expect(parseEdgeWithListOfObjectsProperty).toThrow('Value of "properties.tags[0]" is not supported as a Neo4j property value.')
+  })
+
+  it("Accepts rich edge properties with scalar and scalar array values", () => {
+    const edgeWithFullProperties = [{
+      label: UsedEdgeLabels.InPostgisLocation,
+      fromKey: "n0",
+      toKey: "n1",
+      properties: {
+        column: "test01",
+        featureId: 42,
+        periodIso: null,
+        tags: ["demo", "test"],
+        numbers: [1, 2, 3]
+      }
+    }]
+
+    const parsed = parseRichEdges(edgeWithFullProperties)
+
+    expect(parsed[0].properties).toEqual(edgeWithFullProperties[0].properties)
+  })
+
 })

@@ -32,8 +32,10 @@ the request does not provide it. Values are runtime-validated on parse and
 must be JSON-like: strings, numbers, booleans, null, arrays, and nested objects.
 
 > Note: a MAP is a Cypher [constructed type](https://neo4j.com/docs/cypher-manual/current/values-and-types/property-structural-constructed/),
-> which cannot be stored as a native node property. When persisting `extras`,
-> serialize it (e.g. to a JSON string property) or pass it as a query parameter.
+> which cannot be stored as a native node property. When persisting
+> `extras`, encode it with `serializeNeo4jMap` (stored as a JSON string
+> property) and decode stored values with `parseNeo4jMap` — both exported
+> from `@gisatcz/ptr-be-core/node`.
 
 ## Edge Structure
 Edge is connection betwee two nodes. Can be directed (from-to). 
@@ -46,6 +48,11 @@ Works the same as in the node case.
 
 Example of Edge Labels: `IS_RELATED`, `WAITING_FOR`, `CONTAINS`
 Example of Edge properties: `expiration`, `length`, `priority`, `created`
+
+Unlike node `extras`, edge `properties` map 1:1 to stored relationship
+properties, so values must be Neo4j property types — strings, numbers,
+booleans, null, and arrays of these scalars. Nested objects are rejected on
+parse (`validateNeo4jProperties`), as they cannot be stored as properties.
 
 ## Resources
 Please check resorces for visual explanation and many other examples.
