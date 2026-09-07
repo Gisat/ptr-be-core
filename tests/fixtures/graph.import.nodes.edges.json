@@ -76,6 +76,14 @@
       "nameDisplay": "displayTest",
       "description": "Long Description",
       "url": "http://external.example.com/data"
+    },
+    {
+      "key": "n9",
+      "labels": ["datasource", "obj"],
+      "nameInternal": "test",
+      "nameDisplay": "displayTest",
+      "description": "Long Description",
+      "url": "http://models.example.com/dam.obj"
     }
   ],
   "edges": [

@@ -22,7 +22,7 @@ describe("Parse graph structures (nodes and edges)", () => {
   it("Check parsed nodes by labels", () => {
 
     // Check number of parsed nodes and edges
-    expect(nodes.length).toBe(9)
+    expect(nodes.length).toBe(10)
     expect(edges.length).toBe(8)
 
     // Check specific nodes count by label
@@ -31,12 +31,13 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Tag).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Place).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Period).length).toBe(1)
-    expect(filterNodeByLabel(nodes, UsedNodeLabels.Datasource).length).toBe(3)
+    expect(filterNodeByLabel(nodes, UsedNodeLabels.Datasource).length).toBe(4)
     expect(filterNodeByLabel(nodes, UsedNodeLabels.Layer).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.COG).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Attribute).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Timeseries).length).toBe(1)
     expect(filterNodeByLabel(nodes, UsedDatasourceLabels.External).length).toBe(1)
+    expect(filterNodeByLabel(nodes, UsedDatasourceLabels.Obj).length).toBe(1)
   })
 
   it("Check parsed tag node", () => {
@@ -134,6 +135,13 @@ describe("Parse graph structures (nodes and edges)", () => {
 
     expect(datasourceExternal?.url).toBeDefined()
     expect(datasourceExternal?.labels).toContain(UsedDatasourceLabels.External)
+  })
+
+  it("Check parsed obj datasource", () => {
+    const datasourceObj = findNodeByLabel(nodes, UsedDatasourceLabels.Obj)
+
+    expect(datasourceObj?.url).toBeDefined()
+    expect(datasourceObj?.labels).toContain(UsedDatasourceLabels.Obj)
   })
 
   it("Check parsed timeseries datasources", () => {
