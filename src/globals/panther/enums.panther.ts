@@ -34,7 +34,8 @@ export enum UsedDatasourceLabels {
     GeoPackage = "geopackage", // OGC GeoPackage format
     MapStyle = "mapStyle", // Map style datasource
     Timeseries = "timeseries", // Timeseries datasource (with from-to and step)
-    External = "external" // External datasource served from an external URL
+    External = "external", // External datasource served from an external URL
+    Obj = "obj" // Wavefront OBJ 3D model file
 }
 
 /**

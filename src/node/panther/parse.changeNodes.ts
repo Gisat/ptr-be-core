@@ -350,7 +350,8 @@ export const parseSinglePantherNode = (bodyNodeEntity: unknown): FullPantherEnti
       UsedDatasourceLabels.WFS,
       UsedDatasourceLabels.WMTS,
       UsedDatasourceLabels.Geojson,
-      UsedDatasourceLabels.External
+      UsedDatasourceLabels.External,
+      UsedDatasourceLabels.Obj
     ];
 
     if (datasourcesWithUrl.includes(label as UsedDatasourceLabels)) {
