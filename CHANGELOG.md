@@ -1,3 +1,9 @@
+## [58.7.1](https://github.com/Gisat/ptr-be-core/compare/v58.7.0...v58.7.1) (2026-09-09)
+
+### Bug Fixes
+
+* expose HTTP status on API error classes ([44240c1](https://github.com/Gisat/ptr-be-core/commit/44240c1f2a5a4782ea7f9599a8c1a808899deb07))
+
 ## [58.7.0](https://github.com/Gisat/ptr-be-core/compare/v58.6.0...v58.7.0) (2026-09-07)
 
 ### Features
