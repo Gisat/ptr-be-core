@@ -1,3 +1,10 @@
+## [58.7.2](https://github.com/Gisat/ptr-be-core/compare/v58.7.1...v58.7.2) (2026-09-09)
+
+### Bug Fixes
+
+* add neo4j map codec for extras persistence ([1564c5a](https://github.com/Gisat/ptr-be-core/commit/1564c5add62518da6efa9a23176b59a3562e1d7f)), closes [#80](https://github.com/Gisat/ptr-be-core/issues/80)
+* store extras as a json string, remove neo4j logic from npm ([8e18ba2](https://github.com/Gisat/ptr-be-core/commit/8e18ba2ffa6257ad4fac7a7b5f83b54464a71cbc)), closes [#81](https://github.com/Gisat/ptr-be-core/issues/81) [#69](https://github.com/Gisat/ptr-be-core/issues/69) [#80](https://github.com/Gisat/ptr-be-core/issues/80) [#80](https://github.com/Gisat/ptr-be-core/issues/80)
+
 ## [58.7.1](https://github.com/Gisat/ptr-be-core/compare/v58.7.0...v58.7.1) (2026-09-09)
 
 ### Bug Fixes
