@@ -1,14 +1,36 @@
 import { randomUUID } from "crypto"
-import { Unsure } from "../../globals/coding/code.types"
+import { Unsure, Nullable } from "../../globals/coding/code.types"
 import { FullPantherEntity, PantherEntity } from "../../globals/panther/models.nodes"
 import { HasConfiguration, HasGeometry, HasInterval, HasLevels, HasUnits } from "../../globals/panther/models.nodes.properties.general"
 import { InvalidRequestError } from "../api/models.errors"
 import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "../../globals/panther/models.nodes.properties.datasources"
 import { UsedDatasourceLabels, UsedNodeLabels } from "../../globals/panther/enums.panther"
 import { validateNodeLabels } from "../api/validations.shared"
-import { validateNeo4jMap } from "./validations.neo4j"
 import { isoIntervalToTimestamps, nowTimestamp } from "../../globals/coding/code.dates"
 import { csvParseNumbers, csvParseStrings } from "../../globals/coding/formats.csv"
+
+/**
+ * Parse the extras common property from raw body.
+ * Object extras are normalized to a JSON string for storage, as a MAP is a
+ * Cypher constructed type and cannot be stored as a node property. String
+ * extras pass through unchanged. Absent extras result in null.
+ *
+ * @param extras - Raw request body extras value.
+ * @returns JSON string of the extras, or null when not provided.
+ * @throws {InvalidRequestError} If extras is neither an object nor a string.
+ */
+const parseExtras = (extras: unknown): Nullable<string> => {
+  if (extras === undefined || extras === null)
+    return null
+
+  if (typeof extras === "string")
+    return extras
+
+  if (typeof extras === "object")
+    return JSON.stringify(extras)
+
+  throw new InvalidRequestError("extras must be an object or a JSON string")
+}
 
 /**
  * Extract and parse basic entity fields from a raw request body.
@@ -31,9 +53,6 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
   // Validate labels against allowed enums
   validateNodeLabels(labels)
 
-  // Validate extras, when provided, only holds Neo4j-supported values
-  validateNeo4jMap(extras)
-
   // Build the basic entity with defaults for missing fields
   const basicGraphResult: PantherEntity = {
     lastUpdatedAt: nowTimestamp(),
@@ -41,7 +60,7 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
     nameInternal: nameInternal as string ?? "",
     nameDisplay: nameDisplay as string ?? "",
     description: description as string ?? "",
-    extras: extras ?? null,
+    extras: parseExtras(extras),
     labels: labels as string[]
   }
 

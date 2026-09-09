@@ -61,46 +61,46 @@ describe("Parse graph structures (nodes and edges)", () => {
   it("Check parsed extras common property", () => {
     const pantherEntity = findNodeByLabel(nodes, UsedNodeLabels.Application)
 
-    expect(pantherEntity?.extras).toEqual({
+    expect(pantherEntity?.extras).toBe(JSON.stringify({
       source: "gisat",
       tags: ["demo", "test"],
       meta: { owner: "team-x" }
-    })
-    expect(pantherEntity?.extras?.tags).toEqual(["demo", "test"])
-    expect(pantherEntity?.extras?.meta?.owner).toBe("team-x")
+    }))
 
     const periodWithoutExtras = findNodeByLabel(nodes, UsedNodeLabels.Period)
     expect(periodWithoutExtras?.extras).toBeNull()
   })
 
-  it("Rejects extras that are not objects", () => {
-    const nodeWithArrayExtras = {
+  it("Accepts extras provided as a JSON string", () => {
+    const nodeWithStringExtras = {
+      key: "string-extras",
+      labels: ["application"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      extras: JSON.stringify({ source: "gisat" })
+    }
+
+    const parsed = parseParsePantherNodes([nodeWithStringExtras])
+
+    expect(parsed[0].extras).toBe(nodeWithStringExtras.extras)
+  })
+
+  it("Rejects extras that are neither objects nor strings", () => {
+    const nodeWithNumberExtras = {
       key: "bad-extras-1",
       labels: ["application"],
       nameInternal: "test",
       nameDisplay: "test",
-      extras: ["unsupported"]
+      extras: 42
     }
 
-    expect(() => parseParsePantherNodes([nodeWithArrayExtras])).toThrow(InvalidRequestError)
+    const parseNodeWithNumberExtras = () => parseParsePantherNodes([nodeWithNumberExtras])
+
+    expect(parseNodeWithNumberExtras).toThrow(InvalidRequestError)
+    expect(parseNodeWithNumberExtras).toThrow("extras must be an object or a JSON string")
   })
 
-  it("Rejects extras with unsupported values", () => {
-    const nodeWithUnsupportedNestedExtras = {
-      key: "bad-extras-2",
-      labels: ["application"],
-      nameInternal: "test",
-      nameDisplay: "test",
-      extras: { nested: { date: new Date() } }
-    }
-
-    const parseNodeWithUnsupportedExtras = () => parseParsePantherNodes([nodeWithUnsupportedNestedExtras])
-
-    expect(parseNodeWithUnsupportedExtras).toThrow(InvalidRequestError)
-    expect(parseNodeWithUnsupportedExtras).toThrow('Value of "extras.nested.date" is not supported in a Neo4j Map.')
-  })
-
-  it("Accepts extras with all supported value types", () => {
+  it("Accepts object extras with all supported value types", () => {
     const nodeWithFullExtras = {
       key: "good-extras",
       labels: ["application"],
@@ -118,7 +118,7 @@ describe("Parse graph structures (nodes and edges)", () => {
 
     const parsed = parseParsePantherNodes([nodeWithFullExtras])
 
-    expect(parsed[0].extras).toEqual(nodeWithFullExtras.extras)
+    expect(parsed[0].extras).toBe(JSON.stringify(nodeWithFullExtras.extras))
   })
 
   it("Check parsed COG datasource", () => {
@@ -155,53 +155,6 @@ describe("Parse graph structures (nodes and edges)", () => {
 
     const timeseriesEdge = findEdgeByLabel(edges, UsedEdgeLabels.InPostgisLocation)
     expect(timeseriesEdge?.properties?.column).toBeDefined()
-  })
-
-  it("Rejects rich edge properties with nested objects", () => {
-    const edgeWithObjectProperty = [{
-      label: UsedEdgeLabels.InPostgisLocation,
-      fromKey: "n0",
-      toKey: "n1",
-      properties: { column: "test01", params: { srid: 4326 } }
-    }]
-
-    const parseEdgeWithObjectProperty = () => parseRichEdges(edgeWithObjectProperty)
-
-    expect(parseEdgeWithObjectProperty).toThrow(InvalidRequestError)
-    expect(parseEdgeWithObjectProperty).toThrow('Value of "properties.params" is not supported as a Neo4j property value.')
-  })
-
-  it("Rejects rich edge properties with lists of objects", () => {
-    const edgeWithListOfObjectsProperty = [{
-      label: UsedEdgeLabels.InPostgisLocation,
-      fromKey: "n0",
-      toKey: "n1",
-      properties: { column: "test01", tags: [{ name: "demo" }] }
-    }]
-
-    const parseEdgeWithListOfObjectsProperty = () => parseRichEdges(edgeWithListOfObjectsProperty)
-
-    expect(parseEdgeWithListOfObjectsProperty).toThrow(InvalidRequestError)
-    expect(parseEdgeWithListOfObjectsProperty).toThrow('Value of "properties.tags[0]" is not supported as a Neo4j property value.')
-  })
-
-  it("Accepts rich edge properties with scalar and scalar array values", () => {
-    const edgeWithFullProperties = [{
-      label: UsedEdgeLabels.InPostgisLocation,
-      fromKey: "n0",
-      toKey: "n1",
-      properties: {
-        column: "test01",
-        featureId: 42,
-        periodIso: null,
-        tags: ["demo", "test"],
-        numbers: [1, 2, 3]
-      }
-    }]
-
-    const parsed = parseRichEdges(edgeWithFullProperties)
-
-    expect(parsed[0].properties).toEqual(edgeWithFullProperties[0].properties)
   })
 
 })

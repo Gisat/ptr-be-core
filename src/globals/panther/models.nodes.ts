@@ -2,12 +2,11 @@ import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUnits } from 
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther.js"
 import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "./models.nodes.properties.datasources.js"
 import { Nullable } from "../coding/code.types.js"
-import { Neo4jMap } from "../../node/panther/models.neo4j.js"
 
 /**
  * Base graph node shared by all metadata entities.
  * Every entity has labels, a unique key, display/internal names, a description,
- * arbitrary extras, and a last-updated timestamp.
+ * arbitrary extras (persisted as a JSON string), and a last-updated timestamp.
  */
 export interface PantherEntity {
     labels: Array<string | UsedNodeLabels | UsedDatasourceLabels>,
@@ -15,7 +14,7 @@ export interface PantherEntity {
     nameDisplay: string,
     nameInternal: string,
     description: Nullable<string>,
-    extras: Nullable<Neo4jMap>,
+    extras: Nullable<string>,
     lastUpdatedAt: number,
 }
 
