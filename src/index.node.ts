@@ -70,3 +70,9 @@ export {
 export {
     cryptoNoCrypticHash
 } from "./node/crypto/crypto.js"
+
+// Redis key generation — namespaced, service-scoped cache keys
+export {
+    redisUniqueKey,
+    type RedisUniqueKeyProps
+} from "./node/redis/redis.js"
