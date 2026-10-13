@@ -1,3 +1,9 @@
+## [58.7.3](https://github.com/Gisat/ptr-be-core/compare/v58.7.2...v58.7.3) (2026-10-13)
+
+### Bug Fixes
+
+* parse bbox as number array ([5171fea](https://github.com/Gisat/ptr-be-core/commit/5171fea04e27177a4cd80ceb6f77dc46cbe0243a)), closes [#83](https://github.com/Gisat/ptr-be-core/issues/83)
+
 ## [58.7.2](https://github.com/Gisat/ptr-be-core/compare/v58.7.1...v58.7.2) (2026-09-09)
 
 ### Bug Fixes
