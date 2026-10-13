@@ -138,36 +138,37 @@ const parseWithConfiguration = (bodyRaw: any, required = false): Unsure<HasConfi
 
 /**
  * Parse geometry data including bounding box and GeoJSON geometry.
- * Bbox is parsed from CSV string to an array of 4 coordinates.
+ * Bbox is provided as an array of 4 coordinates.
  *
  * @param bodyRaw - Raw body containing geometry and bbox.
  * @returns Parsed HasGeometry object.
- * @throws {InvalidRequestError} If bbox CSV does not contain exactly 4 numbers.
+ * @throws {InvalidRequestError} If bbox is not an array of exactly 4 numbers.
  */
-const parseHasGeometry = (bodyRaw: any) => {
+const parseHasGeometry = (bodyRaw: any): HasGeometry => {
   const {
     bbox,
     geometry,
   } = bodyRaw
 
-/**
-   * Convert bbox from CSV string to array of 4 coordinate numbers.
+  /**
+   * Validate bbox is an array of 4 coordinate numbers.
    *
    * @returns An array of 4 numbers: [xmin, ymin, xmax, ymax].
-   * @throws {InvalidRequestError} If the parsed bbox does not have exactly 4 values.
+   * @throws {InvalidRequestError} If bbox is not an array of exactly 4 numbers.
    */
-  const bboxFromCSV = (): number[] => {
-    const bboxFromCSV = csvParseNumbers(bbox as string)
+  const parseBbox = (): number[] => {
+    const isValidBbox = Array.isArray(bbox)
+      && bbox.length === 4
+      && bbox.every((value: unknown) => typeof value === "number")
 
-    // Validate bbox has exactly 4 values (xmin, ymin, xmax, ymax)
-    if (bboxFromCSV.length !== 4)
+    if (!isValidBbox)
       throw new InvalidRequestError("bbox must be an array of 4 numbers")
 
-    return bboxFromCSV
+    return bbox
   }
 
   const geometryResult: HasGeometry = {
-    bbox: bbox ? bboxFromCSV() : [],
+    bbox: bbox ? parseBbox() : [],
     geometry: geometry ?? ""
   }
 

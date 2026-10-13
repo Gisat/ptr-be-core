@@ -14,7 +14,7 @@
       "nameInternal": "test",
       "nameDisplay": "displayTest",
       "description": "Long Description",
-      "bbox": "11,22,33,44",
+      "bbox": [11, 22, 33, 44],
       "geometry": "{geometry: \"here will be\"}"
     },
     {

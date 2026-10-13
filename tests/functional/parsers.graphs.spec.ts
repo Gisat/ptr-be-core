@@ -157,4 +157,66 @@ describe("Parse graph structures (nodes and edges)", () => {
     expect(timeseriesEdge?.properties?.column).toBeDefined()
   })
 
+  it("Check parsed place geometry and bbox", () => {
+    const place = findNodeByLabel(nodes, UsedNodeLabels.Place)
+
+    expect(place?.bbox).toEqual([11, 22, 33, 44])
+    expect(place?.geometry).toBe("{geometry: \"here will be\"}")
+  })
+
+  it("Parses bbox provided as a number array", () => {
+    const nodeWithArrayBbox = {
+      key: "place-array-bbox",
+      labels: ["place"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      bbox: [38.5576397, 35.8561306, 38.5753348, 35.8925169],
+      geometry: "{}"
+    }
+
+    const parsed = parseParsePantherNodes([nodeWithArrayBbox])
+
+    expect(parsed[0].bbox).toEqual([38.5576397, 35.8561306, 38.5753348, 35.8925169])
+  })
+
+  it("Rejects bbox that is not an array of 4 numbers", () => {
+    const nodeWithCsvBbox = {
+      key: "place-csv-bbox",
+      labels: ["place"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      bbox: "11,22,33,44"
+    }
+
+    const nodeWithShortBbox = {
+      key: "place-short-bbox",
+      labels: ["place"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      bbox: [11, 22, 33]
+    }
+
+    const parseNodeWithCsvBbox = () => parseParsePantherNodes([nodeWithCsvBbox])
+    const parseNodeWithShortBbox = () => parseParsePantherNodes([nodeWithShortBbox])
+
+    expect(parseNodeWithCsvBbox).toThrow(InvalidRequestError)
+    expect(parseNodeWithCsvBbox).toThrow("bbox must be an array of 4 numbers")
+    expect(parseNodeWithShortBbox).toThrow(InvalidRequestError)
+    expect(parseNodeWithShortBbox).toThrow("bbox must be an array of 4 numbers")
+  })
+
+  it("Defaults bbox to an empty array when not provided", () => {
+    const placeWithoutBbox = {
+      key: "place-no-bbox",
+      labels: ["place"],
+      nameInternal: "test",
+      nameDisplay: "test",
+      geometry: "{}"
+    }
+
+    const parsed = parseParsePantherNodes([placeWithoutBbox])
+
+    expect(parsed[0].bbox).toEqual([])
+  })
+
 })
