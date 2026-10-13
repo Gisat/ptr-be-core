@@ -1,3 +1,9 @@
+## [58.8.0](https://github.com/Gisat/ptr-be-core/compare/v58.7.3...v58.8.0) (2026-10-13)
+
+### Features
+
+* add service-scoped redis unique key helper ([dda5043](https://github.com/Gisat/ptr-be-core/commit/dda504300f3ccb19d186980c3694805ceb89fe5c))
+
 ## [58.7.3](https://github.com/Gisat/ptr-be-core/compare/v58.7.2...v58.7.3) (2026-10-13)
 
 ### Bug Fixes
