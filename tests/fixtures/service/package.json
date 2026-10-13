@@ -1,0 +1,5 @@
+{
+  "name": "@gisatcz/panther-api",
+  "description": "Fixture package for redisUniqueKey default resolution tests",
+  "version": "1.0.0"
+}
