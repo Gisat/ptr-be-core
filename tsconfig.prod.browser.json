@@ -5,7 +5,10 @@
     "rootDir": "src",
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "types": [
+      "node",
+    ]
   },
   "include": ["src/index.browser.ts"],
   "exclude": ["node_modules", "dist", "tests", "**/*.test.ts", "**/*.spec.ts", "vitest.config.ts"]
