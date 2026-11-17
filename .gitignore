@@ -49,3 +49,6 @@ tmp/
 
 # Kilo CLI planning documents (ephemeral, per-session)
 plans/
+
+# PR description drafts
+pr/
