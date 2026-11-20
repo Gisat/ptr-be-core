@@ -1,3 +1,9 @@
+## [58.9.0](https://github.com/Gisat/ptr-be-core/compare/v58.8.0...v58.9.0) (2026-11-20)
+
+### Features
+
+* add shared IAM role and group enums (UsedAuthRoles, UsedAuthGroups) ([e33396b](https://github.com/Gisat/ptr-be-core/commit/e33396b6355c9d8639362b84e25f67a4a8b1382f))
+
 ## [58.8.0](https://github.com/Gisat/ptr-be-core/compare/v58.7.3...v58.8.0) (2026-10-13)
 
 ### Features
