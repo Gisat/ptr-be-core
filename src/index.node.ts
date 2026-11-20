@@ -66,6 +66,12 @@ export {
     UsedHeaderNames, UsedHeaderValues
 } from "./node/api/enums.http.headers.js"
 
+// IAM enums — authentication roles and groups shared by identity-aware services
+export {
+    UsedAuthRoles,
+    UsedAuthGroups
+} from "./node/iam/enums.iam.js"
+
 // Cryptography utilities for BE apps
 export {
     cryptoNoCrypticHash
