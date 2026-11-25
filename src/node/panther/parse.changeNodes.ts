@@ -8,6 +8,8 @@ import { UsedDatasourceLabels, UsedNodeLabels } from "../../globals/panther/enum
 import { validateNodeLabels } from "../api/validations.shared"
 import { isoIntervalToTimestamps, nowTimestamp } from "../../globals/coding/code.dates"
 import { csvParseNumbers, csvParseStrings } from "../../globals/coding/formats.csv"
+import { enumValuesToString, isInEnum } from "../../globals/coding/code.formating"
+import { UsedAuthGroups, UsedAuthRoles } from "../../globals/iam/enums.iam"
 
 /**
  * Parse the extras common property from raw body.
@@ -33,8 +35,35 @@ const parseExtras = (extras: unknown): Nullable<string> => {
 }
 
 /**
+ * Validate an optional array of IAM enum values (roles or groups).
+ * Absent values resolve to an empty array. Every provided member must belong
+ * to the given enum.
+ *
+ * @param values - Raw request body value; expected to be an array of strings.
+ * @param enumType - The IAM enum to validate membership against.
+ * @param fieldName - Field name used in error messages.
+ * @returns The validated values, or an empty array when not provided.
+ * @throws {InvalidRequestError} If values is not an array or contains unknown members.
+ */
+const parseAuthEnumArray = <T>(values: unknown, enumType: any, fieldName: string): T[] => {
+  if (values === undefined || values === null)
+    return []
+
+  if (!Array.isArray(values))
+    throw new InvalidRequestError(`${fieldName} must be an array of strings`)
+
+  for (const value of values) {
+    if (!isInEnum(value, enumType))
+      throw new InvalidRequestError(`${fieldName} value ${value} is not supported. Value must be one of: ${enumValuesToString(enumType)}`)
+  }
+
+  return values as T[]
+}
+
+/**
  * Extract and parse basic entity fields from a raw request body.
- * Fields parsed: labels, nameInternal, nameDisplay, description, key, extras.
+ * Fields parsed: labels, nameInternal, nameDisplay, description, key, extras,
+ * owner, roles, groups.
  * Generates a UUID for key if not provided.
  *
  * @param bodyRaw - Raw HTTP request body.
@@ -47,7 +76,10 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
     nameDisplay,
     description,
     extras,
-    key
+    key,
+    owner,
+    roles,
+    groups
   } = bodyRaw as any
 
   // Validate labels against allowed enums
@@ -61,7 +93,10 @@ const parseBasicNodeFromBody = (bodyRaw: unknown): PantherEntity => {
     nameDisplay: nameDisplay as string ?? "",
     description: description as string ?? "",
     extras: parseExtras(extras),
-    labels: labels as string[]
+    labels: labels as string[],
+    owner: owner ?? null,
+    roles: parseAuthEnumArray<UsedAuthRoles>(roles, UsedAuthRoles, "roles"),
+    groups: parseAuthEnumArray<UsedAuthGroups>(groups, UsedAuthGroups, "groups")
   }
 
   return basicGraphResult
