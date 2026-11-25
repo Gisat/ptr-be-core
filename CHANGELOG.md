@@ -1,3 +1,25 @@
+## [59.0.0](https://github.com/Gisat/ptr-be-core/compare/v58.9.0...v59.0.0) (2026-11-25)
+
+### ⚠ BREAKING CHANGES
+
+* PantherEntity now requires owner, roles, and groups
+fields — all node metadata must include access-control attributes.
+* UsedAuthRoles and UsedAuthGroups enums moved from
+src/node/iam/enums.iam to src/globals/iam/enums.iam — consumers
+importing from the old path will need to update their imports.
+
+- Relocate IAM enums from src/node/iam/ to src/globals/iam/ so they are
+  accessible from both browser and Node entrypoints
+- Re-export UsedAuthRoles and UsedAuthGroups from index.browser.ts and
+  remove the re-export from index.node.ts (already shared via globals)
+- Add owner, roles, and groups properties to the PantherEntity interface
+- Extend parseBasicNodeFromBody to accept, validate, and parse the new
+  auth fields using shared enum utilities
+
+### Features
+
+* move IAM enums to globals and add auth fields to PantherEntity ([c23c805](https://github.com/Gisat/ptr-be-core/commit/c23c805f1b0f458e4e1a23ed384eeeeb91771864))
+
 ## [58.9.0](https://github.com/Gisat/ptr-be-core/compare/v58.8.0...v58.9.0) (2026-11-20)
 
 ### Features
