@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { UsedAuthRoles, UsedAuthGroups } from "../../src/node/iam/enums.iam"
+import { UsedAuthRoles, UsedAuthGroups } from "../../src/globals/iam/enums.iam"
 
 describe("IAM role and group enums", () => {
 

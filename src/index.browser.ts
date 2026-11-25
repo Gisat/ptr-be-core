@@ -47,6 +47,9 @@ export {
 // Shared general code types — Nullable, Unsure, Nullish, UsurePromise
 export { type Nullable, type Nullish, type Unsure, type UsurePromise } from "./globals/coding/code.types.js";
 
+// IAM enums — authentication roles and groups shared by identity-aware services
+export { UsedAuthRoles, UsedAuthGroups } from "./globals/iam/enums.iam.js";
+
 // Panther graph model — labels for nodes, edges, datasources and timeseries steps
 export { UsedDatasourceLabels, UsedEdgeLabels, UsedNodeLabels, UsedTimeseriesSteps } from "./globals/panther/enums.panther.js";
 

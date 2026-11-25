@@ -2,11 +2,13 @@ import { HasGeometry, HasInterval, HasLevels, HasConfiguration, HasUnits } from 
 import { UsedNodeLabels, UsedDatasourceLabels } from "./enums.panther.js"
 import { HasBands, HasColor, HasDocumentId, HasSpecificName, HasTimeseries, HasUrl } from "./models.nodes.properties.datasources.js"
 import { Nullable } from "../coding/code.types.js"
+import { UsedAuthGroups, UsedAuthRoles } from "../iam/enums.iam.js"
 
 /**
  * Base graph node shared by all metadata entities.
  * Every entity has labels, a unique key, display/internal names, a description,
- * arbitrary extras (persisted as a JSON string), and a last-updated timestamp.
+ * arbitrary extras (persisted as a JSON string), a last-updated timestamp, and
+ * ownership/access-control fields (owner, roles, groups).
  */
 export interface PantherEntity {
     labels: Array<string | UsedNodeLabels | UsedDatasourceLabels>,
@@ -16,6 +18,9 @@ export interface PantherEntity {
     description: Nullable<string>,
     extras: Nullable<string>,
     lastUpdatedAt: number,
+    owner: Nullable<string>,
+    roles: Array<UsedAuthRoles>,
+    groups: Array<UsedAuthGroups>,
 }
 
 /**
