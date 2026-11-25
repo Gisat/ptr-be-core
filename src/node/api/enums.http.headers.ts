@@ -4,7 +4,8 @@
 export enum UsedHeaderNames {
   IgnoreCache = "ignore-cache",
   ResultFrom = "result-from",
-  Sid = "sid"
+  Sid = "sid",
+  SessionId = "x-session-id"
 }
 
 /**
